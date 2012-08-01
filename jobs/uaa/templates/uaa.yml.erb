@@ -1,0 +1,83 @@
+---
+<% uaa_db = properties.uaadb.databases.find { |db| db.tag == "uaa" } %>
+<% uaa_role = properties.uaadb.roles.find { |role| role.tag == "admin" } %>
+
+<% cc_db = properties.ccdb.databases.find { |db| db.tag == "cc" } %>
+<% cc_role = properties.ccdb.roles.find { |role| role.tag == "admin" } %>
+
+pid: /var/vcap/sys/run/uaa.pid
+# nats message bus uri
+mbus: nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>/
+
+name: uaa
+
+database:
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://<%= properties.uaadb.address %>:<%= properties.uaadb.port %>/<%= uaa_db.name %>
+  username: <%= uaa_role.name %>
+  password: <%= uaa_role.password %>
+
+jvm_args: -Xmx512m
+spring_profiles: postgresql
+
+cloud_controller:
+  database:
+    url: jdbc:postgresql://<%= properties.ccdb.address %>:<%= properties.ccdb.port %>/<%= cc_db.name %>
+    username: <%= cc_role.name %>
+    password: <%= cc_role.password %>
+
+logging:
+  config: /var/vcap/jobs/uaa/config/log4j.properties
+
+varz:
+  username: _random_username_replaced_by_a_script_
+  password: _random_password_replaced_by_a_script_
+  type: uaa
+  uuid: _random_uuid_replaced_by_a_script_
+
+<% if properties.uaa.cc %>
+jwt:
+  token:
+    signing-key: <%= properties.uaa.cc.token_secret %>
+    verification-key: <%= properties.uaa.cc.token_secret %>
+<% end %>
+
+<% if properties.uaa.batch %>
+batch:
+  username: <%= properties.uaa.batch.username %>
+  password: <%= properties.uaa.batch.password %>
+<% end %>
+
+oauth:
+  authorize:
+    ssl: true
+  client:
+    autoapprove:
+      - vmc
+      - my
+      - micro
+      - support-signon
+  clients:
+    admin:
+      authorized-grant-types: client_credentials
+      scope: read,write,password
+      authorities: ROLE_CLIENT,ROLE_ADMIN
+      id: admin
+      secret: <%= properties.uaa.admin.client_secret %>
+      resource-ids: clients
+    cloud_controller:
+      authorized-grant-types: client_credentials
+      scope: read,write,password
+      authorities: ROLE_CLIENT,ROLE_ADMIN
+      id: cloud_controller
+      secret: <%= properties.uaa.cc.client_secret %>
+      resource-ids: scim,password,tokens
+      access-token-validity: 604800
+    vmc:
+      authorized-grant-types: implicit
+      scope: read,password
+      authorities: ROLE_UNTRUSTED
+      id: vmc
+      resource-ids: cloud_controller,password
+      redirect-uri: http://uaa.cloudfoundry.com/redirect/vmc
+      access-token-validity: 604800

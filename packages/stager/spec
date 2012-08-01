@@ -1,0 +1,12 @@
+---
+name: stager
+dependencies:
+- libpq
+- mysqlclient
+- sqlite
+- ruby
+- insight_agent
+files:
+- stager/{Gemfile,Gemfile.lock}
+- stager/{bin,lib,vendor/cache}/**/*
+- pkg_utils/*

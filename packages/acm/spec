@@ -1,0 +1,11 @@
+---
+name: acm
+dependencies:
+- libpq
+- ruby
+files:
+- acm/Gemfile*
+- acm/bin/**/*
+- acm/lib/**/*
+- acm/db/**/*
+- acm/vendor/**/*

@@ -1,0 +1,9 @@
+---
+name: dea
+dependencies:
+- ruby
+files:
+- dea/Gemfile
+- dea/Gemfile.lock
+- dea/{bin,lib}/**/*
+- pkg_utils/*

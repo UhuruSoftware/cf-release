@@ -1,0 +1,20 @@
+---
+server:
+  unix_domain_permissions: 0777
+  container_klass: Warden::Container::Linux
+  container_depot_path: /var/vcap/data/warden
+
+logging:
+  file: /var/vcap/sys/log/warden/warden.log
+  <% if properties.syslog_aggregator %>
+  syslog: vcap.warden
+  <% end %>
+  level: debug
+
+network:
+  pool_start_address: 10.254.0.0
+  pool_size: 256
+
+user:
+  pool_start_uid: 20000
+  pool_size: 256

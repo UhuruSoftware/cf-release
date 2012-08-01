@@ -1,0 +1,8 @@
+---
+name: mongodb_gateway
+dependencies:
+- ruby
+- sqlite
+files:
+- services/mongodb/**/*
+- pkg_utils/*
