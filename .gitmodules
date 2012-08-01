@@ -27,4 +27,4 @@
 	url = git@github.com:UhuruSoftware/private-cloud_controller.git
 [submodule "src/core"]
 	path = src/core
-	url = git@github.com:cloudfoundry/vcap.git
+	url = git://github.com/cloudfoundry/vcap.git
