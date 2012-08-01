@@ -25,3 +25,6 @@
 [submodule "src/cloud_controller"]
 	path = src/cloud_controller
 	url = git@github.com:UhuruSoftware/private-cloud_controller.git
+[submodule "src/core"]
+	path = src/core
+	url = git@github.com:UhuruSoftware/private-vcap-dotnet.git
