@@ -1,9 +1,6 @@
 [submodule "src/services"]
 	path = src/services
 	url = git@github.com:UhuruSoftware/private-vcap-services.git
-[submodule "src/core"]
-	path = src/core
-	url = git@github.com:UhuruSoftware/private-vcap-dotnet.git
 [submodule "src/tools"]
 	path = src/tools
 	url = git@github.com:cloudfoundry/vcap-tools.git
