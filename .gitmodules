@@ -1,3 +1,30 @@
 [submodule "src/services"]
 	path = src/services
 	url = git@github.com:UhuruSoftware/private-vcap-services.git
+[submodule "src/core"]
+	path = src/core
+	url = git@github.com:UhuruSoftware/private-vcap-dotnet.git
+[submodule "src/tools"]
+	path = src/tools
+	url = git@github.com:cloudfoundry/vcap-tools.git
+[submodule "src/acm"]
+	path = src/acm
+	url = git@github.com:cloudfoundry/acm.git
+[submodule "src/dea"]
+	path = src/dea
+	url = git@github.com:UhuruSoftware/private-dea.git
+[submodule "src/health_manager_next"]
+	path = src/health_manager_next
+	url = git://github.com/cloudfoundry/health_manager.git
+[submodule "src/router"]
+	path = src/router
+	url = git@github.com:UhuruSoftware/private-router.git
+[submodule "src/stager"]
+	path = src/stager
+	url = git@github.com:UhuruSoftware/private-stager.git
+[submodule "src/warden"]
+	path = src/warden
+	url = git@github.com:cloudfoundry/warden.git
+[submodule "src/cloud_controller"]
+	path = src/cloud_controller
+	url = git@github.com:UhuruSoftware/private-cloud_controller.git
