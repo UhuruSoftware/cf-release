@@ -29,7 +29,7 @@ echo "Extracting nginx_upload module..."
 tar xzvf nginx/nginx_upload_module-2.2.0.tar.gz
 
 echo "Extracting http_chunkin module..."
-tar xzvf nginx/agentzh-chunkin-nginx-module-v0.23rc2.tar.gz
+tar xzvf nginx/http-chunkin-v0.23rc2.tar.gz
 
 echo "Patching upload module"
 cd nginx_upload_module-2.2.0
