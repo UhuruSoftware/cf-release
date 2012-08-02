@@ -28,3 +28,6 @@
 [submodule "src/core"]
 	path = src/core
 	url = git://github.com/cloudfoundry/vcap.git
+[submodule "src/vblob_src"]
+	path = src/vblob_src
+	url = git@github.com:cloudfoundry/vblob.git
