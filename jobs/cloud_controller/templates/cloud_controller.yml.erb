@@ -134,6 +134,16 @@ allow_debug: <%= properties.cc.allow_debug || false %>
 
 admins: [ "<%= properties.cc.admins.join('", "') %>" ]
 
+<% if properties.cc.bootstrap_users %>
+bootstrap_users:
+  <% properties.cc.bootstrap_users.each do |user| %>
+  - email: <%= user.email %>
+    password: <%= user.password %>
+    is_admin: <%= user.is_admin %>
+    is_hashed_password: <%= user.is_hashed_password %>
+  <% end %>
+<% end %>
+
 https_required: <%= properties.cc.https_required || false %>
 https_required_for_admins: <%= properties.cc.https_required_for_admins || false %>
 
@@ -236,3 +246,5 @@ runtimes:
       - suspend
   erlangR14B02:
     version: ".* 5.8.3"
+  iis:
+    version: 0x7
