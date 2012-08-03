@@ -47,6 +47,10 @@ directories:
   staging_cache: /var/vcap/data/cloud_controller/staging
   tmpdir: /var/vcap/data/cloud_controller/tmp
 
+resource_pool:
+  minimum_size: <%= (properties.cc.resource_pool && properties.cc.resource_pool.minimum_size) || 10240 %>  # 10 KB by default
+  maximum_size: <%= (properties.cc.resource_pool && properties.cc.resource_pool.maximum_size) || 536870912 %>  # 536870912 # 512 MB
+  
 logging:
   file: /var/vcap/sys/log/cloud_controller/cloud_controller.log
   <% if properties.syslog_aggregator %>
