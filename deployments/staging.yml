@@ -1,0 +1,584 @@
+---
+name: cloud-foundry
+director_uuid: 90db59eb-9363-4918-a787-520455f3300b
+
+release:
+  name: uhuru-cf
+  version: 91.3-dev
+
+compilation:
+  workers: 4
+  network: default
+  cloud_properties:
+    ram: 2048
+    disk: 8096
+    cpu: 4
+
+update:
+  canaries: 1
+  canary_watch_time: 3000-90000
+  update_watch_time: 3000-90000
+  max_in_flight: 2
+  max_errors: 1
+
+networks:
+
+- name: default
+  subnets:
+  - reserved:
+    - 10.0.0.2 - 10.0.5.150
+    static:
+    - 10.0.5.151 - 10.0.5.200
+    range: 10.0.5.0/16
+    gateway: 10.0.0.1
+    dns:
+    - 10.0.5.30
+    - 8.8.8.8
+    cloud_properties:
+      name: "VM Network"
+
+resource_pools:
+
+- name: tiny
+  network: default
+  size: 7
+  stemcell:
+    name: bosh-stemcell
+    version: 0.6.4
+  cloud_properties:
+    ram: 300
+    disk: 5000
+    cpu: 1
+  env:
+    bosh:
+      password: $6$Y.mc6abg$pLww6JwY7fgnxRwjVqHZ/iqO1fbNru2nQF4KyvNn1BEuHYTwzzUVqDJbWx1F5hlFjZG0/Fh2fKXYtEKZQ/38A.
+      # c1oudc0w - password generated using mkpasswd -m sha-512
+
+
+- name: small
+  network: default
+  size: 3
+  stemcell:
+    name: bosh-stemcell
+    version: 0.6.4
+  cloud_properties:
+    ram: 512
+    disk: 5000
+    cpu: 1
+  env:
+    bosh:
+      password: $6$Y.mc6abg$pLww6JwY7fgnxRwjVqHZ/iqO1fbNru2nQF4KyvNn1BEuHYTwzzUVqDJbWx1F5hlFjZG0/Fh2fKXYtEKZQ/38A.
+      # c1oudc0w - password generated using mkpasswd -m sha-512
+
+- name: medium
+  network: default
+  size: 13
+  stemcell:
+    name: bosh-stemcell
+    version: 0.6.4
+  cloud_properties:
+    ram: 1024
+    disk: 5000
+    cpu: 2
+  env:
+    bosh:
+      password: $6$Y.mc6abg$pLww6JwY7fgnxRwjVqHZ/iqO1fbNru2nQF4KyvNn1BEuHYTwzzUVqDJbWx1F5hlFjZG0/Fh2fKXYtEKZQ/38A.
+      # c1oudc0w - password generated using mkpasswd -m sha-512
+
+- name: large
+  network: default
+  size: 1
+  stemcell:
+    name: bosh-stemcell
+    version: 0.6.4
+  cloud_properties:
+    ram: 2048
+    disk: 10000
+    cpu: 4
+  env:
+    bosh:
+      password: $6$Y.mc6abg$pLww6JwY7fgnxRwjVqHZ/iqO1fbNru2nQF4KyvNn1BEuHYTwzzUVqDJbWx1F5hlFjZG0/Fh2fKXYtEKZQ/38A.
+      # c1oudc0w - password generated using mkpasswd -m sha-512
+
+
+- name: deas
+  network: default
+  size: 3
+  stemcell:
+    name: bosh-stemcell-php
+    version: 0.6.4.2
+  cloud_properties:
+    ram: 3072
+    disk: 30000
+    cpu: 4
+  env:
+    bosh:
+      password: $6$Y.mc6abg$pLww6JwY7fgnxRwjVqHZ/iqO1fbNru2nQF4KyvNn1BEuHYTwzzUVqDJbWx1F5hlFjZG0/Fh2fKXYtEKZQ/38A.
+      # c1oudc0w - password generated using mkpasswd -m sha-512
+
+jobs:
+
+- name: debian_nfs_server
+  template: debian_nfs_server
+  instances: 1
+  resource_pool: small
+  persistent_disk: 50000
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.177
+
+- name: syslog_aggregator
+  template: syslog_aggregator
+  instances: 1
+  resource_pool: medium
+  persistent_disk: 1000
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.176
+
+- name: nats
+  template: nats
+  instances: 1
+  resource_pool: small
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.157
+
+#- name: opentsdb
+#  template: opentsdb
+#  instances: 1
+#  resource_pool: infrastructure
+#  persistent_disk: 16384
+#  networks:
+#  - name: default
+#    static_ips:
+#    - 192.0.2.14
+
+#- name: collector
+#  template: collector
+#  instances: 1
+#  resource_pool: infrastructure
+#  networks:
+#  - name: default
+
+#- name: dashboard
+#  template: dashboard
+#  instances: 1
+#  resource_pool: infrastructure
+#  networks:
+#  - name: default
+
+- name: ccdb_postgres
+  template: ccdb_postgres
+  instances: 1
+  resource_pool: medium
+  persistent_disk: 10000
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.156
+
+#- name: uaadb
+#  template: ccdb_postgres
+#  instances: 1
+#  resource_pool: infrastructure
+#  persistent_disk: 8192
+#  properties:
+#    ccdb:
+#      user: root
+#      password: aaa39c8e3f34bc201351ba7a
+#      address: 192.0.2.15
+#      port: 2544
+#      dbname: uaa
+#  networks:
+#  - name: default
+#    static_ips:
+#    - 192.0.2.15
+
+- name: vcap_redis
+  template: vcap_redis
+  instances: 1
+  resource_pool: medium
+  persistent_disk: 5000
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.173
+
+#- name: uaa
+#  template: uaa
+#  instances: 1
+#  resource_pool: infrastructure
+#  networks:
+#  - name: default
+
+- name: cloud_controller
+  template: cloud_controller
+  instances: 4
+  resource_pool: medium
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.151 - 10.0.5.154
+
+- name: stager
+  template: stager
+  instances: 2
+  resource_pool: medium
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.174 - 10.0.5.175
+
+- name: router
+  template: router
+  instances: 1
+  resource_pool: medium
+  networks:
+  - name: default
+    default: [dns, gateway]
+    static_ips: 10.0.5.155
+
+- name: health_manager
+  template: health_manager
+  instances: 1
+  resource_pool: small
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.178
+
+- name: dea
+  template: dea
+  instances: 3
+  resource_pool: deas
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.165 - 10.0.5.167
+
+- name: mysql_node
+  template: mysql_node
+  instances: 1
+  resource_pool: medium
+  persistent_disk: 10000
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.170
+
+- name: mysql_gateway
+  template: mysql_gateway
+  instances: 1
+  resource_pool: tiny
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.161
+
+
+- name: mongodb_node
+  template: mongodb_node
+  instances: 1
+  resource_pool: medium
+  persistent_disk: 10000
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.168
+
+- name: mongodb_gateway
+  template: mongodb_gateway
+  instances: 1
+  resource_pool: tiny
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.159
+
+- name: redis_node
+  template: redis_node
+  instances: 1
+  resource_pool: large
+  persistent_disk: 10000
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.172
+
+- name: redis_gateway
+  template: redis_gateway
+  instances: 1
+  resource_pool: tiny
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.163
+
+- name: rabbit_node
+  template: rabbit_node
+  instances: 1
+  resource_pool: medium
+  persistent_disk: 5000
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.171
+
+- name: rabbit_gateway
+  template: rabbit_gateway
+  instances: 1
+  resource_pool: tiny
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.162
+
+- name: mssql_gateway
+  template: mssql_gateway
+  instances: 1
+  resource_pool: tiny
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.160
+
+- name: uhurufs_gateway
+  template: uhurufs_gateway
+  instances: 1
+  resource_pool: tiny
+  networks:
+  - name: default
+    static_ips:
+    - 10.0.5.164
+
+
+
+#- name: postgresql_node
+#  template: postgresql_node
+#  instances: 1
+#  resource_pool: infrastructure
+#  persistent_disk: 650
+#  networks:
+#  - name: default
+#    static_ips:
+#    - 192.0.2.70
+
+#- name: postgresql_gateway
+#  template: postgresql_gateway
+#  instances: 1
+#  resource_pool: infrastructure
+#  networks:
+#  - name: default
+
+#- name: backup_manager
+#  template: backup_manager
+#  instances: 1
+#  resource_pool: infrastructure
+#  networks:
+#  - name: default
+#    static_ips:
+#    - 192.0.2.80
+
+#- name: service_utilities
+#  template: service_utilities
+#  instances: 1
+#  resource_pool: infrastructure
+#  networks:
+#  - name: default
+#    static_ips:
+#    - 192.0.2.81
+
+properties:
+  domain: uhurucloud.net
+
+  env: {}
+
+  networks:
+    apps: default
+    management: default
+
+  nats:
+    user: 9RejfzNe3512
+    password: lAcVi2bjW1ww
+    address: 10.0.5.157
+    port: 4222
+
+  ccdb:
+    user: root
+    password: klcmBLc0kY5j
+    address: 10.0.5.156
+    port: 5432
+    pool_size: 10
+    dbname: 5b101e8dd07145e6be2cf5fb27c43679
+
+  cc:
+    srv_api_uri: http://api.uhurucloud.net
+#    password: aaauuLaap44jadlas2l312lk
+#    token: aaaf4eaa8c1758f66d5cb7adcb24adb9d7
+    use_nginx: true
+#    new_stager_percent: 100
+#    new_stager_email_regexp: '.*@vmware.com'
+    staging_upload_user: aaafhgjg
+    staging_upload_password: AAAfdase9
+    allow_registration: true
+    uaa:
+      enabled: false
+      resource_id: cloud_controller
+      client_secret: aaaNxRJcx6cpv
+    admins:
+    - dev@uhurusoftware.com
+
+  vcap_redis:
+    address: 10.0.5.173
+    port: 5454
+    password: aaaxbL98RWpwBuUJvKNojnpIcRb1ot2
+    maxmemory: 1000000000 # 2GB
+
+  router:
+    status:
+      port: 8080
+      user: aaaUxXlS0pc71wVef
+      password: aaamaIf9vPV4mJyBe
+
+  dashboard:
+    users:
+      - [dash, admin]
+
+  dea:
+    max_memory: 4000
+
+  nfs_server:
+    address: 10.0.5.117
+    network: 10.0.0.0/16
+
+#  opentsdb:
+#    address: 192.0.2.14
+#    port: 4242
+
+  service_plans:
+    mysql:
+      free:
+        job_management:
+          high_water: 1400
+          low_water: 100
+        configuration:
+          allow_over_provisioning: true
+          capacity: 200
+          max_db_size: 128
+          max_long_query: 3
+          max_long_tx: 0
+          max_clients: 20
+    postgresql:
+      free:
+        job_management:
+          high_water: 1400
+          low_water: 100
+        configuration:
+          capacity: 200
+          max_db_size: 128
+          max_long_query: 3
+          max_long_tx: 30
+          max_clients: 20
+    mongodb:
+      free:
+        job_management:
+          high_water: 3000
+          low_water: 100
+        configuration:
+          allow_over_provisioning: true
+          capacity: 200
+          quota_files: 4
+          max_clients: 500
+    redis:
+      free:
+        job_management:
+          high_water: 1400
+          low_water: 100
+        configuration:
+          capacity: 200
+          max_memory: 16
+          max_swap: 32
+          max_clients: 500
+    rabbit:
+      free:
+        job_management:
+          low_water: 100
+          high_water: 1400
+        configuration:
+          max_memory_factor: 0.5
+          max_clients: 512
+          capacity: 200
+
+  mysql_gateway:
+    check_orphan_interval: 7200
+    token: "0xfeedface"
+  mysql_node:
+    production: true
+    password: aaa13djkas
+
+  mssql_gateway:
+    check_orphan_interval: 7200
+    token: "0xfeedface"
+
+  uhurufs_gateway:
+    check_orphan_interval: 7200
+    token: "0xfeedface"
+
+  redis_gateway:
+    token: "0xfeedface"
+    check_orphan_interval: 7200
+  redis_node:
+    command_rename_prefix: sample
+
+  mongodb_gateway:
+    check_orphan_interval: 7200
+    token: "0xfeedface"
+  mongodb_node:
+    {}
+
+  rabbit_gateway:
+    token: AAA430A8BAED490B1240338DA34B10D
+  rabbit_node:
+    {}
+
+#  postgresql_gateway:
+#    check_orphan_interval: 7200
+#    token: aaaeAh4BXFBXwLrrWJCpQTfeDnaCn7m
+#  postgresql_node:
+#    production: true
+
+  syslog_aggregator:
+    address: 10.0.5.176
+    port: 54321
+
+  stager:
+    max_staging_duration: 120
+    max_active_tasks: 20
+    queues:
+    - staging
+
+#  uaa:
+#    db:
+#      user: root
+#      password: aaa39c8e3f34bc201351ba7a
+#      address: 192.0.2.15
+#      port: 2544
+#      dbname: uaa
+#    bootstrap:
+#      username: admin@vmware.com
+      # BCrypt::Password.create('foobar', :cost => 8)
+#      password: $2a$08$4iXvbGvgfC9vhyN7QjXboeK2tlc3dHMQlcWkfHGaHB5aCY.jTZrgy
+#      given_name: UAA Administrator
+#      family_name: UAA Administrator
+#      email: admin@vmware.com
+#    cc:
+#      token_secret: aaabxaiC371JM
+#      client_secret: $2a$08$dahioBqSkqa1AbLvaqkLoe5W0aOPN3Ia9W0xkeB926G.AZJhq1SsK
+#    batch:
+#      username: do0H2AKay2jAc
+#      password: FSCTiplI5Q83n
+
