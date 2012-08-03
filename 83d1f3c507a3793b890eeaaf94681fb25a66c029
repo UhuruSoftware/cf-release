@@ -1,0 +1,8 @@
+Change-Id: I83d1f3c507a3793b890eeaaf94681fb25a66c029
+Code-Review+2: Stefan Schneider <stefan.schneider@uhurusoftware.com>
+Verified+1: Stefan Schneider <stefan.schneider@uhurusoftware.com>
+Submitted-by: Stefan Schneider <stefan.schneider@uhurusoftware.com>
+Submitted-at: Fri, 03 Aug 2012 13:32:24 +0300
+Reviewed-on: http://gerrit.uhurusoftware.org/248
+Project: private-cf-release
+Branch: refs/heads/master
