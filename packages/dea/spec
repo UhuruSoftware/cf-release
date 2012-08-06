@@ -7,4 +7,3 @@ files:
 - dea/Gemfile.lock
 - dea/{bin,lib}/**/*
 - pkg_utils/*
-- dea_debs/*
