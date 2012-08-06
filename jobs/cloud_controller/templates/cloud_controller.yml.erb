@@ -178,6 +178,14 @@ builtin_services:
   mysql:
     token: <%= properties.mysql_gateway.token %>
 <% end %>
+<% if properties.mssql_gateway %>
+  mssql:
+    token: <%= properties.mssql_gateway.token %>
+<% end %>
+<% if properties.uhurufs_gateway %>
+  uhurufs:
+    token: <%= properties.uhurufs_gateway.token %>
+<% end %>
 <% if properties.redis_gateway %>
   redis:
     token: <%= properties.redis_gateway.token %>
