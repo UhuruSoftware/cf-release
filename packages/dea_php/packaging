@@ -1,0 +1,13 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+cp -a dea_php/* ${BOSH_INSTALL_TARGET}
+
+tar xzf dea_php/owlient-phpredis-2.1.1-1-g90ecd17.tar.gz
+(
+  cd owlient-phpredis-90ecd17
+  phpize
+  ./configure --prefix=${BOSH_INSTALL_TARGET}
+  make
+  make install
+)
