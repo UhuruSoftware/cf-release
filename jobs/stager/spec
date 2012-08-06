@@ -9,15 +9,17 @@ templates:
   iptables.conf.erb: config/iptables.conf
   manifests/grails.yml: config/manifests/grails.yml
   manifests/java_web.yml: config/manifests/java_web.yml
-  manifests/lift.yml: config/manifests/lift.yml
+  #manifests/lift.yml: config/manifests/lift.yml
   manifests/node.yml: config/manifests/node.yml
   manifests/platform.yml: config/manifests/platform.yml
   manifests/rails3.yml: config/manifests/rails3.yml
   manifests/sinatra.yml: config/manifests/sinatra.yml
   manifests/spring.yml: config/manifests/spring.yml
-  manifests/rack.yml: config/manifests/rack.yml
+  manifests/dotNet.yml: config/manifests/dotNet.yml
+  manifests/php.yml: config/manifests/php.yml
+  #manifests/rack.yml: config/manifests/rack.yml
   manifests/standalone.yml: config/manifests/standalone.yml
-  manifests/play.yml: config/manifests/play.yml
+  #manifests/play.yml: config/manifests/play.yml
   sudoers: config/sudoers
 packages:
 - common
