@@ -33,10 +33,10 @@ info_file: /var/vcap/packages/cloud_controller/config/cloud_controller-info.json
 
 # Legacy (FIXME REMOVE)
 # Can't be removed yet since CC checks to make sure it's present
-allow_external_app_uris: false
+allow_external_app_uris: <%= properties.cc.allow_external_app_uris || false %>
 
 app_uris:
-  allow_external: false
+  allow_external: <%= properties.cc.allow_external_app_uris || false %>
   reserved_file: /var/vcap/jobs/cloud_controller/config/blacklist.txt
   reserved_length: 3
 
