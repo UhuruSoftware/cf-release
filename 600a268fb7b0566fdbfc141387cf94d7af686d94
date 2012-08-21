@@ -1,0 +1,8 @@
+Change-Id: I600a268fb7b0566fdbfc141387cf94d7af686d94
+Code-Review+2: Vlad Iovanov <vlad.iovanov@uhurusoftware.com>
+Verified+1: Vlad Iovanov <vlad.iovanov@uhurusoftware.com>
+Submitted-by: Vlad Iovanov <vlad.iovanov@uhurusoftware.com>
+Submitted-at: Tue, 21 Aug 2012 11:07:04 +0300
+Reviewed-on: http://gerrit.uhurusoftware.org/318
+Project: private-cf-release
+Branch: refs/heads/master
