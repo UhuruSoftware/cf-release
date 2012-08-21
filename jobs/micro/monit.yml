@@ -12,9 +12,14 @@ mongodb:
 mysql:
   - mysql_node
   - mysql_gateway
-postgres:
-  - postgresql_node
-  - postgresql_gateway
 redis:
   - redis_node
   - redis_gateway
+rabbit:
+  - rabbit_node
+  - rabbit_gateway
+mssql:
+  - mssql_gateway
+uhurufs:
+  - uhurufs_gateway
+
