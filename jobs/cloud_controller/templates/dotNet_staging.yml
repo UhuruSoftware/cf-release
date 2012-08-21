@@ -6,6 +6,12 @@ runtimes:
       description: 'Internet Information Services 7.5'
       executable: appcmd.exe
       default: true
+  - uhurutunnel:
+      version: '0x7'
+      description: 'Uhuru Tunnel Runtime'
+      executable: iisver.cmd
+      default: false 
+
 app_servers:
 detection:
   - "web.config": true
