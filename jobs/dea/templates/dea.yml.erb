@@ -13,6 +13,7 @@ logging:
   level: debug
 multi_tenant: true
 max_memory: <%= properties.dea.max_memory %>
+max_concurrent_starts: <%= properties.dea.max_concurrent_starts || 3%>
 secure: <%= properties.dea.secure.nil? ? true : properties.dea.secure %>
 index: <%= spec.index %>
 intervals:
