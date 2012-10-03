@@ -11,7 +11,11 @@ runtimes:
       description: 'Uhuru Tunnel Runtime'
       executable: iisver.cmd
       default: false 
-
+  - iis8:
+      version: '0x8'
+      description: 'Internet Information Services 8'
+      executable: iisver.cmd
+      default: false
 app_servers:
 detection:
   - "web.config": true
