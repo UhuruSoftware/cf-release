@@ -28,6 +28,8 @@ pid: /var/vcap/sys/run/mongodb_node/mongodb_node.pid
 node_id: <%= "#{service}_node#{'_' + plan if plan != 'free'}_#{spec.index.to_i + 1}" %>
 max_clients: <%= plan_enabled && plan_conf.max_clients || 500 %>
 quota_files: <%= plan_enabled && plan_conf.quota_files || 4 %>
+supported_versions: <%= "['#{supported_versions.join("' , '")}']" %>
+default_version: <%= "'#{default_version}'"%>
 
 mongod_path:
 <% for version in supported_versions %>
