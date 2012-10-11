@@ -19,9 +19,6 @@
 [submodule "src/health_manager_next"]
 	path = src/health_manager_next
 	url = git://github.com/cloudfoundry/health_manager.git
-[submodule "src/router"]
-	path = src/router
-	url = git@github.com:UhuruSoftware/private-router.git
 [submodule "src/stager"]
 	path = src/stager
 	url = git@github.com:UhuruSoftware/private-stager.git
