@@ -34,3 +34,6 @@
 [submodule "src/tests"]
 	path = src/tests
 	url = git@github.com:cloudfoundry/vcap-yeti.git
+[submodule "src/router"]
+	path = src/router
+	url = git://github.com/cloudfoundry/router.git
