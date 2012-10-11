@@ -15,7 +15,7 @@ templates:
   rails3_staging.yml: config/staging/rails3.yml
   grails_staging.yml: config/staging/grails.yml
   #lift_staging.yml: config/staging/lift.yml
-  #rack_staging.yml: config/staging/rack.yml
+  rack_staging.yml: config/staging/rack.yml
   dotNet_staging.yml: config/staging/dotNet.yml
   standalone_staging.yml: config/staging/standalone.yml
   #play_staging.yml: config/staging/play.yml
