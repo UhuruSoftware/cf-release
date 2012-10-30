@@ -33,10 +33,10 @@ info_file: /var/vcap/packages/cloud_controller/config/cloud_controller-info.json
 
 # Legacy (FIXME REMOVE)
 # Can't be removed yet since CC checks to make sure it's present
-allow_external_app_uris: false
+allow_external_app_uris: <%= properties.cc.allow_external_app_uris || false %>
 
 app_uris:
-  allow_external: false
+  allow_external: <%= properties.cc.allow_external_app_uris || false %>
   reserved_file: /var/vcap/jobs/cloud_controller/config/blacklist.txt
   reserved_length: 3
 
@@ -45,6 +45,10 @@ directories:
   resources: /var/vcap/shared/resources
   staging_manifests: /var/vcap/jobs/cloud_controller/config/staging
   tmpdir: /var/vcap/data/cloud_controller/tmp
+
+resource_pool:
+  minimum_size: <%= (properties.cc.resource_pool && properties.cc.resource_pool.minimum_size) || 10240 %>  # 10 KB by default
+  maximum_size: <%= (properties.cc.resource_pool && properties.cc.resource_pool.maximum_size) || 536870912 %>  # 536870912 # 512 MB
 
 logging:
   file: /var/vcap/sys/log/cloud_controller/cloud_controller.log
@@ -124,6 +128,16 @@ staging:
 allow_debug: <%= properties.cc.allow_debug || false %>
 
 admins: [ "<%= properties.cc.admins.join('", "') %>" ]
+
+<% if properties.cc.bootstrap_users %>
+bootstrap_users:
+  <% properties.cc.bootstrap_users.each do |user| %>
+  - email: <%= user.email %>
+    password: <%= user.password %>
+    is_admin: <%= user.is_admin %>
+    is_hashed_password: <%= user.is_hashed_password %>
+  <% end %>
+<% end %>
 
 https_required: <%= properties.cc.https_required || false %>
 https_required_for_admins: <%= properties.cc.https_required_for_admins || false %>
