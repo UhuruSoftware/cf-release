@@ -165,7 +165,7 @@ default_account_capacity:
 <% end %>
 
 builtin_services:
-<% services = ['mysql', 'redis', 'mongodb', 'memcached', 'rabbit', 'postgresql', 'atmos', 'filesystem', 'vblob'] %>
+<% services = ['mysql', 'redis', 'mongodb', 'memcached', 'rabbit', 'postgresql', 'atmos', 'filesystem', 'mssql', 'uhurufs', 'vblob'] %>
 <% for service in services %>
   <% service_gateway = "#{service}_gateway" %>
   <% if properties.send(service_gateway.to_sym) %>
