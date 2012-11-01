@@ -1,0 +1,10 @@
+---
+name: dotNet
+
+runtimes:
+  - iis:
+      default: true
+  - iis8:
+      default: false
+detection:
+  - "Web.config": true

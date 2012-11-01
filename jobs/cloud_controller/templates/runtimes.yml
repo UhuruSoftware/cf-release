@@ -130,3 +130,21 @@ php:
   environment:
     PATH: /var/vcap/packages/dea_ruby19/bin:/var/vcap/packages/imagemagick/bin:$PATH
     LD_LIBRARY_PATH: '/var/vcap/packages/mysqlclient/lib/mysql:/var/vcap/packages/sqlite/lib:/var/vcap/packages/libpq/lib:/var/vcap/packages/imagemagick/lib:$LD_LIBRARY_PATH'
+iis:
+  description: "Internet Information Services 7.5"
+  version: "7.5"
+  executable:
+  staging:
+  version_output: "0x7"
+  version_flag:
+  version_executable: iisver.cmd
+  environment: {}
+iis8:
+  description: "Internet Information Services 8"
+  version: "8"
+  executable:
+  staging:
+  version_output: "0x8"
+  version_flag:
+  version_executable: iisver.cmd
+  environment: {}
