@@ -6,5 +6,7 @@ runtimes:
       default: true
   - iis8:
       default: false
+  - uhurutunnel:
+      default: false
 detection:
   - "Web.config": true

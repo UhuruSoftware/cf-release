@@ -148,3 +148,12 @@ iis8:
   version_flag:
   version_executable: iisver.cmd
   environment: {}
+uhurutunnel:
+  description: "Uhuru Tunnel Runtime"
+  version: "7.5"
+  executable:
+  staging:
+  version_output: "0x7"
+  version_flag:
+  version_executable: iisver.cmd
+  environment: {}
