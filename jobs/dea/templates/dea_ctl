@@ -49,6 +49,54 @@ case $1 in
 
     ulimit -c unlimited
 
+    # PHP Configuration
+    /etc/init.d/apache2 stop
+    update-rc.d -f apache2 remove
+    pear install /var/vcap/packages/dea_php/PHPUnit-3.2.4.15.tgz
+    yes | pecl install /var/vcap/packages/dea_php/APC-3.1.9.tgz
+    yes | pecl install /var/vcap/packages/dea_php/memcache-2.2.6.tgz
+    yes | pecl install /var/vcap/packages/dea_php/mongo-1.2.10.tgz
+	yes | pecl install /var/vcap/packages/dea_php/amqp-1.0.4.tgz
+	yes | pecl install /var/vcap/packages/dea_php/APC-3.1.9.tgz
+	yes | pecl install /var/vcap/packages/dea_php/apd-1.0.1.tgz
+	yes | pecl install /var/vcap/packages/dea_php/bcompiler-1.0.2.tgz
+	yes | pecl install /var/vcap/packages/dea_php/Fileinfo-1.0.4.tgz
+	yes | pecl install /var/vcap/packages/dea_php/gearman-1.0.2.tgz
+	yes | pecl install /var/vcap/packages/dea_php/geoip-1.0.8.tgz
+	yes | pecl install /var/vcap/packages/dea_php/hash-1.5.tgz
+	yes | pecl install /var/vcap/packages/dea_php/ibm_db2-1.9.3.tgz
+	yes | pecl install /var/vcap/packages/dea_php/imagick-3.0.1.tgz
+	yes | pecl install /var/vcap/packages/dea_php/intl-2.0.0.tgz
+	yes | pecl install /var/vcap/packages/dea_php/json-1.2.1.tgz
+	yes | pecl install /var/vcap/packages/dea_php/LZF-1.6.2.tgz
+	yes | pecl install /var/vcap/packages/dea_php/mailparse-2.1.6.tgz
+	yes | pecl install /var/vcap/packages/dea_php/memcache-2.2.6.tgz
+	yes | pecl install /var/vcap/packages/dea_php/memcached-2.0.1.tgz
+	yes | pecl install /var/vcap/packages/dea_php/mongo-1.2.10.tgz
+	yes | pecl install /var/vcap/packages/dea_php/oauth-1.2.2.tgz
+	yes | pecl install /var/vcap/packages/dea_php/oci8-1.4.7.tgz
+	yes | pecl install /var/vcap/packages/dea_php/pdflib-2.1.9.tgz
+	yes | pecl install /var/vcap/packages/dea_php/PDO-1.0.3.tgz
+	yes | pecl install /var/vcap/packages/dea_php/PDO_MYSQL-1.0.2.tgz
+	yes | pecl install /var/vcap/packages/dea_php/perl-1.0.0.tgz
+	yes | pecl install /var/vcap/packages/dea_php/radius-1.2.5.tgz
+	yes | pecl install /var/vcap/packages/dea_php/rar-3.0.0.tgz
+	yes | pecl install /var/vcap/packages/dea_php/SQLite-1.0.3.tgz
+	yes | pecl install /var/vcap/packages/dea_php/tidy-1.2.tgz
+	yes | pecl install /var/vcap/packages/dea_php/timezonedb-2012.3.tgz
+	yes | pecl install /var/vcap/packages/dea_php/uploadprogress-1.0.3.1.tgz
+	yes | pecl install /var/vcap/packages/dea_php/xdebug-2.2.1.tgz
+	yes | pecl install /var/vcap/packages/dea_php/zip-1.10.2.tgz
+
+    tar xzf /var/vcap/packages/dea_php/owlient-phpredis-2.1.1-1-g90ecd17.tar.gz
+    (
+      cd owlient-phpredis-90ecd17
+      phpize
+      ./configure
+      make
+      make install
+    )
+
     <% if properties.syslog_aggregator %>
     /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $JOB_DIR/config
     <% end %>
