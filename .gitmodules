@@ -40,3 +40,6 @@
 [submodule "src/tests"]
 	path = src/tests
 	url = git@github.com:cloudfoundry/vcap-yeti.git
+[submodule "src/uhuru_webui"]
+	path = src/uhuru_webui
+	url = git@github.com:UhuruSoftware/private-uhuru-webui.git

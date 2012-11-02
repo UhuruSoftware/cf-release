@@ -1,0 +1,15 @@
+
+cloudfoundry:
+  cloud-controller-api: <%= properties.ccng.external_host || "api2" %>.<%= properties.domain %>
+  client-id: "cloud_controller"
+  client-secret: <%= properties.uaa.cc.client_secret %>
+
+uaa:
+  uaa-api: http://uaa.<%= properties.domain %>
+
+uhuru:
+  webui-port: <%= properties.uhuru.webui.port || 9494 %>
+  dev-mode: <%= properties.uhuru.webui.dev_mode || true %>
+
+logger:
+  path: "/var/vcap/sys/log/uhuru_webui/uhuru_webui.log"

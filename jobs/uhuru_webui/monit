@@ -1,0 +1,5 @@
+check process uhuru_webui
+  with pidfile /var/vcap/sys/run/uhuru_webui/uhuru_webui.pid
+  start program "/var/vcap/jobs/uhuru_webui/bin/uhuru_webui_ctl start"
+  stop program "/var/vcap/jobs/uhuru_webui/bin/uhuru_webui_ctl stop"
+  group vcap

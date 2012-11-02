@@ -1,0 +1,8 @@
+---
+name: uhuru_webui
+dependencies:
+- ruby
+files:
+- uhuru_webui/{Gemfile,Gemfile.lock,main.rb,uhuru_config.rb,main.rb}
+- uhuru_webui/{lib,public,views}/**/*
+- pkg_utils/*

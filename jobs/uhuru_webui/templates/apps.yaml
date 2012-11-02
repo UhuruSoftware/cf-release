@@ -1,0 +1,81 @@
+---
+joomla:
+  id: app_joomla
+  name: Joomla
+  framework:
+    info:
+      description: Php Web
+      mem: 512
+      exec: grails
+    name: php
+  runtime: java
+  memory: 512
+  url: ${name}.${target-base}
+  instances: 5
+  services:
+      type: mssql
+  description: Joomla CMS
+  git-hub-link: "git hub path for joomla"
+  download-location: "/path/joomla"
+
+drupal:
+  id: app_drupal
+  name: Drupal
+  framework:
+    info:
+      description: Php Web
+      mem: 256
+      exec: lift
+    name: php
+  runtime: node08
+  memory: 256
+  url: ${name}.${target-base}
+  instances: 5
+  services:
+      type: mssql
+  description: drupal CMS
+  git-hub-link: "git hub path for drupal"
+  download-location: "/path/drupal"
+
+orchard:
+  id: app_orchard
+  name: Orchard
+  framework:
+    info:
+      description: a .Net framework
+      mem: 512
+      exec: "sinatra"
+    name: .net
+  runtime: ruby19
+  memory: 128
+  url: ${name}.${target-base}
+  instances: 5
+  services:
+      type: mssql
+  description: this is orchard CMS
+  git-hub-link: "git hub path for orchard"
+  download-location: "/path/orchard"
+
+
+umbraco:
+  id: app_umbraco
+  name: Umbraco
+  framework:
+    info:
+      description: a .Net framework
+      mem: 128
+      exec: "/framework"
+    name: .net
+  runtime: iis
+  memory: 128
+  url: ${name}.${target-base}
+  instances: 5
+  services:
+      type: mssql
+  description: this is the umbraco CMS
+  git-hub-link: "git hub path for umbraco"
+  download-location: "/path/umbraco"
+
+
+
+
