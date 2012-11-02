@@ -1,0 +1,11 @@
+---
+name: uhuru_webui
+templates:
+  uhuru_webui_ctl: bin/uhuru_webui_ctl
+  uhuru_webui.yml.erb: config/uhuru-webui.yml
+  apps.yaml: apps.yaml
+packages:
+  - common
+  - uhuru_webui
+  - ruby
+  - syslog_aggregator
