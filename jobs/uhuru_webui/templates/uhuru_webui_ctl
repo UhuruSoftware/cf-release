@@ -19,7 +19,7 @@ case $1 in
 
     echo $$ > $PIDFILE
 
-    export CONFIG_FILE=$JOB_DIR/config/uhuru-webui.yml
+    export WEBUI_CONFIG=$JOB_DIR/config/uhuru_webui.yml
 
     <% if properties.syslog_aggregator %>
     /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $JOB_DIR/config

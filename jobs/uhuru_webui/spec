@@ -2,7 +2,7 @@
 name: uhuru_webui
 templates:
   uhuru_webui_ctl: bin/uhuru_webui_ctl
-  uhuru-webui.yml.erb: config/uhuru-webui.yml
+  uhuru_webui.yml.erb: config/uhuru_webui.yml
   apps.yaml: apps.yaml
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
 packages:
