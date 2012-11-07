@@ -1,0 +1,5 @@
+---
+name: uhurufs_node
+
+files:
+  - uhurufs_node/FileServiceInstaller_x64.msi

@@ -1,0 +1,28 @@
+﻿<uhuru>
+  <service
+    index="0"
+    plan="free"
+    capacity="<%= properties.uhurufs_node.capacity %>"
+    
+    baseDir="<%= properties.uhurufs_node.basedir %>"
+    localRoute="198.41.0.4"
+    nodeId="uhurufs_node_free_1"
+    zInterval="30000"
+    mbus="nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>"
+    localDb="localDb.xml"
+    migrationNfs=""
+
+    maxNatsPayload="1048576"
+    fqdnHosts="false"
+    opTimeLimit="6"
+    
+    statusPort="<%= properties.uhurufs_node.statusport %>">
+
+    <uhurufs
+      maxStorageSize="100"
+      useVhd="false"
+      vhdFixedSize="false"
+      />
+
+  </service>
+</uhuru>
