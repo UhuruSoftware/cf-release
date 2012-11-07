@@ -1,0 +1,49 @@
+﻿<uhuru xmlns="urn:Uhuru.Configuration">
+  <service
+    index="0"
+    plan="free"
+    capacity="<%= properties.mssql_node.capacity %>"
+    
+    baseDir="<%= properties.mssql_node.basedir %>"
+    localRoute="<%= properties.mssql_node.localroute %>"
+    nodeId="mssql_node_free_1"
+    zInterval="30000"
+    mbus="nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>"
+    localDb="localDb.xml"
+    migrationNfs=""
+
+    maxNatsPayload="1048576"
+    fqdnHosts="false"
+    opTimeLimit="6"
+    
+    statusPort="<%= properties.mssql_node.statusport %>" >
+    
+    <mssql
+      host="127.0.0.1"
+      user="<%= properties.mssql_node.admin_user %>"
+      password="<%= properties.mssql_node.admin_password %>"
+      port="<%= properties.mssql_node.port %>"
+      
+      maxDbSize="<%= properties.mssql_node.max_db_size %>"
+      maxLongQuery="<%= properties.mssql_node.max_long_query %>"
+      maxLongTx="<%= properties.mssql_node.max_long_tx %>"
+      maxUserConns="<%= properties.mssql_node.max_user_conns %>"
+      
+      initialDataSize="4096KB"
+      dataFileGrowth="5120KB"
+      logFileGrowth="1024KB"
+      maxDataSize="UNLIMITED"
+      initialLogSize="2048KB"
+      maxLogSize="UNLIMITED"
+      
+      logicalStorageUnits="C:\vcap\storage\storageunit" />
+
+    <supportedVersions defaultVersion="2008">
+      <supportedVersion name="2008"/>
+    </supportedVersions>
+    <backup
+      backupBaseDir="C:\vcap\storage\backup" 
+      timeout="120"
+      serviceName="mssql"/>
+  </service>
+</uhuru>

@@ -1,0 +1,4 @@
+msiexec /a win_dea\DEAInstaller_x64.msi /qb TARGETDIR=%CD%\temp
+del %CD%\temp\uhuru.config
+xcopy "temp" "%BOSH_INSTALL_TARGET%" /O /X /E /H /K /I /J /Y
+

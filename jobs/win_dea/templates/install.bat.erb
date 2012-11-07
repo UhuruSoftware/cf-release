@@ -1,0 +1,4 @@
+REM msiexec /i C:\vcap\packages\win_dea\DEAInstaller_x64.msi /qn baseDir=C:\vcap\data\win_dea\db localRoute=<%= properties.win_dea.localroute %> filerPort=<%= properties.win_dea.fillerport %> messageBus=nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>/ secure=false maxMemory=4096
+copy "C:\vcap\jobs\win_dea\uhuru.config" "C:\vcap\packages\win_dea\uhuru.config"
+sc create DEA DisplayName= "Uhuru .NET Droplet Execution Agent" binPath= "C:\vcap\packages\win_dea\DEA.exe" start= auto
+sc failure DEA actions= restart/0 reset= 0

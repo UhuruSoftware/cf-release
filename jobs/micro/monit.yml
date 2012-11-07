@@ -26,3 +26,5 @@ redis:
 rabbitmq:
   - rabbit_node
   - rabbit_gateway
+uhurufs:
+ - uhurufs_gateway
