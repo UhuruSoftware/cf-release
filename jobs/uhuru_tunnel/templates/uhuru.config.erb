@@ -1,0 +1,20 @@
+﻿<uhuru>
+  <dea
+    baseDir="C:\vcap\data\win_dea\db"
+    localRoute="<%= properties.win_dea.localroute %>"
+    filerPort="<%= properties.win_dea.fillerport %>"
+    statusPort="0"
+    messageBus="nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>"
+    multiTenant="true"
+    maxMemory="8000"
+    secure="true"
+    enforceUlimit="true"
+    heartBeatInterval="10000"
+    forceHttpSharing="false">
+
+
+    <runtimes>
+      <runtime name="uhurutunnel" executable="iisver.cmd" version="0x7" versionFlag="" /> 
+    </runtimes>
+  </dea>
+</uhuru>

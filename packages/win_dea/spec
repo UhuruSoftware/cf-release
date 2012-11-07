@@ -1,0 +1,6 @@
+---
+name: win_dea
+
+files:
+  - win_dea/DEAInstaller_x64.msi
+
