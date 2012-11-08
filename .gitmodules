@@ -36,7 +36,7 @@
 	url = git@github.com:cloudfoundry/cloud_controller.git
 [submodule "src/cloud_controller_ng"]
 	path = src/cloud_controller_ng
-	url = git@github.com:cloudfoundry/cloud_controller_ng.git
+	url = git@github.com:UhuruSoftware/private-cloud_controller_ng.git
 [submodule "src/tests"]
 	path = src/tests
 	url = git@github.com:cloudfoundry/vcap-yeti.git
