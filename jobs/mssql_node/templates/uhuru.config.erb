@@ -38,7 +38,8 @@
       
       logicalStorageUnits="C:\vcap\storage\storageunit" />
 
-    <supportedVersions defaultVersion="2008">
+    <supportedVersions defaultVersion="<%= properties.mssql_node.default_version %>">
+      <!-- TODO for multiple supported versions -->
       <supportedVersion name="2008"/>
     </supportedVersions>
     <backup
