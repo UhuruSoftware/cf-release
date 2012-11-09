@@ -15,6 +15,12 @@ bulk_api:
   auth_user: <%= properties.ccng.bulk_api_user || "bulk_api" %>
   auth_password: <%= properties.ccng.bulk_api_password %>
 
+service_lifecycle:
+  max_upload_size: 1
+  upload_token: <%= properties.serialization_data_server.upload_token %>
+  upload_timeout: <%= properties.serialization_data_server.upload_timeout %>
+  serialization_data_server: <%= properties.service_lifecycle.serialization_data_server.map {|ip| "http://#{ip}:#{properties.serialization_data_server.port}" } %>
+
 nginx:
   use_nginx: <%= properties.ccng.use_nginx || true %>
   instance_socket: "/var/vcap/sys/run/cloud_controller_ng/cloud_controller.sock"
@@ -71,9 +77,26 @@ uaa:
 quota_manager:
 <% if properties.ccng.quota_manager %>
   policy: <%= properties.ccng.quota_manager.policy %>
-  base_url: <%= properties.ccng.quota_manager.base_url %>
+  billing_provider: <%= properties.ccng.quota_manager.billing_provider %>
+  chargify_domain: <%= properties.ccng.quota_manager.chargify_domain %>
+<% if properties.ccng.quota_manager.base_url %>
+  base_url: <%= properties.ccng.quota_manager.base_url%>
+<% end %>
   auth_token: <%= properties.ccng.quota_manager.auth_token %>
+  dummy_credit_card_product: <%= properties.ccng.quota_manager.dummy_credit_card_product %>
+  max_free_memory: <%= properties.ccng.quota_manager.max_free_memory %>
   http_timeout_sec: <%= properties.ccng.quota_manager.http_timeout_sec %>
+  product_handles:
+    memory: "memory"
+    sql_server_100MB: "sqlserver100"
+    free_service_limits:
+      - {name: mysqlfree, limit: 3}
+      - {name: mssqlfree, limit: 2}
+    component_ids:
+      - {name: ram, limit: 13753}
+      - {name: mysql 1gb, id: 13826}
+      - {name: mysql 5gb, id: 13821}
+      - {name: mssql 5gb, idl: 13822}
 <% else %>
   policy: "BlindApproval"
   base_url: ""

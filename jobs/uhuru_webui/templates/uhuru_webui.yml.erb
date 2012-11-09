@@ -4,7 +4,7 @@ port: <%= properties.uhuru.webui.port || 9494 %>
 dev-mode: <%= properties.uhuru.webui.dev_mode || true %>
 
 cloudfoundry:
-  cloud_controller_api: "<%= properties.ccng.external_host || "api2" %>.<%= properties.domain %>"
+  cloud_controller_api: "http://<%= properties.ccng.external_host || "api2" %>.<%= properties.domain %>"
   client_id: "cloud_controller"
   client_secret: "<%= properties.uaa.cc.client_secret %>"
   cloud_controller_admin: "<%= properties.uhuru.webui.cloud_admin || "sre@vmware.com" %>"
