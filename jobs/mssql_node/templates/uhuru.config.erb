@@ -29,12 +29,12 @@
       maxLongTx="<%= properties.mssql_node.max_long_tx %>"
       maxUserConns="<%= properties.mssql_node.max_user_conns %>"
       
-      initialDataSize="4096KB"
-      dataFileGrowth="5120KB"
-      logFileGrowth="1024KB"
-      maxDataSize="UNLIMITED"
-      initialLogSize="2048KB"
-      maxLogSize="UNLIMITED"
+      initialDataSize="<%= properties.mssql_node.initial_db_size || '4096KB' %>"
+      dataFileGrowth="<%= properties.mssql_node.data_file_growth || '5120KB' %>"
+      logFileGrowth="<%= properties.mssql_node.log_file_growth || '1024KB' %>"
+      maxDataSize="<%= properties.mssql_node.max_data_size || 'UNLIMITED' %>"
+      initialLogSize="<%= properties.mssql_node.initial_log_size || '2048KB' %>"
+      maxLogSize="<%= properties.mssql_node.max_log_size || 'UNLIMITED' %>"
       
       logicalStorageUnits="C:\vcap\storage\storageunit" />
 
