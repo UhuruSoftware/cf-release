@@ -6,3 +6,4 @@ files:
 - uhuru_webui/{Gemfile,Gemfile.lock}
 - uhuru_webui/{lib,public,views,bin}/**/*
 - pkg_utils/*
+- tools/router_registrar/**/*
