@@ -12,3 +12,14 @@ cd ${BOSH_INSTALL_TARGET}
 cp -a ${BOSH_COMPILE_TARGET}/tools/router_registrar router_registrar
 cd ${BOSH_INSTALL_TARGET}/router_registrar
 $bundle_cmd install --local --deployment --without development test
+
+mkdir -p ${BOSH_INSTALL_TARGET}/uhuru_webui/public/tapps/zip
+cd ${BOSH_INSTALL_TARGET}/uhuru_webui/public/tapps/zip/
+
+wget http://www.uhurucloud.com/Content/templateApps/zip/drupal.zip
+wget http://www.uhurucloud.com/Content/templateApps/zip/joomla.zip
+wget http://www.uhurucloud.com/Content/templateApps/zip/magento.zip
+wget http://www.uhurucloud.com/Content/templateApps/zip/orchard.zip
+wget http://www.uhurucloud.com/Content/templateApps/zip/sugarCRM.zip
+wget http://www.uhurucloud.com/Content/templateApps/zip/umbraco.zip
+wget http://www.uhurucloud.com/Content/templateApps/zip/wordpress.zip
