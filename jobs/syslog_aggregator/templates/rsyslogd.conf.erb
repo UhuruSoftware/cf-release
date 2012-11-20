@@ -12,9 +12,11 @@ $PrivDropToGroup vcap
 # Directory is created automatically
 $template VcapComponentLogFile, "/var/vcap/store/log/%programname:6:$%/%$year%/%$month%/%$day%/%programname:6:$%.log"
 $template VcapComponentLogFormat, "%fromhost-ip% -- %msg%\n"
+$template RouterAccessLog, "/var/vcap/store/log/router_access/%$year%/%$month%/%$day%/router_access.log"
 
 # The initial '-' tells rsyslogd to not sync the file after each write
 :programname, startswith, "vcap." -?VcapComponentLogFile;VcapComponentLogFormat
+:syslogtag, isequal, "router" -?RouterAccessLog
 
 <% if properties.syslog_aggregator.relay_host then %>
 # relay to remote host
@@ -24,3 +26,4 @@ $template VcapForwardFormat,"<%%PRI%>%TIMESTAMP% cf-<%= properties.syslog_aggreg
 
 # Prevent them from reaching anywhere else
 :programname, startswith, "vcap." ~
+:syslogtag, isequal, "router" ~
