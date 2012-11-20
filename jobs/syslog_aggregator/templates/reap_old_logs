@@ -4,7 +4,7 @@ set -u
 
 LOG_DIR=/var/vcap/store/log
 # Reap logs that are older than 7 days
-DAYS_TO_KEEP=7
+DAYS_TO_KEEP=30
 let "MIN_TO_KEEP=${DAYS_TO_KEEP}*24*60"
 
 # get the last $DAYS_TO_KEEP date to exclude from the rmdir
