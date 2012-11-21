@@ -1,5 +1,5 @@
 check process syslog_aggregator
-  with pidfile /var/vcap/sys/run/syslog_aggregator/syslog_aggregator.pid
-  start program "/var/vcap/jobs/syslog_aggregator/bin/syslog_aggregator_ctl start"
-  stop program "/var/vcap/jobs/syslog_aggregator/bin/syslog_aggregator_ctl stop"
+  with pidfile /var/vcap/sys/run/trafficlog_aggregator/syslog_aggregator.pid
+  start program "/var/vcap/jobs/trafficlog_aggregator/bin/syslog_aggregator_ctl start"
+  stop program "/var/vcap/jobs/trafficlog_aggregator/bin/syslog_aggregator_ctl stop"
   group vcap
