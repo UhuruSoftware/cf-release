@@ -1,8 +1,8 @@
 #!/bin/bash
 
-RUN_DIR=/var/vcap/sys/run/syslog_aggregator
+RUN_DIR=/var/vcap/sys/run/trafficlog_aggregator
 LOG_DIR=/var/vcap/store/log
-JOB_DIR=/var/vcap/jobs/syslog_aggregator
+JOB_DIR=/var/vcap/jobs/trafficlog_aggregator
 BIN_DIR=$JOB_DIR/bin
 PIDFILE=$RUN_DIR/syslog_aggregator.pid
 
