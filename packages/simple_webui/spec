@@ -1,0 +1,9 @@
+---
+name: simple_webui
+dependencies:
+- ruby
+files:
+- simple_webui/{Gemfile, Gemfile.lock}
+- simple_webui/{.idea,bin,lib,public,views}/**/*
+- pkg_utils/*
+- tools/router_registrar/**/*
