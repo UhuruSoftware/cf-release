@@ -1,5 +1,5 @@
 C:\vcap\packages\services\packages\uhurufs_node\FSWindowsFeatures.bat
-REM msiexec /i C:\vcap\packages\uhurufs_node\FileServiceInstaller_x64.msi /qn mbus=nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>/ nodeId=0 index=0 statusPort=<%= properties.uhurufs_node.statusport %> zInterval=30000 maxDbSize=20 maxLongQuery=3 maxLongTx=30 localDb=localDB.xml baseDir=<%= properties.uhurufs_node.basedir %> capacity=<%= properties.uhurufs_node.capacity %> /lvx! C:\\FileServiceInstaller.log ALLUSERS=2
 copy "C:\vcap\jobs\uhurufs_node\uhuru.config" "C:\vcap\packages\uhurufs_node\uhuru.config"
 sc create UhuruFS DisplayName= "Uhuru FileService" binPath= "C:\vcap\packages\uhurufs_node\FileServiceNode.exe" start= auto
+netsh advfirewall firewall add rule name="uhurufs_statusport" protocol=TCP dir=in localport=<%= properties.uhurufs_node.statusport || '12345' %> action=allow
 sc failure UhuruFS actions= restart/0 reset= 0
