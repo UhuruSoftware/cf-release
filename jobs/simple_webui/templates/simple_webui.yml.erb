@@ -1,0 +1,45 @@
+pid_filename: /tmp/simple-webui.pid
+local_route: <%= spec.networks.send(properties.networks.apps).ip %>
+port: <%= properties.uhuru.simple_webui.port || 9191 %>
+
+ui_settings:
+  cloud_name: "<%= properties.uhuru.simple_webui.cloud_name || "Uhuru Cloud" %>"
+  cloud_admin_download_url: "http://www.uhurucloud.com/tools/cloudadmin"
+  visual_studio_plugin_download_url: "http://www.uhurucloud.com/tools/visualstudio"
+  vmc_url: "http://docs.cloudfoundry.com/tools/vmc/installing-vmc.html"
+  eclipse_url: "http://docs.cloudfoundry.com/tools/STS/configuring-STS.html"
+  signup_message: "Host your web applications in minutes. We support apps written in PHP, Node.js, Ruby, Java and .NET. Sign up for your free account now. Find more details about our Cloud features on our web site."
+  copyright_message: "&copy; Copyright Uhuru Software 2012"
+  welcome_message: "PeakColo PaaS - powered by Uhuru"
+  color_theme: "simple_white"
+<% if properties.uhuru.simple_webui && properties.uhuru.simple_webui.domain %>
+  domain: "<%= properties.uhuru.simple_webui.domain %>"
+<% else %>
+  domain: "www.<%= properties.domain %>"
+<% end %>
+  recaptcha_public_key: "<%= properties.uhuru.simple_webui.recaptcha_public_key %>"
+  recaptcha_private_key: "<%= properties.uhuru.simple_webui.recaptcha_private_key %>"
+  activation_link_secret: "<%= properties.uhuru.simple_webui.activation_link_secret %>"
+
+# if e-mail settings are not properly setup the site won't work
+# e-mail activation is required
+email:
+  from: "<%= properties.uhuru.simple_webui.email.from %>"
+  from_alias: "<%= properties.uhuru.simple_webui.email.from_alias %>"
+  server: "<%= properties.uhuru.simple_webui.email.server || "smtp.gmail.com" %>"
+  port: "<%= properties.uhuru.simple_webui.email.port || 587 %>"
+  user: "<%= properties.uhuru.simple_webui.email.user %>"
+  secret: "<%= properties.uhuru.simple_webui.email.secret %>"
+  auth_method: :login
+  enable_tls: true
+
+cloudfoundry:
+  target: "http://api.<%= properties.domain %>"
+  admin_email: "<%= properties.uhuru.simple_webui.admin_email%>"
+  admin_password: "<%= properties.uhuru.simple_webui.admin_password%>"
+  default_random_password: "<%= properties.uhuru.simple_webui.default_random_password%>"
+
+logging:
+  level: <%= properties.uhuru.simple_webui.logging_level || "debug" %>
+  file: /var/vcap/sys/log/simple_webui/simple_webui.log
+
