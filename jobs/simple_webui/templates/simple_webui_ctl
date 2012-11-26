@@ -1,0 +1,48 @@
+#!/bin/bash
+
+export PATH=/var/vcap/packages/ruby/bin:$PATH
+RUN_DIR=/var/vcap/sys/run/simple_webui
+LOG_DIR=/var/vcap/sys/log/simple_webui
+PIDFILE=$RUN_DIR/simple_webui.pid
+JOB_DIR=/var/vcap/jobs/simple_webui
+
+source /var/vcap/packages/common/utils.sh
+
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE "Simple WebUI"
+
+    mkdir -p $RUN_DIR
+    mkdir -p $LOG_DIR
+
+    echo $$ > $PIDFILE
+
+    export CONFIG_FILE=$JOB_DIR/config/simple_webui.yml
+
+    <% if properties.syslog_aggregator %>
+    /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $JOB_DIR/config
+    <% end %>
+
+    cd /var/vcap/packages/simple_webui
+
+    exec /var/vcap/packages/ruby/bin/ruby \
+         /var/vcap/packages/simple_webui/simple_webui/bin/simple-webui \
+         -c $CONFIG_FILE \
+         >>$LOG_DIR/simple_webui.stdout.log \
+         2>>$LOG_DIR/simple_webui.stderr.log
+
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+
+  *)
+    echo "Usage: simple_webui_ctl {start|stop}"
+
+    ;;
+
+esac
