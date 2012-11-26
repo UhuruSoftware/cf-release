@@ -1,0 +1,13 @@
+---
+name: simple_webui
+templates:
+  simple_webui_ctl: bin/simple_webui_ctl
+  router_registrar_ctl.erb: bin/router_registrar_ctl
+  simple_webui.yml.erb: config/simple_webui.yml
+  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
+  router_registrar.config.yml.erb: config/router_registrar/config.yml
+packages:
+  - common
+  - simple_webui
+  - ruby
+  - syslog_aggregator

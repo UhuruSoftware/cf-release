@@ -1,22 +1,25 @@
-﻿<uhuru xmlns="urn:Uhuru.Configuration">
+﻿<%
+plan = properties.plan || "free"
+%>
+<uhuru xmlns="urn:Uhuru.Configuration">
   <service
-    index="0"
-    plan="free"
+    index="<%= spec.index %>"
+    plan="<%= plan %>"
     capacity="<%= properties.mssql_node.capacity %>"
     
     baseDir="<%= properties.mssql_node.basedir %>"
-    localRoute="<%= properties.mssql_node.localroute %>"
-    nodeId="mssql_node_free_1"
+    localRoute="<%= spec.networks.send(properties.networks.apps).ip %>"
+    nodeId="<%= "mssql_node#{'_' + plan if plan != 'free'}_#{spec.index.to_i + 1}" %>"
     zInterval="30000"
     mbus="nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>"
     localDb="localDb.xml"
-    migrationNfs=""
+    migrationNfs="C:\vcap\storage\migration"
 
     maxNatsPayload="1048576"
     fqdnHosts="false"
     opTimeLimit="6"
     
-    statusPort="<%= properties.mssql_node.statusport %>" >
+    statusPort="<%= properties.mssql_node.statusport || '12345'%>" >
     
     <mssql
       host="127.0.0.1"
