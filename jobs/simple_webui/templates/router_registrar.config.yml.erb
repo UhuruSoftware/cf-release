@@ -1,0 +1,17 @@
+---
+logging:
+  file: /var/vcap/sys/log/router_registrar/router_registrar.log
+  <% if properties.syslog_aggregator %>
+  syslog: vcap.webui_router_registrar
+  <% end %>
+  level: info
+mbus: nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>
+<% if properties.uhuru.simple_webui && properties.uhuru.simple_webui.domain %>
+uri: <%= properties.uhuru.simple_webui.domain %>
+<% else %>
+uri: www.<%= properties.domain %>
+<% end %>
+host: <%= spec.networks.send(properties.networks.apps).ip %>
+port: <%= properties.uhuru.simple_webui.port || 9191 %>
+tags:
+  component: SimpleWebui
