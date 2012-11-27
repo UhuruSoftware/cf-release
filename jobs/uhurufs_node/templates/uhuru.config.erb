@@ -7,13 +7,13 @@ plan = properties.plan || "free"
     plan="<%= plan %>"
     capacity="<%= properties.uhurufs_node.capacity %>"
     
-    baseDir="<%= properties.uhurufs_node.basedir %>"
+    baseDir="<%= properties.uhurufs_node.basedir || 'C:\vcap\store\uhurufs' %>"
     localRoute="<%= spec.networks.send(properties.networks.apps).ip %>"
     nodeId="<%= "uhurufs_node#{'_' + plan if plan != 'free'}_#{spec.index.to_i + 1}" %>"
     zInterval="30000"
     mbus="nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>"
-    localDb="localDb.xml"
-    migrationNfs="C:\vcap\storage\migration"
+    localDb="C:\vcap\store\uhurufs_node.xml"
+    migrationNfs="C:\vcap\services_migration"
 
     maxNatsPayload="1048576"
     fqdnHosts="false"
@@ -31,7 +31,7 @@ plan = properties.plan || "free"
       <supportedVersion name="0.9"/>
     </supportedVersions>
     <backup
-      backupBaseDir="C:\vcap\storage\backup"
+      backupBaseDir="C:\vcap\services_backup"
       timeout="120"
       serviceName="uhurufs"/>
   </service>

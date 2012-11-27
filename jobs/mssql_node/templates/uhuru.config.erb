@@ -7,13 +7,13 @@ plan = properties.plan || "free"
     plan="<%= plan %>"
     capacity="<%= properties.mssql_node.capacity %>"
     
-    baseDir="<%= properties.mssql_node.basedir %>"
+    baseDir="<%= properties.mssql_node.basedir || 'C:\vcap\store\mssql' %>"
     localRoute="<%= spec.networks.send(properties.networks.apps).ip %>"
     nodeId="<%= "mssql_node#{'_' + plan if plan != 'free'}_#{spec.index.to_i + 1}" %>"
     zInterval="30000"
     mbus="nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>"
-    localDb="localDb.xml"
-    migrationNfs="C:\vcap\storage\migration"
+    localDb="C:\vcap\store\mssql_node.xml"
+    migrationNfs="C:\vcap\services_migration"
 
     maxNatsPayload="1048576"
     fqdnHosts="false"
@@ -39,14 +39,14 @@ plan = properties.plan || "free"
       initialLogSize="<%= properties.mssql_node.initial_log_size || '2048KB' %>"
       maxLogSize="<%= properties.mssql_node.max_log_size || 'UNLIMITED' %>"
       
-      logicalStorageUnits="C:\vcap\store\storageunit" />
+      logicalStorageUnits="<%= properties.mssql_node.logical_storage_units || 'C:\vcap\store' %>" />
 
     <supportedVersions defaultVersion="<%= properties.mssql_node.default_version %>">
       <!-- TODO for multiple supported versions -->
       <supportedVersion name="2008"/>
     </supportedVersions>
     <backup
-      backupBaseDir="C:\vcap\storage\backup" 
+      backupBaseDir="C:\vcap\services_backup"
       timeout="120"
       serviceName="mssql"/>
   </service>
