@@ -93,10 +93,14 @@ database_environment:
     template: template0 # Required for utf8 encoding
     adapter: postgresql
 
+<%
+  protocol = (properties.login && properties.login.protocol) ? properties.login.protocol : "https"
+%>
+
 <% if properties.cc.uaa && properties.uaa.cc %>
 uaa:
   enabled: <%= properties.cc.uaa.enabled %>
-  url: https://uaa.<%= properties.domain %>
+  url: <%= protocol %>://uaa.<%= properties.domain %>
   resource_id: <%= properties.cc.uaa.resource_id %>
   token_secret: <%= properties.uaa.cc.token_secret %>
   client_secret: <%= properties.uaa.cc.client_secret %>
@@ -104,7 +108,7 @@ uaa:
 <% else %>
 uaa:
   enabled: false
-  url: https://uaa.<%= properties.domain %>
+  url: <%= protocol %>://uaa.<%= properties.domain %>
   resource_id: cloud_controller
   token_secret:
   client_secret:
