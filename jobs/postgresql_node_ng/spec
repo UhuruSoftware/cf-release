@@ -13,14 +13,18 @@ templates:
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
   logrotate.conf.erb: config/logrotate.conf
   postgresql_logrotate.cron.erb: config/postgresql_logrotate.cron
+  postgresql.conf.erb: config/postgresql.conf
+  postgresql91.conf.erb: config/postgresql91.conf
 
   warden_ctl: bin/warden_ctl
   warden.yml: config/warden.yml
-  warden_postgresql_ctl: bin/warden_postgresql_ctl
-  services.conf: config/services.conf
+  pre_service_start.sh: bin/pre_service_start.sh
+  warden_service_ctl: bin/warden_service_ctl
+  post_service_start.sh: bin/post_service_start.sh
 packages:
   - common
   - postgresql
+  - postgresql91
   - postgresql_node_ng
   - ruby
   - sqlite

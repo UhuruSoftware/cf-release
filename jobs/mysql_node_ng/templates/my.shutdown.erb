@@ -1,5 +1,12 @@
+<%
+service = "mysql"
+plan_enabled = properties.service_plans && properties.service_plans.send(service.to_sym)
+plan = properties.plan || "free"
+plan_conf = plan_enabled && properties.service_plans.send(service.to_sym).send(plan.to_sym).configuration
+base_folder = '/var/vcap/sys/run/mysqld'
+%>
 export LD_LIBRARY_PATH=/var/vcap/packages/mysql/lib/mysql
 
 password=<%= properties.mysql_node.password %>
 
-/var/vcap/packages/mysql/bin/mysqladmin --user=root --password="${password}" --socket=/var/vcap/sys/run/mysqld/mysqld.sock shutdown
+/var/vcap/packages/mysql/bin/mysqladmin --user=root --password="${password}" --socket=<%= "#{base_folder}/mysqld.sock" %> shutdown

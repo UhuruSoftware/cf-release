@@ -5,11 +5,18 @@ gateway = eval("properties.#{service}_gateway")
 acls = gateway.acls
 plan_enabled = properties.service_plans && properties.service_plans.send(service.to_sym)
 plan_mgmt = plan_enabled && properties.service_plans.send(service.to_sym)
-plan_mgmt.instance_eval("def fields; @table.keys; end;") if plan_mgmt
+supported_plans = properties.supported_plans
+if supported_plans
+  plan_mgmt.instance_eval("def fields; @table.keys.select { |v| #{supported_plans}.include? v.to_s }; end;") if plan_mgmt
+else
+  plan_mgmt.instance_eval("def fields; @table.keys; end;") if plan_mgmt
+end
 supported_versions = gateway.supported_versions
 version_aliases = gateway.version_aliases
 version_aliases.instance_eval("def fields; @table.keys; end;") if version_aliases
-nats = "nats://#{properties.nats.user}:#{properties.nats.password}@#{properties.nats.address}:#{properties.nats.port}"
+nats_props_name = properties.nats_props || "nats"
+nats_props = properties.send(nats_props_name) || OpenStruct.new
+nats = "nats://#{nats_props.user}:#{nats_props.password}@#{nats_props.address}:#{nats_props.port}"
 lifecycle = properties.service_lifecycle
 %>
 index: <%= spec.index %>
@@ -22,7 +29,7 @@ service:
   version: "1.4"
   description: 'Memcached in-memory cache service'
   plans: ['<%= plan_enabled && plan_mgmt.fields.join("', '") || 'free' %>']
-  default_plan: <%= gateway.default_plan || 'free' %>
+  default_plan: '<%= gateway.default_plan || 'free' %>'
   tags: ['key-value', 'cache']
   timeout: <%= properties.memcached_gateway.service_timeout || 10 %>
 <% if acls %>
@@ -66,4 +73,4 @@ pid: /var/vcap/sys/run/memcached_gateway/memcached_gateway.pid
 z_interval: <%= gateway.z_interval || 30 %>
 check_orphan_interval: <%= gateway.check_orphan_interval || -1 %>
 double_check_orphan_interval: <%= gateway.double_check_orphan_interval || 300 %>
-max_nats_payload: <%= properties.nats.max_payload || 1048576 %>
+max_nats_payload: <%= nats_props.max_payload || 1048576 %>

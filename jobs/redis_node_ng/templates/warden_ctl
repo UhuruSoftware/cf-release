@@ -14,18 +14,6 @@ case $1 in
 
   start)
     setup_warden
-
-    mkdir -p $ROOT_DIR/usr/share/redis/redis-2.2
-    mkdir -p $ROOT_DIR/usr/share/redis/redis-2.4
-    mkdir -p $ROOT_DIR/usr/share/redis/redis-2.6
-
-    # Copy redis binaries and configuration files to warden base file system
-    install -m 0755 -t $ROOT_DIR/usr/bin  $JOB_DIR/bin/redis_startup.sh
-    install -m 0755 -t $ROOT_DIR/usr/share/redis/redis-2.2 $REDIS22_BIN_DIR/*
-    install -m 0755 -t $ROOT_DIR/usr/share/redis/redis-2.4 $REDIS24_BIN_DIR/*
-    install -m 0755 -t $ROOT_DIR/usr/share/redis/redis-2.6 $REDIS26_BIN_DIR/*
-    install -m 0644 -t $ROOT_DIR/etc/init $JOB_DIR/config/services.conf
-
     start_warden
     ;;
 

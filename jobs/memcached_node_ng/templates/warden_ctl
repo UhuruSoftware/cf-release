@@ -10,12 +10,6 @@ case $1 in
 
   start)
     setup_warden
-
-    mkdir -p $ROOT_DIR/usr/share/memcached/bin
-
-    # Copy memcached binaries to warden base file system
-    install -m 0755 -t $ROOT_DIR/usr/share/memcached/bin $MEMCACHED_BIN_DIR/*
-
     start_warden
     ;;
 

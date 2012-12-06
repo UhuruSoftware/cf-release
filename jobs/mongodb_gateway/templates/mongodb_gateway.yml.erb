@@ -5,11 +5,18 @@ gateway = eval("properties.#{service}_gateway")
 acls = gateway.acls
 plan_enabled = properties.service_plans && properties.service_plans.send(service.to_sym)
 plan_mgmt = plan_enabled && properties.service_plans.send(service.to_sym)
-plan_mgmt.instance_eval("def fields; @table.keys; end;") if plan_mgmt
+supported_plans = properties.supported_plans
+if supported_plans
+  plan_mgmt.instance_eval("def fields; @table.keys.select { |v| #{supported_plans}.include? v.to_s }; end;") if plan_mgmt
+else
+  plan_mgmt.instance_eval("def fields; @table.keys; end;") if plan_mgmt
+end
 supported_versions = gateway.supported_versions
 version_aliases = gateway.version_aliases
 version_aliases.instance_eval("def fields; @table.keys; end;") if version_aliases
-nats = "nats://#{properties.nats.user}:#{properties.nats.password}@#{properties.nats.address}:#{properties.nats.port}"
+nats_props_name = properties.nats_props || "nats"
+nats_props = properties.send(nats_props_name) || OpenStruct.new
+nats = "nats://#{nats_props.user}:#{nats_props.password}@#{nats_props.address}:#{nats_props.port}"
 lifecycle = properties.service_lifecycle
 %>
 mbus: <%= nats %>
@@ -22,10 +29,10 @@ service:
   version: "1.8"
   description: 'MongoDB NoSQL store'
   plans: ['<%= plan_enabled && plan_mgmt.fields.join("', '") || 'free' %>']
-  default_plan: <%= gateway.default_plan || 'free' %>
+  default_plan: '<%= gateway.default_plan || 'free' %>'
   cf_plan_id:
 <% plan_mgmt.fields.each do |pf| %>
-    <%= "#{pf}: #{plan_mgmt.send(pf).configuration.cf_plan_id}" %>
+    <%= "'#{pf}': #{plan_mgmt.send(pf).configuration.cf_plan_id}" %>
 <% end if plan_mgmt %>
   tags: ['nosql', 'document']
   timeout: <%= properties.mongodb_gateway.service_timeout || 10 %>
@@ -71,7 +78,7 @@ node_timeout: <%= gateway.node_timeout || 8 %>
 z_interval: <%= gateway.z_interval || 30 %>
 check_orphan_interval: <%= gateway.check_orphan_interval || -1 %>
 double_check_orphan_interval: <%= gateway.double_check_orphan_interval || 300 %>
-max_nats_payload: <%= properties.nats.max_payload || 1048576 %>
+max_nats_payload: <%= nats_props.max_payload || 1048576 %>
 
 <% if lifecycle and lifecycle.resque %>
 resque:
@@ -86,7 +93,7 @@ download_url_template: "http://<%= lifecycle.download_url %>/serialized/%{servic
 plan_management:
   plans:
 <% plan_mgmt.fields.each do |pf| %>
-    <%= pf %>:
+    '<%= pf %>':
       high_water: <%= plan_mgmt.send(pf).job_management.high_water %>
       low_water: <%= plan_mgmt.send(pf).job_management.low_water %>
       allow_over_provisioning: <%= plan_mgmt.send(pf).configuration.allow_over_provisioning || "false" %>

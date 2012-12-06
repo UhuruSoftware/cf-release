@@ -8,13 +8,15 @@ node = properties.mongodb_node
 supported_versions = node.supported_versions
 default_version = node.default_version
 packages = {}
-# convention, package contains mongodb 1.8 is mongodb18
-supported_versions.each{|v| packages[v] = v.sub(".","")}
+supported_versions.each{ |v| packages[v] = v.sub(".","") } # convention: package containing mongodb 1.8 is mongodb18
+nats_props_name = properties.nats_props || "nats"
+nats_props = properties.send(nats_props_name) || OpenStruct.new
+nats = "nats://#{nats_props.user}:#{nats_props.password}@#{nats_props.address}:#{nats_props.port}"
 %>
 capacity: <%= plan_enabled && plan_conf.capacity || 200 %>
-plan: <%= plan %>
+plan: '<%= plan %>'
 local_db: sqlite3:/var/vcap/store/mongodb_node.db
-mbus: nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>
+mbus: <%= nats %>
 index: <%= spec.index %>
 base_dir: /var/vcap/store/mongodb
 image_dir: /var/vcap/store/mongodb_image
@@ -25,10 +27,8 @@ logging:
   syslog: vcap.mongodb_node
   <% end %>
 pid: /var/vcap/sys/run/mongodb_node/mongodb_node.pid
-node_id: <%= "#{service}_node#{'_' + plan if plan != 'free'}_#{spec.index.to_i + 1}" %>
+node_id: <%= "#{service}_node_#{plan}_#{spec.index}" %>
 max_clients: <%= plan_enabled && plan_conf.max_clients || 500 %>
-max_disk: <%= plan_enabled && plan_conf.max_disk || 128 %>
-filesystem_quota: <%= plan_enabled && plan_conf.filesystem_quota || "false" %>
 supported_versions: <%= "['#{supported_versions.join("' , '")}']" %>
 default_version: <%= "'#{default_version}'"%>
 
@@ -38,16 +38,10 @@ mongod_path:
 <% end %>
 
 mongod_options:
-  <% if plan_enabled && plan_conf.enable_journaling %>
-  "1.8": "--journal"
-  <% else %>
-  "1.8": ""
-  <% end %>
-  <% if plan_enabled && plan_conf.enable_journaling %>
-  "2.0": ""
-  <% else %>
-  "2.0": "--nojournal"
-  <% end %>
+<% enable_journaling = plan_enabled && plan_conf.enable_journaling %>
+  "1.8": <%= enable_journaling ? "--journal": "" %>
+  "2.0": <%= enable_journaling ? "": "--nojournal" %> --nopreallocj
+  "2.2": <%= enable_journaling ? "": "--nojournal" %> --nopreallocj
 
 port_range:
   first: 25001
@@ -62,7 +56,21 @@ ip_route: <%= node.ip_route %>
 <% end %>
 z_interval: <%= node.z_interval || 30 %>
 service_log_dir: /var/vcap/sys/service-log/mongodb
-max_nats_payload: <%= properties.nats.max_payload || 1048576 %>
+service_script_dir: /var/vcap/jobs/mongodb_node_ng/bin
+service_conf_dir: /var/vcap/jobs/mongodb_node_ng/config
+service_bin_dir:
+<% for version in supported_versions %>
+  <%= "'#{version}': /var/vcap/packages/mongodb#{packages[version]}" %>
+<% end %>
+  proxy: /var/vcap/packages/mongodb_proxy
+max_nats_payload: <%= nats_props.max_payload || 1048576 %>
 fqdn_hosts: <%= properties.services && properties.services.fqdn_hosts || "false" %>
 op_time_limit: <%= node.op_time_limit || 6 %>
-service_start_timeout: <%= node.service_start_timeout || 3 %>
+service_start_timeout: <%= node.service_start_timeout || 4 %>
+m_interval: <%= node.m_interval || 10 %>
+<% if node.m_actions %>
+m_actions:
+<% node.m_actions.each do |act| %>
+  - <%= act %>
+<% end %>
+<% end %>

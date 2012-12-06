@@ -7,12 +7,15 @@ plan_conf = plan_enabled && properties.service_plans.send(service.to_sym).send(p
 node = properties.vblob_node
 supported_versions = node.supported_versions
 default_version = node.default_version
-node_id = "#{service}_node#{'_' + plan if plan != 'free'}_#{spec.index.to_i + 1}"
+node_id = "#{service}_node_#{plan}_#{spec.index}"
+nats_props_name = properties.nats_props || "nats"
+nats_props = properties.send(nats_props_name) || OpenStruct.new
+nats = "nats://#{nats_props.user}:#{nats_props.password}@#{nats_props.address}:#{nats_props.port}"
 %>
 capacity: <%= plan_enabled && plan_conf.capacity || 200 %>
-plan: <%= plan %>
+plan: '<%= plan %>'
 local_db: sqlite3:/var/vcap/store/vblob_node.db
-mbus: nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>
+mbus: <%= nats %>
 index: <%= spec.index %>
 <% if (node.nfs_server && node.nfs_server.address && node.nfs_server.export_dir) %>
 base_dir: <%= node.nfs_mount_point || "/var/vcap/vblob_nfs_mount" %>/<%= node_id %>
@@ -28,6 +31,10 @@ logging:
 pid: /var/vcap/sys/run/vblob_node/vblob_node.pid
 node_id: <%= node_id %>
 service_log_dir: /var/vcap/sys/service-log/vblob
+service_script_dir: /var/vcap/jobs/vblob_node_ng/bin
+service_bin_dir:
+  vblob: /var/vcap/packages/vblob
+  node: /var/vcap/packages/node
 supported_versions: <%= "['#{supported_versions.join("' , '")}']" %>
 default_version: <%= "'#{default_version}'"%>
 nodejs_path: /var/vcap/packages/node/bin/node
@@ -47,3 +54,10 @@ fqdn_hosts: <%= properties.services && properties.services.fqdn_hosts || "false"
 max_disk: <%= plan_enabled && plan_conf.max_disk || 2048 %>
 op_time_limit: <%= node.op_time_limit || 6 %>
 service_start_timeout: <%= node.service_start_timeout || 3 %>
+m_interval: <%= node.m_interval || 10 %>
+<% if node.m_actions %>
+m_actions:
+<% node.m_actions.each do |act| %>
+  - <%= act %>
+<% end %>
+<% end %>

@@ -20,8 +20,7 @@ templates:
   warden.yml.erb: config/warden.yml
   mongodb.conf.erb: config/mongodb.conf
   mongodb_proxy.yml.erb: config/mongodb_proxy.yml
-  mongod_startup.sh: bin/mongod_startup.sh
-  services.conf: config/services.conf
+  warden_service_ctl: bin/warden_service_ctl
 
 packages:
   - common
@@ -29,6 +28,7 @@ packages:
   - mongodb_proxy
   - mongodb18
   - mongodb20
+  - mongodb22
   - ruby
   - sqlite
   - syslog_aggregator
