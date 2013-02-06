@@ -148,3 +148,56 @@ ruby19:
     name: current
   series: ruby19
   category: ruby
+php:
+  description: "PHP 5"
+  version: "5.3"
+  executable: /usr/bin/php
+  staging: /var/vcap/packages/ruby/bin/ruby stage
+  version_output: 5.3.[2-6]
+  version_flag: '-vn'
+  environment:
+    PATH: /var/vcap/packages/dea_ruby19/bin:/var/vcap/packages/imagemagick/bin:$PATH
+    LD_LIBRARY_PATH: '/var/vcap/packages/mysqlclient/lib/mysql:/var/vcap/packages/sqlite/lib:/var/vcap/packages/libpq/lib:/var/vcap/packages/imagemagick/lib:$LD_LIBRARY_PATH'
+  status:
+    name: current
+  series: php
+  category: php
+iis:
+  description: Internet Information Services 7.5
+  version: "7.5"
+  executable:
+  staging:
+  version_output: "Version 7.5"
+  version_flag: query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\InetStp /v VersionString
+  version_executable: reg # this is Windows DEA specific
+  environment: {}
+  status:
+    name: current
+  series: iis
+  category: iis
+iis8:
+  description: Internet Information Services 8
+  version: "8"
+  executable:
+  staging:
+  version_output: "Version 8.0"
+  version_flag: query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\InetStp /v VersionString
+  version_executable: reg # this is Windows DEA specific
+  environment: {}
+  status:
+    name: current
+  series: iis8
+  category: iis
+uhurutunnel:
+  description: Uhuru Tunnel Runtime
+  version: "7.5"
+  executable:
+  staging:
+  version_output: "Version 7.5"
+  version_flag: query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\InetStp /v VersionString
+  version_executable: reg # this is Windows DEA specific
+  environment: {}
+  status:
+    name: current
+  series: uhurutunnel
+  category: uhurutunnel

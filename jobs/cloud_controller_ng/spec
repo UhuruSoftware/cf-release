@@ -20,6 +20,8 @@ templates:
   rack_staging.yml: config/staging/rack.yml
   standalone_staging.yml: config/staging/standalone.yml
   play_staging.yml: config/staging/play.yml
+  dotNet_staging.yml: config/staging/dotNet.yml
+  php_staging.yml: config/staging/php.yml
   runtimes.yml: config/runtimes.yml
 packages:
   - common
