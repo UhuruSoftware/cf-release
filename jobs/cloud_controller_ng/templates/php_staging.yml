@@ -1,0 +1,8 @@
+---
+name: php
+
+runtimes:
+  - php:
+      default: true
+detection:
+  - "*.php": true
