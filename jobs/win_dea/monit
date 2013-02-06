@@ -1,0 +1,6 @@
+<Job>
+  <Service Name="Uhuru .NET Droplet Execution Agent">
+    <PreStart>C:\vcap\jobs\win_dea\install.bat</PreStart>
+    <PreStop></PreStop>
+  </Service>
+</Job>

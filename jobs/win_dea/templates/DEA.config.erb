@@ -1,0 +1,30 @@
+﻿<uhuru>
+  <dea
+    index="<%= spec.index %>"
+
+    baseDir="C:\vcap\data\win_dea"
+    localRoute="<%= spec.networks.send(properties.networks.apps).ip %>"
+    filerPort="<%= properties.win_dea.filerport || '12346' %>"
+    statusPort="<%= properties.win_dea.statusport || '12345' %>"
+    messageBus="nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>"
+    
+    multiTenant="true"
+    maxMemoryMB="<%= properties.win_dea.max_memory || '8192' %>"
+    secure="true"
+    enforceUlimit="true"
+    
+    heartbeatIntervalMs="10000"
+    advertiseIntervalMs="5000"
+    
+    useDiskQuota="true"
+    maxConcurrentStarts="3"
+    
+    onlyProductionApps="false"
+    >
+
+    <runtimes>
+      <runtime name="iis"/>
+      <runtime name="iis8"/> 
+    </runtimes>
+  </dea>
+</uhuru>
