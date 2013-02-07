@@ -22,9 +22,17 @@
     onlyProductionApps="false"
     >
 
+    <% if properties.win_dea.runtimes %>
+    <runtimes>
+      <% properties.win_dea.runtimes.each do |runtime_name| %>
+      <runtime name="<%= runtime_name %>"/>
+      <% end %>
+    </runtimes>
+    <% else %>
     <runtimes>
       <runtime name="iis"/>
       <runtime name="iis8"/> 
     </runtimes>
+    <% end %>
   </dea>
 </uhuru>
