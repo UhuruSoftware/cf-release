@@ -1,0 +1,7 @@
+---
+name: dea_php
+dependencies:
+- mysqlclient
+- libpq
+files:
+- php/**
