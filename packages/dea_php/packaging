@@ -1,0 +1,42 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+# dependency for httpd 2.4.3
+tar xzf pcre-8.21.tar.gz
+cd pcre-8.21
+#./configure --prefix=${BOSH_INSTALL_TARGET}/pcre
+#make
+#make install
+cd ..
+
+tar xzf httpd-2.4.3.tar.gz
+tar xzf httpd-2.4.3-deps.tar.gz 
+cd httpd-2.4.3
+#./configure  --prefix=${BOSH_INSTALL_TARGET}/apache2  --with-included-apr  --with-pcre=${BOSH_INSTALL_TARGET}/pcre  --with-mpm=prefork  --enable-so
+# make
+# make install
+cd ..
+
+tar xzf php-5.4.11.tar.gz
+cd php-5.4.11
+# or use --with-mysql=mysqlnd --with-mysql=/var/vcap/packages/mysqlclient
+#./configure --with-apxs2=${BOSH_INSTALL_TARGET}/apache2/bin/apxs  --with-mysql --with-pgsql=/var/vcap/packages/libpq  --prefix=${BOSH_INSTALL_TARGET}/php5
+# make
+# make install
+cd ..
+
+tar xzf httpd-2.2.23.tar.gz
+cd httpd-2.2.23
+./configure  --prefix=${BOSH_INSTALL_TARGET}/apache2  --with-included-apr  --with-mpm=prefork  --enable-so
+make
+make install
+cd ..
+
+tar xzf php-5.3.21.tar.gz
+cd php-5.3.21
+# or use --with-mysql=mysqlnd --with-mysql=/var/vcap/packages/mysqlclient
+./configure --with-apxs2=${BOSH_INSTALL_TARGET}/apache2/bin/apxs  --with-mysql=mysqlnd --with-pgsql=/var/vcap/packages/libpq  --prefix=${BOSH_INSTALL_TARGET}/php5
+make
+make install
+cd ..
+
