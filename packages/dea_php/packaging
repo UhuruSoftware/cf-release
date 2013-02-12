@@ -2,28 +2,38 @@
 set -e
 
 # dependency for httpd 2.4.3
-tar xzf pcre-8.21.tar.gz
-cd pcre-8.21
+#tar xzf pcre-8.21.tar.gz
+#cd pcre-8.21
 #./configure --prefix=${BOSH_INSTALL_TARGET}/pcre
 #make
 #make install
-cd ..
+#cd ..
 
-tar xzf httpd-2.4.3.tar.gz
-tar xzf httpd-2.4.3-deps.tar.gz 
-cd httpd-2.4.3
+#tar xzf httpd-2.4.3.tar.gz
+#tar xzf httpd-2.4.3-deps.tar.gz 
+#cd httpd-2.4.3
 #./configure  --prefix=${BOSH_INSTALL_TARGET}/apache2  --with-included-apr  --with-pcre=${BOSH_INSTALL_TARGET}/pcre  --with-mpm=prefork  --enable-so
 # make
 # make install
-cd ..
+#cd ..
 
-tar xzf php-5.4.11.tar.gz
-cd php-5.4.11
+#tar xzf php-5.4.11.tar.gz
+#cd php-5.4.11
 # or use --with-mysql=mysqlnd --with-mysql=/var/vcap/packages/mysqlclient
 #./configure --with-apxs2=${BOSH_INSTALL_TARGET}/apache2/bin/apxs  --with-mysql --with-pgsql=/var/vcap/packages/libpq  --prefix=${BOSH_INSTALL_TARGET}/php5
 # make
 # make install
+#cd ..
+
+# dependency for mssql
+# http://www.php.net/manual/en/mssql.installation.php
+tar xzf freetds-0.91.tar.gz
+cd freetds-0.91
+./configure  --prefix=${BOSH_INSTALL_TARGET}/freetds --enable-msdblib
+make
+make install
 cd ..
+
 
 tar xzf httpd-2.2.23.tar.gz
 cd httpd-2.2.23
@@ -35,7 +45,47 @@ cd ..
 tar xzf php-5.3.21.tar.gz
 cd php-5.3.21
 # or use --with-mysql=mysqlnd --with-mysql=/var/vcap/packages/mysqlclient
-./configure --with-apxs2=${BOSH_INSTALL_TARGET}/apache2/bin/apxs  --with-mysql=mysqlnd --with-pgsql=/var/vcap/packages/libpq  --prefix=${BOSH_INSTALL_TARGET}/php5
+./configure --enable-mbstring  --with-apxs2=${BOSH_INSTALL_TARGET}/apache2/bin/apxs  --with-mysql=mysqlnd --with-pgsql=/var/vcap/packages/libpq  --with-mssql=${BOSH_INSTALL_TARGET}/freetds  --prefix=${BOSH_INSTALL_TARGET}/php5
+make
+make install
+cd ..
+
+
+# Install Autotools
+tar xzf libtool-2.4.2.tar.gz
+cd libtool-2.4.2
+./configure --prefix=${BOSH_INSTALL_TARGET}/php5
+make
+make install
+cd ..
+
+tar xzf autoconf-2.69.tar.gz
+cd autoconf-2.69
+./configure --prefix=${BOSH_INSTALL_TARGET}/php5
+make
+make install
+cd .. 
+
+# Automake has to have access to autoconf
+export PATH=${BOSH_INSTALL_TARGET}/php5/bin:$PATH
+
+tar xzf automake-1.13.1.tar.gz
+cd automake-1.13.1
+./configure --prefix=${BOSH_INSTALL_TARGET}/php5
+make
+make install
+cd ..
+
+# Install all pecl packages in pecl directory
+gzip -df pecl/*
+echo | pecl install -O pecl/*
+
+
+# Install dependency for Redis service
+tar xzf phpredis-2.2.2.tar.gz
+cd phpredis-2.2.2
+phpize
+./configure --prefix=${BOSH_INSTALL_TARGET}/php5
 make
 make install
 cd ..
