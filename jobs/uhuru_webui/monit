@@ -1,0 +1,11 @@
+check process uhuru_webui
+  with pidfile /var/vcap/sys/run/uhuru_webui/uhuru_webui.pid
+  start program "/var/vcap/jobs/uhuru_webui/bin/uhuru_webui_ctl start"
+  stop program "/var/vcap/jobs/uhuru_webui/bin/uhuru_webui_ctl stop"
+  group vcap
+
+check process router_registrar
+  with pidfile /var/vcap/sys/run/router_registrar/router_registrar.pid
+  start program "/var/vcap/jobs/uhuru_webui/bin/router_registrar_ctl start"
+  stop program "/var/vcap/jobs/uhuru_webui/bin/router_registrar_ctl stop"
+  group vcap

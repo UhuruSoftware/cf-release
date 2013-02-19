@@ -1,0 +1,9 @@
+---
+name: uhuru_webui
+dependencies:
+- ruby
+files:
+- uhuru_webui/{Gemfile,Gemfile.lock,apps.yaml}
+- uhuru_webui/{lib,public,views,bin}/**/*
+- pkg_utils/*
+- tools/router_registrar/**/*

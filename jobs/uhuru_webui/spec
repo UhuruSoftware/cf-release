@@ -1,0 +1,13 @@
+---
+name: uhuru_webui
+templates:
+  uhuru_webui_ctl: bin/uhuru_webui_ctl
+  router_registrar_ctl.erb: bin/router_registrar_ctl
+  uhuru_webui.yml.erb: config/uhuru_webui.yml
+  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
+  router_registrar.config.yml.erb: config/router_registrar/config.yml
+packages:
+  - common
+  - uhuru_webui
+  - ruby
+  - syslog_aggregator
