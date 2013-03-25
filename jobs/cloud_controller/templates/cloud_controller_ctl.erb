@@ -109,6 +109,22 @@ case $1 in
       fi
       unset CC_NOSTART
 
+      <% ccdb_prop_name = properties.db || 'ccdb' %>
+      <% ccdb = properties.send(ccdb_prop_name) %>
+      <% db = ccdb.databases.find { |db| db.tag == "cc" } %>
+      <% db_name = ccdb.databases.find { |db| db.tag == "cc" }.name %>
+      <% db_role = ccdb.roles.find { |role| role.tag == "admin" } %>
+      <% if db.audit_trigger %>
+        cd $CC_PACKAGE_DIR/cloud_controller
+        chpst -u vcap:vcap bundle exec ruby /var/vcap/packages/cloud_controller/script/enable_audit.rb '<% ccdb.address %>' '<% ccdb.port %>' '<% db_name  %>' '<% db_role.name  %>' '<% db_role.password  %>'
+        if [ $? != 0 ]; then
+          echo "Enabling audit failed"
+          # TODO: what to do with other CCs if this failed?
+          exit 1
+        fi
+
+      <% end %>
+
     <% end %>
 
     # Configure the core file location
