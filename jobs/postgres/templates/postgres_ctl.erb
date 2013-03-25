@@ -104,6 +104,25 @@ case "$1" in
         set -e
       <% end %>
 
+      <% if database.hstore %>
+        echo "Trying to install hstore..."
+        set +e
+        $PACKAGE_DIR/bin/psql -U vcap -p $PORT \
+                              -d "<%= database.name %>" \
+                              -f $PACKAGE_DIR/share/postgresql/contrib/hstore.sql
+        set -e
+      <% end %>
+
+      <% if database.dblink%>
+        echo "Trying to install dblink..."
+        set +e
+        $PACKAGE_DIR/bin/psql -U vcap -p $PORT \
+                              -d "<%= database.name %>" \
+                              -f $PACKAGE_DIR/share/postgresql/contrib/dblink.sql
+        set -e
+      <% end %>
+
+
       <% if database.run_on_every_startup %>
         <% database.run_on_every_startup.each do |query| %>
           $PACKAGE_DIR/bin/psql -U vcap -p $PORT \
