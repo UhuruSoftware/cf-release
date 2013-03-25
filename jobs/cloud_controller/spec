@@ -25,6 +25,7 @@ templates:
   blacklist.txt: config/blacklist.txt
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
   iptables.conf.erb: config/iptables.conf
+  enable_audit.rb: script/enable_audit.rb
 packages:
   - common
   - cloud_controller
