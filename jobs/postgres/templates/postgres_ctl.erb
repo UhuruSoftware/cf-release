@@ -104,7 +104,17 @@ case "$1" in
         set -e
       <% end %>
 
-      <% if database.hstore %>
+     <% if database.audit_trigger %>
+        echo "Trying to install hstore..."
+        set +e
+        $PACKAGE_DIR/bin/psql -U vcap -p $PORT \
+                              -d "<%= database.name %>" \
+                              -f $JOB_DIR/script/audit.sql
+        set -e
+      <% end %>
+
+
+      <% if database.hstore || database.audit_trigger %>
         echo "Trying to install hstore..."
         set +e
         $PACKAGE_DIR/bin/psql -U vcap -p $PORT \
