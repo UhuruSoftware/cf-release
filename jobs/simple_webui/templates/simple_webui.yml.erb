@@ -39,6 +39,17 @@ contact:
   phone: "<%= properties.uhuru.simple_webui.contact.phone || "+1 (425) 406-6383" %>"
   email: "<%= properties.uhuru.simple_webui.contact.email || "uhuru@uhurusoftware.com" %>"
 
+<% ccdb_prop_name = properties.db || 'ccdb' %>
+<% ccdb = properties.send(ccdb_prop_name) %>
+<% db_name = ccdb.databases.find { |db| db.tag == "cc" }.name %>
+<% db_role = ccdb.roles.find { |role| role.tag == "admin" } %>
+audit_database:
+  host: <%= ccdb.address %>
+  port: <%= ccdb.port %>
+  database: <%= db_name %>
+  username: <%= db_role.name %>
+  password: "<%= db_role.password %>" 
+
 cloudfoundry:
   target: "http://api.<%= properties.domain %>"
   admin_email: "<%= properties.uhuru.simple_webui.admin_email%>"
