@@ -1,9 +1,10 @@
 ---
 name: simple_webui
 dependencies:
+- libpq
 - ruby
 files:
 - simple_webui/{Gemfile,Gemfile.lock,config/email_verification.erb,config/email_password_reset.erb}
-- simple_webui/{.idea,bin,lib,public,views}/**/*
+- simple_webui/{bin,lib,public,views}/**/*
 - pkg_utils/*
 - tools/router_registrar/**/*
