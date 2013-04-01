@@ -8,6 +8,9 @@ templates:
   router_registrar.config.yml.erb: config/router_registrar/config.yml
 packages:
   - common
+  - libpq
+  - mysqlclient
+  - sqlite
   - simple_webui
   - ruby
   - syslog_aggregator
