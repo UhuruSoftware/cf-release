@@ -116,7 +116,7 @@ case $1 in
       <% db_role = ccdb.roles.find { |role| role.tag == "admin" } %>
       <% if db.audit_trigger %>
         cd $CC_PACKAGE_DIR/cloud_controller
-	chpst -u vcap:vcap bundle exec ruby /var/vcap/packages/cloud_controller/script/enable_audit.rb '<%= ccdb.address %>' '<%= ccdb.port %>' '<%= db_name  %>' '<%= db_role.name  %>' '<%= db_role.password  %>'
+	chpst -u vcap:vcap bundle exec ruby /var/vcap/jobs/cloud_controller/script/enable_audit.rb '<%= ccdb.address %>' '<%= ccdb.port %>' '<%= db_name  %>' '<%= db_role.name  %>' '<%= db_role.password  %>'
         if [ $? != 0 ]; then
           echo "Enabling audit failed"
           # TODO: what to do with other CCs if this failed?
