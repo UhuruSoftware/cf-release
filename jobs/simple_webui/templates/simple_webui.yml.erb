@@ -60,3 +60,42 @@ logging:
   level: <%= properties.uhuru.simple_webui.logging_level || "debug" %>
   file: /var/vcap/sys/log/simple_webui/simple_webui.log
 
+<% mdb_prop_name = properties.db || 'monitoring' %>
+<% mdb = properties.send(mdb_prop_name) %>
+<% mdb_name = mdb.databases.find { |db| db.tag == "monitoring" }.name %>
+<% mdb_role = mdb.roles.find { |role| role.tag == "monitoring" } %>
+monitoring:
+  reports:
+    half_of_day:
+      resolution: 30
+      resolution_unit: 'minutes'
+      sample_count: 30
+    last_day:
+      resolution: 1
+      resolution_unit: 'hours'
+      sample_count: 30
+    last_week:
+      resolution: 6
+      resolution_unit: 'hours'
+      sample_count: 30
+    last_month:
+      resolution: 1
+      resolution_unit: 'days'
+      sample_count: 30
+    last_year:
+      resolution: 1
+      resolution_unit: 'months'
+      sample_count: 30
+  vmc_executable_path: vmc
+  cloud_user: "<%= properties.uhuru.simple_webui.monitoring.cloud_user %>"
+  cloud_password: "<%= properties.uhuru.simple_webui.monitoring.cloud_password %>"
+  email_to: "<%= properties.uhuru.simple_webui.monitoring.email_to %>"
+  database:
+    database: "<%= mdb_name %>" 
+    host: <%= mdb.address %>
+    port: <%= mdb.port %>
+    encoding: utf8
+    username: <%= mdb_role.name %>
+    password: <%= mdb_role.password %> 
+    adapter: postgresql
+    timeout: 2000
