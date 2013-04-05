@@ -6,6 +6,7 @@ templates:
   simple_webui.yml.erb: config/simple_webui.yml
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
   router_registrar.config.yml.erb: config/router_registrar/config.yml
+  monitoring.cron.erb: config/monitoring.cron
 packages:
   - common
   - libpq

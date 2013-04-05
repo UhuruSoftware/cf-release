@@ -1,0 +1,5 @@
+<%
+cron_time = properties.uhuru.simple_webui.monitoring.cron_time || "0,15 * * * *" 
+%>
+
+<%= cron_time %> /var/vcap/packages/ruby/bin/ruby /var/vcap/packages/simple_webui/simple_webui/bin/monitoring.rb -c /var/vcap/jobs/simple_webui/config/simple_webui.yml >>/var/vcap/sys/log/simple_webui/monitoring.log 2>&1

@@ -29,6 +29,8 @@ case $1 in
     /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $JOB_DIR/config
     <% end %>
 
+    (crontab -l | sed /monitoring/d; cat /var/vcap/jobs/simple_webui/config/monitoring.cron) | sed /^$/d | crontab
+
     cd /var/vcap/packages/simple_webui
 
     exec /var/vcap/packages/ruby/bin/ruby \
@@ -41,6 +43,8 @@ case $1 in
 
   stop)
     kill_and_wait $PIDFILE
+
+    crontab -l | sed /monitoring/d | crontab
 
     ;;
 
