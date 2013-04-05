@@ -71,7 +71,7 @@ if [ "$mode" = "start" ] && ! test -d ${datadir}; then
   cd $basedir
   /var/vcap/packages/mysql/bin/mysql_install_db \
     --basedir=/var/vcap/packages/mysql --user=vcap \
-    --datadir=/var/vcap/store/mysql
+    --datadir=/var/vcap/store/mysql --no-defaults
 
   bootstrap=1
 fi
