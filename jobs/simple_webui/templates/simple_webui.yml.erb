@@ -99,3 +99,14 @@ monitoring:
     password: <%= mdb_role.password %> 
     adapter: postgresql
     timeout: 2000
+  components:
+    dea: <%= properties.uhuru.simple_webui.monitoring.components.dea %>
+    win_dea: <%= properties.uhuru.simple_webui.monitoring.components.win_dea %>
+    mysql_node: <%= properties.uhuru.simple_webui.monitoring.components.mysql_node %>
+    mongodb_node: <%= properties.uhuru.simple_webui.monitoring.components.mongodb_node %>
+    redis_node: <%= properties.uhuru.simple_webui.monitoring.components.redis_node %>
+    rabbit_node: <%= properties.uhuru.simple_webui.monitoring.components.rabbit_node %>
+    postgresql_node: <%= properties.uhuru.simple_webui.monitoring.components.postgresql_node %>
+    uhuru_tunnel: <%= properties.uhuru.simple_webui.monitoring.components.uhuru_tunnel %>
+    uhurufs_node: <%= properties.uhuru.simple_webui.monitoring.components.uhurufs_node %>
+    mssql_node: <%= properties.uhuru.simple_webui.monitoring.components.mssql_node %>
