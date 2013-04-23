@@ -1,5 +1,5 @@
 <%
-cron_time = properties.uhuru.simple_webui.monitoring.cron_time || "0,15,30,45 * * * *" 
+cron_time = properties.uhuru.simple_webui.monitoring.cron_time || "0,20,40 * * * *" 
 %>
 
 <%= cron_time %> /var/vcap/jobs/simple_webui/bin/monitoring 
