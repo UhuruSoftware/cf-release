@@ -1,5 +1,21 @@
-copy "C:\vcap\jobs\uhuru_tunnel\uhuru.config" "C:\vcap\packages\win_dea\uhuru.config"
+# Change default user profiles directory
+powershell  -ExecutionPolicy bypass  -Command Set-ItemProperty \"hklm:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\"  -Name ProfilesDirectory  -Value "C:\vcap\data\users" -Type ExpandString
+
+# Set anonymoys authentication
+C:\windows\system32\inetsrv\appcmd.exe set config  -section:system.webServer/security/authentication/anonymousAuthentication /enabled:"True" /userName:"" /password:"" /logonMethod:"ClearText"  /commit:apphost
+
+# This will allow an app instance (i.e. a IIS website) to be be aware of changes made on a network share (e.g. uhurufs service). 
+powershell  -ExecutionPolicy bypass  -Command Set-ItemProperty hklm:\SYSTEM\CurrentControlSet\Services\InetInfo\Parameters  -Name DoDirMonitoringForUNC  -Value 1 -Type DWord
+
+# Copy the config files in the same folder as DEA.exe
+copy "C:\vcap\jobs\uhuru_tunnel\DEA.config" "C:\vcap\packages\win_dea\DEA.config"
+copy "C:\vcap\jobs\uhuru_tunnel\NLog.config" "C:\vcap\packages\win_dea\NLog.config"
+
+# Create the windows service
 sc create DEA DisplayName= "Uhuru .NET Droplet Execution Agent" binPath= "C:\vcap\packages\win_dea\DEA.exe" start= auto
+sc failure DEA actions= restart/0 reset= 0
+
+# Add firewall rules for fileport and statusport
 netsh advfirewall firewall add rule name="windea_filerport" protocol=TCP dir=in localport=<%= properties.win_dea.filerport || '12346' %> action=allow
 netsh advfirewall firewall add rule name="windea_statusport" protocol=TCP dir=in localport=<%= properties.win_dea.statusport || '12345' %> action=allow
-sc failure DEA actions= restart/0 reset= 0
+

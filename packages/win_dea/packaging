@@ -1,4 +1,7 @@
-msiexec /a win_dea\DEAInstaller_x64.msi /qb TARGETDIR=%CD%\temp
-del %CD%\temp\uhuru.config
-xcopy "temp" "%BOSH_INSTALL_TARGET%" /O /X /E /H /K /I /J /Y
+# Extract the msi
+msiexec /a win_dea\DEAInstaller.msi /qb TARGETDIR=%BOSH_INSTALL_TARGET%
+
+# Deleted the default configs. They will be generated from the job's ERBs.
+del %BOSH_INSTALL_TARGET%\DEA.config
+del %BOSH_INSTALL_TARGET%\NLog.config
 
