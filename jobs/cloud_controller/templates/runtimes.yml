@@ -167,9 +167,9 @@ iis:
   version: "7.5"
   executable:
   staging:
-  version_output: "0x7"
-  version_flag:
-  version_executable: iisver.cmd
+  version_output: "Version 7.5"
+  version_flag: query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\InetStp /v VersionString
+  version_executable: reg # this is Windows DEA specific
   environment: {}
   status:
     name: current
@@ -180,9 +180,9 @@ iis8:
   version: "8"
   executable:
   staging:
-  version_output: "0x8"
-  version_flag:
-  version_executable: iisver.cmd
+  version_output: "Version 8.0"
+  version_flag: query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\InetStp /v VersionString
+  version_executable: reg # this is Windows DEA specific
   environment: {}
   status:
     name: current
@@ -193,9 +193,9 @@ uhurutunnel:
   version: "7.5"
   executable:
   staging:
-  version_output: "0x7"
-  version_flag:
-  version_executable: iisver.cmd
+  version_output: "Version 7.5"
+  version_flag: query HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\InetStp /v VersionString
+  version_executable: reg # this is Windows DEA specific
   environment: {}
   status:
     name: current

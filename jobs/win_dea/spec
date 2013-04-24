@@ -3,7 +3,8 @@ name: win_dea
 templates:
     install.bat.erb: install.bat
     drain.bat.erb: drain.bat
-    uhuru.config.erb: uhuru.config
+    DEA.config.erb: DEA.config
+    NLog.config.erb: NLog.config
 
 packages:
   - win_dea
