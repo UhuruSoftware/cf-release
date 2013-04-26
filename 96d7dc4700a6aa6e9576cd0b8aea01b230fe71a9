@@ -1,0 +1,8 @@
+Change-Id: I96d7dc4700a6aa6e9576cd0b8aea01b230fe71a9
+Code-Review+2: Vlad Iovanov <vlad.iovanov@uhurusoftware.com>
+Verified+1: Stefan Schneider <stefan.schneider@uhurusoftware.com>
+Submitted-by: Stefan Schneider <stefan.schneider@uhurusoftware.com>
+Submitted-at: Fri, 26 Apr 2013 11:56:49 +0300
+Reviewed-on: http://gerrit.uhurusoftware.org/1417
+Project: private-cf-release
+Branch: refs/heads/master
