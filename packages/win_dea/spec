@@ -2,5 +2,5 @@
 name: win_dea
 
 files:
-  - win_dea/DEAInstaller.msi
+  - vcap_dotnet/installers/DEAInstaller.msi
 

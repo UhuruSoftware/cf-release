@@ -2,4 +2,4 @@
 name: mssql_node
 
 files:
-  - mssql_node/MSSqlNodeInstaller.msi
+  - vcap_dotnet/installers/MSSqlNodeInstaller.msi

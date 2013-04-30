@@ -43,3 +43,6 @@
 [submodule "src/simple_webui"]
 	path = src/simple_webui
 	url = git@github.com:UhuruSoftware/private-simple-webui.git
+[submodule "src/vcap_dotnet"]
+	path = src/vcap_dotnet
+	url = git@github.com:UhuruSoftware/private-vcap-dotnet.git

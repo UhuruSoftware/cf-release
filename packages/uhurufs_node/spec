@@ -2,4 +2,4 @@
 name: uhurufs_node
 
 files:
-  - uhurufs_node/FileServiceInstaller_x64.msi
+  - vcap_dotnet/installers/FileServiceInstaller_x64.msi
