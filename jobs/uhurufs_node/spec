@@ -2,6 +2,7 @@
 name: uhurufs_node
 templates:
     install.bat.erb: install.bat
+    drain.bat.erb: drain.bat
     FSWindowsFeatures.bat: FSWindowsFeatures.bat
     uhuru.config.erb: uhuru.config
 
