@@ -3,7 +3,7 @@
 	url = git@github.com:UhuruSoftware/private-vcap-services.git
 [submodule "src/tools"]
 	path = src/tools
-	url = git@github.com:cloudfoundry/vcap-tools.git
+	url = git@github.com:UhuruSoftware/vcap-tools.git
 [submodule "src/vblob_src"]
 	path = src/vblob_src
 	url = git@github.com:cloudfoundry/vblob.git
@@ -15,31 +15,31 @@
 	url = git@github.com:UhuruSoftware/private-dea.git
 [submodule "src/dea_next"]
 	path = src/dea_next
-	url = git@github.com:cloudfoundry/dea_ng.git
+	url = git@github.com:UhuruSoftware/dea_ng.git
 [submodule "src/health_manager_next"]
 	path = src/health_manager_next
-	url = git://github.com/cloudfoundry/health_manager.git
+	url = git@github.com:UhuruSoftware/health_manager.git
 [submodule "src/router"]
 	path = src/router
-	url = git@github.com:cloudfoundry/router.git
+	url = git@github.com:UhuruSoftware/router.git
 [submodule "src/stager"]
 	path = src/stager
 	url = git@github.com:UhuruSoftware/private-stager.git
 [submodule "src/warden"]
 	path = src/warden
-	url = git@github.com:cloudfoundry/warden.git
+	url = git@github.com:UhuruSoftware/warden.git
 [submodule "src/services_warden"]
 	path = src/services_warden
-	url = git@github.com:cloudfoundry/warden.git
+	url = git@github.com:UhuruSoftware/warden.git
 [submodule "src/cloud_controller"]
 	path = src/cloud_controller
 	url = git@github.com:UhuruSoftware/private-cloud_controller.git
 [submodule "src/cloud_controller_ng"]
 	path = src/cloud_controller_ng
-	url = git@github.com:cloudfoundry/cloud_controller_ng.git
+	url = git@github.com:UhuruSoftware/cloud_controller_ng.git
 [submodule "src/tests"]
 	path = src/tests
-	url = git@github.com:cloudfoundry/vcap-yeti.git
+	url = git@github.com:UhuruSoftware/vcap-yeti.git
 [submodule "src/simple_webui"]
 	path = src/simple_webui
 	url = git@github.com:UhuruSoftware/private-simple-webui.git
