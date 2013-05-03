@@ -90,6 +90,8 @@ monitoring:
   cloud_user: "<%= properties.uhuru.simple_webui.monitoring.cloud_user %>"
   cloud_password: "<%= properties.uhuru.simple_webui.monitoring.cloud_password %>"
   email_to: "<%= properties.uhuru.simple_webui.monitoring.email_to %>"
+  sleep_after_app_push: 60
+  pause_after_each_app: 45
   database:
     database: "<%= mdb_name %>" 
     host: <%= mdb.address %>
