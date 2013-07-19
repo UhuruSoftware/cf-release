@@ -198,7 +198,7 @@
                                 divIPs.innerHTML += ip + "<br/>";
                             });
 
-                            var sshUrl = "/ssh_connect/<%= cloud_name %>/" + vm["job_name"] + "/" + vm["index"]
+                            var sshUrl = "/ssh_connect/<%= product_name  %>/<%= cloud_name %>/" + vm["job_name"] + "/" + vm["index"]
                             var logUrl = "/vmlog/<%= cloud_name %>/" + vm["job_name"] + "/" + vm["index"]
                             var jobIndexUrl = "/<%= cloud_name %>/" + vm["job_name"] + "/" + vm["index"]
                             divSSHAndLogs.innerHTML =
