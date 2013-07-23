@@ -199,7 +199,7 @@
                             });
 
                             var sshUrl = "/ssh_connect/<%= product_name  %>/<%= cloud_name %>/" + vm["job_name"] + "/" + vm["index"]
-                            var logUrl = "/<%= product_name %>/vmlog/<%= cloud_name %>/" + vm["job_name"] + "/" + vm["index"]
+                            var logUrl = "/vmlog/<%= product_name %>/<%= cloud_name %>/" + vm["job_name"] + "/" + vm["index"]
                             var jobIndexUrl = "/<%= product_name %>/<%= cloud_name %>/" + vm["job_name"] + "/" + vm["index"]
                             divSSHAndLogs.innerHTML =
                                     "<a onClick=\"window.open('" + sshUrl + "','_blank','width=800,height=600,resizable=yes')\" href='#'>SSH</a>&nbsp;" +
