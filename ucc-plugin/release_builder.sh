@@ -64,9 +64,9 @@ VERSION_DESCRIPTION=`parse_changelog ${UCC_PLUGIN_DIR}/Changelog`
 gunzip ${DEV_RELEASES_DIR}/release.tgz
 tar xf ${DEV_RELEASES_DIR}/release.tar ./release.MF -C ${DEV_RELEASES_DIR}/release.MF
 
-if [ -e  ${DEV_RELEASES_DIR}/release.MF ]; then
+if [ -e ${DEV_RELEASES_DIR}/release.MF ]; then
     release_manifest_line_count=`cat ${DEV_RELEASES_DIR}/release.MF | wc -l`
-    head -n $((${release_manifest_line_count} -1)) > ${DEV_RELEASES_DIR}/release.MF.tmp
+    head -n $(( ${release_manifest_line_count} - 1 )) ${DEV_RELEASES_DIR}/release.MF > ${DEV_RELEASES_DIR}/release.MF.tmp
 fi
 
 echo "version: ${CURRENT_VERSION}" >> ${DEV_RELEASES_DIR}/release.MF.tmp
