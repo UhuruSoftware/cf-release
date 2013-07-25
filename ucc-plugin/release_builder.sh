@@ -40,7 +40,7 @@ CWD=`pwd`
 echo "Release dir is: ${CWD}"
 
 export BUNDLE_GEMFILE=${WEBUI_DIR}/Gemfile
-
+bundle install
 echo "Gemfile is: ${BUNDLE_GEMFILE}"
 
 bundle exec bosh --non-interactive create release --with-tarball --force
@@ -87,6 +87,7 @@ tar -czvf /tmp/${PRODUCT_NAME}/bits.tgz -C ${DEV_RELEASES_DIR} .
 echo "Current version is ${CURRENT_VERSION}"
 
 export BUNDLE_GEMFILE=${PUBLISHER_DIR}/Gemfile
+bundle install
 cd ${PUBLISHER_DIR}/bin/
 ./publisher upload version -n ${PRODUCT_NAME} -r ${CURRENT_VERSION} -t alpha -d "${VERSION_DESCRIPTION}" -f /tmp/${PRODUCT_NAME}/bits.tgz
 
