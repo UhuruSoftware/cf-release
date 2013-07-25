@@ -62,7 +62,10 @@ VERSION_DESCRIPTION=`parse_changelog ${UCC_PLUGIN_DIR}/Changelog`
 
 # alter version in tgz
 gunzip ${DEV_RELEASES_DIR}/release.tgz
-tar xf ${DEV_RELEASES_DIR}/release.tar ./release.MF -C ${DEV_RELEASES_DIR}/release.MF
+
+cd ${DEV_RELEASES_DIR}
+tar xf ${DEV_RELEASES_DIR}/release.tar ./release.MF
+cd ${CF_RELEASE_DIR}
 
 if [ -e ${DEV_RELEASES_DIR}/release.MF ]; then
     release_manifest_line_count=`cat ${DEV_RELEASES_DIR}/release.MF | wc -l`
