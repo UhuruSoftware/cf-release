@@ -28,7 +28,7 @@ WEBUI_DIR="${COMMANDER_DIR}/web-ui"
 
 # git clone private-uhuru-commander
 rm -rf ${COMMANDER_DIR}
-git clone ssh://vlad.iovanov@gerrit.uhurusoftware.org:29418/private-uhuru-commander
+git clone ssh://jenkins@gerrit.uhurusoftware.org:29418/private-uhuru-commander
 
 
 rm -rf /tmp/${PRODUCT_NAME}/bits.tgz
