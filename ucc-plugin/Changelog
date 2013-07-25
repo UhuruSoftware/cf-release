@@ -1,0 +1,3 @@
+2013-07-24  Vlad Iovanov  <vlad.iovanov@uhurusoftware.com>
+ * Fixed Virtual Machine action URLs in the "Virtual Machines" tab
+ * Created a change log for the Uhuru AppCloud PaaS
