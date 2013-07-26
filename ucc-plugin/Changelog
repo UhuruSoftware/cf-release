@@ -1,3 +1,5 @@
+2013-07-26  Florin Dragos  <florin.dragos@uhurusoftware.com>
+ * Uhuru AppCloud PaaS modified to only use one Windows image.
 2013-07-24  Vlad Iovanov  <vlad.iovanov@uhurusoftware.com>
  * Fixed Virtual Machine action URLs in the "Virtual Machines" tab
  * Created a change log for the Uhuru AppCloud PaaS

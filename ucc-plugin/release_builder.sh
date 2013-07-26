@@ -43,6 +43,8 @@ export BUNDLE_GEMFILE=${WEBUI_DIR}/Gemfile
 bundle install
 echo "Gemfile is: ${BUNDLE_GEMFILE}"
 
+echo -e "---\ndev_name: ${PRODUCT_NAME}" > ${CF_RELEASE_DIR}/config/dev.yml
+
 bundle exec bosh --non-interactive create release --with-tarball --force
 
 mv `ls ${DEV_RELEASES_DIR}/*.tgz` ${DEV_RELEASES_DIR}/release.tgz

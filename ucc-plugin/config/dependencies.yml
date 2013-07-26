@@ -1,3 +1,2 @@
-uhuru-windows-2008R2: ['0.9.11', '0.9.10']
-uhuru-windows-2008R2-sqlserver: ['0.9.11']
+uhuru-windows-stemcell: ['1.1.0.a.a']
 bosh-stemcell-php: ['0.9.12.a.a']
