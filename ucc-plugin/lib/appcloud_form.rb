@@ -182,7 +182,7 @@ module Uhuru::BoshCommander
       blank_manifest_template = ERB.new(File.read(blank_manifest_path))
 
       new_manifest = YAML.load(blank_manifest_template.result(binding))
-      @saved_data = new_manifest
+      @saved_data = AppcloudUpgrade.upgrade @saved_data, new_manifest
       is_ok = validate?(GenericForm::VALUE_TYPE_FORM)
 
       if is_ok

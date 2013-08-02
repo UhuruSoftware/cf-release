@@ -99,7 +99,7 @@
                value="Export"
                class="export" />
 
-        <input name="btn_import"
+        <input name="btn_import" <%= [ Uhuru::BoshCommander::DeploymentState::DEPLOYED, Uhuru::BoshCommander::DeploymentState::ERROR, Uhuru::BoshCommander::DeploymentState::DEPLOYING].include?(summary["state"]) ? 'disabled' : '' %>
                type="button"
                value="Import"
                class="import"

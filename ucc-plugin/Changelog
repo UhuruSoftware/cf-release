@@ -1,3 +1,6 @@
+2013-08-02 Florin Dragos <florin.dragos@uhurusoftware.com>
+ * Added proper upgrade method
+ * Disabled Import button if cloud has deployment
 2013-07-26  Florin Dragos  <florin.dragos@uhurusoftware.com>
  * Uhuru AppCloud PaaS modified to only use one Windows image.
 2013-07-24  Vlad Iovanov  <vlad.iovanov@uhurusoftware.com>
