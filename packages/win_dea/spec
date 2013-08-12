@@ -1,0 +1,7 @@
+---
+name: win_dea
+
+files:
+  - vcap_dotnet/installers/DEAInstaller.msi
+
+
