@@ -1,0 +1,14 @@
+---
+keys:
+  '["properties"]["router"]["status"]["user"]': '["properties"]["router"]["status"]["user"]'
+  '["properties"]["router"]["status"]["password"]': '["properties"]["router"]["status"]["password"]'
+  '["properties"]["vcap_redis"]["password"]': '["properties"]["vcap_redis"]["password"]'
+  '["properties"]["ccng"]["bulk_api_user"]': '["properties"]["ccng"]["bulk_api_user"]'
+  '["properties"]["ccng"]["bulk_api_password"]': '["properties"]["ccng"]["bulk_api_password"]'
+  '["properties"]["ccng"]["staging_upload_user"]': '["properties"]["ccng"]["staging_upload_user"]'
+  '["properties"]["ccng"]["staging_upload_password"]': '["properties"]["ccng"]["staging_upload_password"]'
+  '["properties"]["ccdb_ng"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]': '["properties"]["ccdb_ng"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]'
+  '["properties"]["ccdb_ng"]["databases"].select{|r| r["tag"] == "cc"}.first["name"]': '["properties"]["ccdb_ng"]["databases"].select{|r| r["tag"] == "cc"}.first["name"]'
+  '["properties"]["nats"]["user"]': '["properties"]["nats"]["user"]'
+  '["properties"]["nats"]["password"]': '["properties"]["nats"]["password"]'
+
