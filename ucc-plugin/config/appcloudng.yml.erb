@@ -1,0 +1,492 @@
+---
+# gem install cf
+# cf -f login admin --password password1234!
+# cf -f  create-service-auth-token  --label mysql  --provider core  --token token
+
+name:           cloud-foundry
+director_uuid:  "DO NOT CHANGE THIS STRING"
+
+release:
+  name: appcloudng
+  version: ###ucc_product_version###
+
+
+compilation:
+  workers: 1
+  reuse_compilation_vms: true
+  network: default
+  cloud_properties:
+    ram: 2048
+    disk: 8096
+    cpu: 4
+
+update:
+  canaries: 0
+  canary_watch_time: 3000-90000
+  update_watch_time: 15000-300000
+  max_in_flight: 1
+
+networks:
+
+- name: default
+  subnets:
+  - reserved: []
+    static: []
+    range:
+    gateway:
+    dns: []
+    cloud_properties:
+      name:
+
+
+
+resource_pools:
+
+- name: windows
+  network: default
+  size: 1
+  stemcell:
+    name: windows
+    version: 0.9.6
+  cloud_properties:
+    ram: 2048
+    disk: 5000
+    cpu: 2
+  env:
+    windows:
+      product_key: 00000-00000-00000-00000-00000
+    bosh:
+      password: Change_me!
+
+- name: tiny
+  network: default
+  size: 6
+  stemcell:
+    name: bosh-stemcell
+    version: 1.5.0.pre.3
+  cloud_properties:
+    ram: 300
+    disk: 5000
+    cpu: 1
+  env:
+    bosh:
+      password: $6$DxzA20NmmfOjOyqk$GiuzvfioqPMpzOIZxhKeuPRSEniM2PecTQLBtj1wcX8j9RncfzLWKNAfdQ/X0hJoTRmyvqNCe1N1BwQb5F3TP.
+
+- name: small
+  network: default
+  size: 5
+  stemcell:
+    name: bosh-stemcell
+    version: 1.5.0.pre.3
+  cloud_properties:
+    ram: 512
+    disk: 5000
+    cpu: 1
+  env:
+    bosh:
+      password: $6$DxzA20NmmfOjOyqk$GiuzvfioqPMpzOIZxhKeuPRSEniM2PecTQLBtj1wcX8j9RncfzLWKNAfdQ/X0hJoTRmyvqNCe1N1BwQb5F3TP.
+
+
+- name: medium
+  network: default
+  size: 10
+  stemcell:
+    name: bosh-stemcell
+    version: 1.5.0.pre.3
+  cloud_properties:
+    ram: 1024
+    disk: 5000
+    cpu: 2
+  env:
+    bosh:
+      password: $6$DxzA20NmmfOjOyqk$GiuzvfioqPMpzOIZxhKeuPRSEniM2PecTQLBtj1wcX8j9RncfzLWKNAfdQ/X0hJoTRmyvqNCe1N1BwQb5F3TP.
+
+- name: large
+  network: default
+  size: 1
+  stemcell:
+    name: bosh-stemcell
+    version: 1.5.0.pre.3
+  cloud_properties:
+    ram: 2048
+    disk: 10000
+    cpu: 4
+  env:
+    bosh:
+      password: $6$DxzA20NmmfOjOyqk$GiuzvfioqPMpzOIZxhKeuPRSEniM2PecTQLBtj1wcX8j9RncfzLWKNAfdQ/X0hJoTRmyvqNCe1N1BwQb5F3TP.
+
+- name: deas
+  network: default
+  size: 1
+  stemcell:
+    name: bosh-stemcell
+    version: 1.5.0.pre.3
+  cloud_properties:
+    ram: 3072
+    disk: 30000
+    cpu: 4
+  env:
+    bosh:
+      password: $6$DxzA20NmmfOjOyqk$GiuzvfioqPMpzOIZxhKeuPRSEniM2PecTQLBtj1wcX8j9RncfzLWKNAfdQ/X0hJoTRmyvqNCe1N1BwQb5F3TP.
+
+
+
+
+jobs:
+  - name: debian_nfs_server
+    template: 
+      - debian_nfs_server # stateful; static ip or domain name required for internal identification 
+    release: appcloudng
+    instances: 1 # farmable
+    resource_pool: small
+    persistent_disk: 50000
+    networks: 
+      - name: default
+        static_ips:
+
+  - name: syslog_aggregator 
+    template:
+      - syslog_aggregator # stateful; static ip or domain name required for internal identification
+    release: appcloudng
+    instances: 1 # farmable
+    resource_pool: medium
+    persistent_disk: 1000
+    networks:
+      - name: default
+        static_ips:
+
+  - name: nats
+    template: 
+      - nats # stateless; static ip or domain name required for internal identification
+    release: appcloudng
+    instances: 1 # more instances can be running, but not useful for CF
+    resource_pool: small
+    networks: 
+      - name: default
+        static_ips:
+
+  - name: router
+    template: 
+      - gorouter # stateless, static ip or domain name required for external identification
+    release: appcloudng
+    instances: 1 # farmable
+    resource_pool: medium
+    networks:
+      - name: default
+        static_ips:
+
+    # ccdb_ng and uaadb consolidated
+  - name: vcap_postgres
+    template: 
+      - postgres # stateful; static ip or domain name required for internal identification
+    release: appcloudng
+    instances: 1
+    resource_pool: medium
+    persistent_disk: 10000 #
+    networks:
+      - name: default
+        static_ips:
+    properties:
+      db: vcap_databases
+
+  - name: uaa
+    template: 
+      - uaa # stateless, dynamically discovered
+    release: appcloudng
+    instances: 1 # version 1.4.x can be farmed
+    resource_pool: medium
+    networks:
+      - name: default
+
+  - name: login
+    template: 
+      - login # stateless, dynamically discovered
+    release: appcloudng
+    instances: 1 # farmable
+    resource_pool: small
+    networks:
+      - name: default
+    properties: {}
+
+  - name: cloud_controller_ng
+    template: 
+      - cloud_controller_ng # stateless, dynamically discovered
+    release: appcloudng
+    instances: 1 # farmable
+    resource_pool: medium
+    networks: 
+      - name: default
+
+  - name: dea_next
+    template: 
+      - dea_next # stateless, dynamically discovered
+    release: appcloudng
+    instances: 1 # farmable
+    resource_pool: deas
+    networks:
+      - name: default
+    properties:
+      dea_next:
+        stacks: ["lucid64"]
+
+  - name: win_dea
+    template:
+      - win_dea # stateless, dynamically discovered
+    release: appcloudng
+    instances: 1 # farmable
+    resource_pool: windows
+    networks:
+      - name: default
+
+  - name: pseudo_stager
+    template:
+      - pseudo_stager # stateless, dynamically discovered
+    release: appcloudng
+    instances: 1 # farmable
+    resource_pool: medium
+    networks:
+      - name: default
+    properties:
+      dea_next:
+        memory_mb: 1024 
+        # num_instances: 0 # don't run apps, act just as a stager # dummy config :(
+        stacks: ["iis75"]
+
+  - name: health_manager
+    template:
+      - health_manager_next # stateless, dynamically discovered
+    release: appcloudng
+    instances: 1 # cannot scale horizontally
+    resource_pool: tiny
+    networks:
+      - name: default
+
+
+
+
+properties:
+  sysadmin_password: changeme
+  domain: mydomain.net
+  system_domain_organization: sys-org
+  system_domain: ccng-dev.net
+  app_domains:
+    - 'apps.mydomain.net'
+
+  env: {}
+  support_address: "http://support.mydomain.net" # has default "http://support.cloudfoundry.com"
+  description: "Uhuru AppCloud Platform as a Service"
+
+
+  networks: 
+    apps: default
+    management: default
+
+  nfs_server:
+    address: 10.0.7.121
+    network: 10.0.0.0/16
+
+  debian_nfs_server:
+    no_root_squash: true # false by default. set to true to use in services.
+
+  syslog_aggregator:
+    address: 10.0.7.125
+    port: 54321
+
+  nats: 
+    user: <%= SecureRandom.hex %>
+    password: <%= SecureRandom.hex %> # Security: assign a random value.
+    address: 10.0.7.122
+    port: 4222
+    authorization_timeout: 10
+
+
+  <% db_name = "ccdb_ng" %>
+  <% db_name_old = "ccdb" %>
+  <% db_password = SecureRandom.hex%>
+  # databases and roles defined to be created in the postgres job
+  # This is artifically created to have only one db deployed.
+  vcap_databases:
+    address: 10.0.7.123
+    port: 2544
+    databases:
+    - tag: cc
+      name: <%= db_name_old %>
+    - tag: cc_ng
+      name: <%= db_name %>
+      citext: true
+    - tag: uaa
+      name: uaa
+    roles:
+    - tag: admin
+      name: root
+      password: <%= db_password %> # Security: assign a random value.
+    - tag: uaa
+      name: uaa
+      password: <%= db_password %> # Security: assign a random value.
+
+  ccdb_ng:
+    address: 10.0.7.123
+    port: 2544
+    databases: 
+    - tag: cc
+      name: <%= db_name %>
+      citext: true
+    roles:
+    - tag: admin
+      name: root
+      password: <%= db_password %> # Security: assign a random value.
+
+  uaadb:
+    address: 10.0.7.123
+    port: 2544
+    db_scheme: postgresql
+    # spring_profiles: postgresql # default is value from db_scheme
+    databases:
+    - tag: uaa
+      name: uaa
+    roles:
+    - tag: admin
+      name: uaa
+      password: <%= db_password %> # Security: assign a random value.
+
+  # ccdb is legacy. required for uaa batch until it is removed
+  ccdb:
+    address: 10.0.7.123
+    port: 2544
+    db_scheme: postgresql
+    databases:
+    - tag: cc
+      name: <%= db_name_old %>
+    roles:
+    - tag: admin
+      name: root
+      password: <%= db_password %>
+
+  cc_props: cc # used by hm
+  cc: 
+    srv_api_uri: http://api.mydomain.net # srv_api_uri still used or api endpoint.
+
+  ccng:
+    stacks: 
+      - name: "lucid64"
+        description: "Lucid 64"
+      - name: "iis75"
+        description: "IIS 7.5"
+
+    cc_partition: "default" # has default "ng"
+
+    bulk_api_user: bulk_api # has default "bulk_api"
+    bulk_api_password: <%= SecureRandom.hex %> # Security: assign a random value.
+    uaa_resource_id: cloud_controller # mirror to cc.uaa.resource_id
+    external_host: api  # has default 'api2'
+    max_staging_runtime: 300 # has default 300
+    staging_upload_user: <%= SecureRandom.hex %>
+    staging_upload_password: <%= SecureRandom.hex %>
+    db_encryption_key: <%= SecureRandom.hex %>
+
+    default_account_capacity:
+      memory: 512
+      app_uris: 8
+      services: 4
+      apps: 4
+    admin_account_capacity:
+      memory: 2048
+      app_uris: 24
+      services: 16
+      apps: 16
+
+    # logging_level: debug # has default "info"
+    # db_logging_level: debug2 # has default "debug2"
+    # use_nginx: true # has default true
+
+    default_quota_definition: "free" # no default
+
+    quota_definitions:
+      free:
+        non_basic_services_allowed: false
+        total_services: 2
+        memory_limit: 1024   # units in MB
+      paid:
+        non_basic_services_allowed: true
+        total_services: 33
+        memory_limit: 204800 # 200 GB # units in MB
+      runaway:
+        non_basic_services_allowed: true
+        memory_limit: 102400
+        total_services: -1
+
+    resource_pool:
+      minimum_size: 0 # ccng default of 0 # units in MB
+      maximum_size: 512  # ccng default of 512 # units in MB
+      resource_directory_key: "cc-resources" # ccng default "cc-resources"
+
+  router:
+    #offset: 0 # not requried; used to offset index
+    #trace_key: 22 
+    status:
+      port: 8080
+      user: <%= SecureRandom.hex %>
+      password: <%= SecureRandom.hex %> # Security: assign a random value.
+
+  health_manager:
+    cc_partition: "default" # has default "default"
+
+  dea_next:
+    # streaming_timeout: 60 # has default
+    memory_mb: 8000 # has default '8000'
+    memory_overcommit_factor: 1 # has default 1
+    disk_mb: 32000 # has default '32000'
+    disk_overcommit_factor: 1 # has default 1
+    num_instances: 30 # has default '30'
+
+  win_dea:
+    max_memory: 2000
+    filerport: 12346
+    statusport: 12345
+    v2fileport: 34567
+
+  uaa:
+    require_https: false
+    no_ssl: true
+
+    cc:
+      client_secret: <%= SecureRandom.hex %> # Security: assign a random value.
+      token_secret: <%= SecureRandom.hex %> # symetric secret with uaa. will mirror jwt.signing_key # Security: assign a random value.
+    admin:
+      client_secret:  <%= SecureRandom.hex %> # Security: assign a random value.
+    batch:
+      username: batch
+      password: <%= SecureRandom.hex %> # Security: assign a random value.
+
+    #client:
+    #  autoapprove:
+    #    - vmc
+
+    clients:
+      login:
+        secret: <%= SecureRandom.hex %>
+      vmc:
+        override: true
+        authorized-grant-types: implicit,password
+        authorities: uaa.none
+        scope: cloud_controller.read,cloud_controller.write,openid,password.write,cloud_controller.admin,scim.read,scim.write
+        autoapprove: true
+      cf:
+        override: true
+        authorized-grant-types: implicit,password,authorization_code,refresh_token
+        authorities: uaa.none
+        scope: cloud_controller.read,cloud_controller.write,openid,password.write,cloud_controller.admin,scim.read,scim.write
+        autoapprove: true
+
+
+    scim:
+      # userids_enabled: true # has default false
+      user:
+        override: true #true # has default true
+      users:
+      - admin|password1234!|scim.write,scim.read,openid,cloud_controller.admin
+
+  login:
+    protocol: http # has default "http"
+    # uaa_base: http://uaa.test.com # auto-generated
+
