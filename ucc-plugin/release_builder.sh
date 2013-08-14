@@ -45,6 +45,9 @@ echo "Gemfile is: ${BUNDLE_GEMFILE}"
 
 echo -e "---\ndev_name: ${PRODUCT_NAME}" > ${CF_RELEASE_DIR}/config/dev.yml
 
+echo "Initializing submodules"
+git submodule update --init --recursive
+
 bundle exec bosh --non-interactive create release --with-tarball --force
 
 mv `ls ${DEV_RELEASES_DIR}/*.tgz` ${DEV_RELEASES_DIR}/release.tgz
