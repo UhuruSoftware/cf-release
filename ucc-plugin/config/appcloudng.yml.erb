@@ -144,6 +144,16 @@ jobs:
       - name: default
         static_ips:
 
+  - name: nats
+    template:
+      - nats # stateless; static ip or domain name required for internal identification
+    release: appcloudng
+    instances: 1 # more instances can be running, but not useful for CF
+    resource_pool: small
+    networks:
+      - name: default
+        static_ips:
+
   - name: syslog_aggregator 
     template:
       - syslog_aggregator # stateful; static ip or domain name required for internal identification
@@ -152,16 +162,6 @@ jobs:
     resource_pool: medium
     persistent_disk: 1000
     networks:
-      - name: default
-        static_ips:
-
-  - name: nats
-    template: 
-      - nats # stateless; static ip or domain name required for internal identification
-    release: appcloudng
-    instances: 1 # more instances can be running, but not useful for CF
-    resource_pool: small
-    networks: 
       - name: default
         static_ips:
 
