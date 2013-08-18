@@ -1,0 +1,1 @@
+*/15 * * * * /var/vcap/jobs/dea/bin/correct_uhurufs_bindings.sh

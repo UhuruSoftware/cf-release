@@ -6,6 +6,8 @@ templates:
   drain.rb: bin/drain
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
   iptables.conf.erb: config/iptables.conf
+  correct_uhurufs_bindings.sh: bin/correct_uhurufs_bindings.sh
+  correct_uhurufs_bindings.cron: bin/correct_uhurufs_bindings.cron
 packages:
 - common
 - dea

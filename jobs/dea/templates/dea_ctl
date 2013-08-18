@@ -101,6 +101,8 @@ case $1 in
     /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $JOB_DIR/config
     <% end %>
 
+    (crontab -l | sed /correct_uhurufs_bindings/d; cat /var/vcap/jobs/dea/bin/correct_uhurufs_bindings.cron) | sed /^$/d | crontab
+
     exec nice -n -20 \
          /var/vcap/packages/ruby/bin/ruby /var/vcap/packages/dea/bin/dea \
          -c $JOB_DIR/config/dea.yml \
@@ -111,7 +113,7 @@ case $1 in
 
   stop)
     kill_and_wait $PIDFILE
-
+    crontab -l | sed /correct_uhurufs_bindings/d | crontab
     ;;
 
   *)
