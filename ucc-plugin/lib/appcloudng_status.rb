@@ -51,7 +51,11 @@ module Uhuru::BoshCommander
       #  current_manifest["jobs"] != nil && current_manifest["jobs"].select{|job| job["name"] == node}.first["instances"] > 0 ? node : nil }.compact
       stats["stacks"] = ["dea_next", "win_dea"].map { |stack|
         current_manifest["jobs"] != nil && current_manifest["jobs"].select{|job| job["name"] == stack}.first["instances"] > 0 ? stack : nil }.compact
-      stats["version"] = current_manifest["release"]["version"]
+      if current_manifest["release"]
+        stats["version"] = current_manifest["release"]["version"]
+      else
+        stats["version"] = current_manifest["releases"][0]["version"]
+      end
       stats
     end
   end
