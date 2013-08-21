@@ -1,0 +1,16 @@
+---
+product: appcloudng
+type: alpha
+releases:
+  - name: appcloudng.core
+    tarball: core.release
+    path: '.'
+  - name: appcloudng.services
+    tarball: services.release
+    path: cf-services-release
+    git_repo: https://github.com/cloudfoundry/cf-services-release.git
+  - name: appcloudng.services-contrib
+    tarball: services-contrib.release
+    path: cf-services-contrib-release
+    git_repo: https://github.com/cloudfoundry/cf-services-contrib-release.git
+ 
