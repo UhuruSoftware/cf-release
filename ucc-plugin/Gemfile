@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem "blobstore_client", :git => "git@github.com:UhuruSoftware/private-bosh.git"
+gem "bosh_cli", "~> 1.5.0.pre.3", :git => 'git@github.com:UhuruSoftware/private-bosh.git'
+gem "uhuru-publisher", :git => "git@github.com:UhuruSoftware/private-uhuru-commander.git"
+
