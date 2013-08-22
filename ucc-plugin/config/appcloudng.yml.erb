@@ -6,9 +6,14 @@
 name:           cloud-foundry
 director_uuid:  "DO NOT CHANGE THIS STRING"
 
-release:
-  name: appcloudng
+releases:
+- name: appcloudng.core
   version: ###ucc_product_version###
+- name: appcloudng.services
+  version: ###ucc_product_version###
+- name: appcloudng.services-contrib
+  version: ###ucc_product_version###
+
 
 
 compilation:
@@ -130,13 +135,11 @@ resource_pools:
       password: $6$DxzA20NmmfOjOyqk$GiuzvfioqPMpzOIZxhKeuPRSEniM2PecTQLBtj1wcX8j9RncfzLWKNAfdQ/X0hJoTRmyvqNCe1N1BwQb5F3TP.
 
 
-
-
 jobs:
   - name: debian_nfs_server
     template: 
       - debian_nfs_server # stateful; static ip or domain name required for internal identification 
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # farmable
     resource_pool: small
     persistent_disk: 50000
@@ -147,7 +150,7 @@ jobs:
   - name: nats
     template:
       - nats # stateless; static ip or domain name required for internal identification
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # more instances can be running, but not useful for CF
     resource_pool: small
     networks:
@@ -157,7 +160,7 @@ jobs:
   - name: syslog_aggregator 
     template:
       - syslog_aggregator # stateful; static ip or domain name required for internal identification
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # farmable
     resource_pool: medium
     persistent_disk: 1000
@@ -168,7 +171,7 @@ jobs:
   - name: router
     template: 
       - gorouter # stateless, static ip or domain name required for external identification
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # farmable
     resource_pool: medium
     networks:
@@ -179,7 +182,7 @@ jobs:
   - name: vcap_postgres
     template: 
       - postgres # stateful; static ip or domain name required for internal identification
-    release: appcloudng
+    release: appcloudng.core
     instances: 1
     resource_pool: medium
     persistent_disk: 10000 #
@@ -192,7 +195,7 @@ jobs:
   - name: uaa
     template: 
       - uaa # stateless, dynamically discovered
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # version 1.4.x can be farmed
     resource_pool: medium
     networks:
@@ -201,7 +204,7 @@ jobs:
   - name: login
     template: 
       - login # stateless, dynamically discovered
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # farmable
     resource_pool: small
     networks:
@@ -211,7 +214,7 @@ jobs:
   - name: cloud_controller_ng
     template: 
       - cloud_controller_ng # stateless, dynamically discovered
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # farmable
     resource_pool: medium
     networks: 
@@ -220,7 +223,7 @@ jobs:
   - name: dea_next
     template: 
       - dea_next # stateless, dynamically discovered
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # farmable
     resource_pool: deas
     networks:
@@ -232,7 +235,7 @@ jobs:
   - name: win_dea
     template:
       - win_dea # stateless, dynamically discovered
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # farmable
     resource_pool: windows
     networks:
@@ -241,7 +244,7 @@ jobs:
   - name: pseudo_stager
     template:
       - pseudo_stager # stateless, dynamically discovered
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # farmable
     resource_pool: medium
     networks:
@@ -255,12 +258,39 @@ jobs:
   - name: health_manager
     template:
       - health_manager_next # stateless, dynamically discovered
-    release: appcloudng
+    release: appcloudng.core
     instances: 1 # cannot scale horizontally
     resource_pool: tiny
     networks:
       - name: default
 
+
+
+  ###### Service Nodes ####
+  - name: mysql_node_free
+    template:
+      - mysql_node # statefull, dynamically discovered by internal components, static IP or domain name requied for serving connections from apps
+    release: appcloudng.services
+    instances: 1 # farmable, NB: evacuate all services when scaling down
+    resource_pool: medium
+    persistent_disk: 5000
+    networks:
+      - name: default
+        static_ips:
+    properties:
+      mysql_node:
+        plan: "free"
+
+  #### Service Gateways ####
+  - name: service_gateways
+    template:
+      - mysql_gateway      # stateless, dynamically discovered
+    release: appcloudng.services
+    instances: 1 # cannot scale horizontally
+    resource_pool: tiny
+    networks:
+      - name: default # static ip not required
+    properties: {}
 
 
 
@@ -485,8 +515,117 @@ properties:
         override: true #true # has default true
       users:
       - admin|password1234!|scim.write,scim.read,openid,cloud_controller.admin
+      - services|services|scim.write,scim.read,openid,cloud_controller.admin
 
   login:
     protocol: http # has default "http"
     # uaa_base: http://uaa.test.com # auto-generated
 
+############## Services ##############
+
+  # uaa_ is used by the service gateways to authenticate to cc_api_version v2
+  uaa_endpoint:  "http://uaa.ccng-dev.net"
+  uaa_client_id: "cf"  # has default 'vmc'
+  uaa_client_auth_credentials:
+    username: "services"
+    password: "services"
+
+  mysql_gateway:
+    supported_versions: ["5.5"]
+    version_aliases:
+      current: "5.5"
+    token: token # Security: assign a random value.
+    cc_api_version: v2
+    check_orphan_interval: 7200 # has default '-1'
+    service_timeout: 70 # has default 10
+    node_timeout: 60 # has default 8
+    default_plan: "free" # has default 'free'
+  mysql_node:
+    supported_versions: ["5.5"]
+    default_version: "5.5"
+    z_interval: 30 # has default 30
+    service_start_timeout: 30 # has default 3
+    op_time_limit: 50 # has default 6
+    m_interval: 10 # has default 10
+    password: mysql # Security: assign a random value.
+    max_tmp: 1024 # has default 2048 # units in MB
+
+
+  service_plans:
+    mysql:
+      "free":
+        unique_id: "748bfee4-af46-42a7-84e6-a157cf0d43a6"
+        description: "Shared server, shared VM, 1MB memory, 10MB storage, 10 connections"
+        free: true
+        # extra: '{"cost":5.0,"bullets":[{"content":"10 MB storage"},{"content":"3 concurrent connections"},{"content":"Shared server"}]}'
+        job_management:
+          high_water: 450
+          low_water: 50
+        configuration:
+          allow_over_provisioning: false
+          capacity: 500
+          max_db_size: 10
+          key_buffer: 512
+          innodb_buffer_pool_size: 512
+          max_allowed_packet: 16
+          thread_cache_size: 128
+          query_cache_size: 128
+          max_long_query: 3
+          max_long_tx: 30
+          max_clients: 10
+          max_connections: 1000
+          table_open_cache: 2000
+          innodb_tables_per_database: 50
+          connection_pool_size:
+            min: 5
+            max: 10
+          backup:
+            enable: true # has default false
+            interval: "0 3 * * *" # has default "0 3 * * *"
+            node_interval: 5 # had default 5
+            first_node_only: false # has default false
+            timeout: 600 # has default 600
+          #lifecycle:
+          #  enable: false # has default false
+          #  serialization: enable # has default "disable"
+          #  snapshot:
+          #    quota: 1 # has default 0
+          #  worker_count: 5 # has default 1
+          warden:
+            enable: false # has default false
+
+      "wardenized":
+        unique_id: "72103582-dc7b-4aa9-b919-7fbbc9537895"
+        description: "Dedicated server, shared VM, 1MB memory, 10MB storage, 10 connections"
+        free: false
+        # extra: '{"cost":5.0,"bullets":[{"content":"10 MB storage"},{"content":"10 concurrent connections"},{"content":"Dedicated server"}]}'
+        job_management:
+          high_water: 900
+          low_water: 100
+        configuration:
+          allow_over_provisioning: false # has default false
+          capacity: 500
+          max_db_size: 10
+          key_buffer: 512
+          innodb_buffer_pool_size: 512
+          max_allowed_packet: 16
+          thread_cache_size: 128
+          query_cache_size: 128
+          max_long_query: 3
+          max_long_tx: 30
+          max_clients: 10
+          max_connections: 1000
+          table_open_cache: 2000
+          innodb_tables_per_database: 50
+          connection_pool_size:
+            min: 5
+            max: 10
+          backup:
+            enable: true
+          #lifecycle:
+          #  enable: false
+          #  serialization: enable
+          #  snapshot:
+          #    quota: 1
+          warden:
+            enable: true # has default false

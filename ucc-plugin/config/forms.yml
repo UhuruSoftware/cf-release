@@ -109,6 +109,12 @@ appcloudng:
       yml_key: ['["jobs"].select{|job| job["name"] == "win_dea"}.first["instances"]'],
       description: 'Windows Droplet Execution Agent - the agent that runs Windows applications (.Net on IIS).' }
 
+      - {name: service_sep,                                  label: Linux Services,                         type: separator}
+
+      - {name: mysql_nodes,                                label: MySQL Node,                                        type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "mysql_node_free"}.first["instances"]'],
+      description: 'Number of MySQL service nodes.' }
+
       - {name: core_sep,                                  label: App Cloud Core Components,                         type: separator}
 
       - {name: cloud_controllers,                         label: Cloud Controllers,                                 type: numeric,
