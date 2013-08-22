@@ -1,2 +1,2 @@
 uhuru-windows-stemcell: ['1.1.2.a.a']
-bosh-stemcell-php: ['0.9.12.a.a']
+bosh-stemcell: ['0.10.0.a.a']
