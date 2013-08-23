@@ -22,7 +22,7 @@ CF_RELEASE_DIR=$(readlink -f ".")
 COMMANDER_DIR="${CF_RELEASE_DIR}/private-uhuru-commander"
 DEV_RELEASES_DIR=$(readlink -f "./dev_releases")
 UCC_PLUGIN_DIR=$(readlink -f "./ucc-plugin")
-PUBLISHER_DIR="${COMMANDER_DIR}/publisher"
+PUBLISHER_DIR="${COMMANDER_DIR}/uhuru-publisher"
 WEBUI_DIR="${COMMANDER_DIR}/web-ui"
 
 
@@ -92,14 +92,15 @@ tar -czvf /tmp/${PRODUCT_NAME}/bits.tgz -C ${DEV_RELEASES_DIR} .
 echo "Current version is ${CURRENT_VERSION}"
 
 export BUNDLE_GEMFILE=${PUBLISHER_DIR}/Gemfile
+rm ${PUBLISHER_DIR}/Gemfile.lock
 bundle install
 cd ${PUBLISHER_DIR}/bin/
-./publisher upload version -n ${PRODUCT_NAME} -r ${CURRENT_VERSION} -t alpha -d "${VERSION_DESCRIPTION}" -f /tmp/${PRODUCT_NAME}/bits.tgz
+./uhuru-publisher upload version -n ${PRODUCT_NAME} -r ${CURRENT_VERSION} -t alpha -d "${VERSION_DESCRIPTION}" -f /tmp/${PRODUCT_NAME}/bits.tgz
 
 
 #add dependencies
 
 ruby -e "require 'yaml'; YAML.load_file('${UCC_PLUGIN_DIR}/config/dependencies.yml').each {|dep, ver| ver.each {|v| puts dep + ' ' + v}}" | while read name version;
 do
-    ./publisher add dependency -n ${PRODUCT_NAME} -r ${CURRENT_VERSION} -d ${name} -s ${version}
+    ./uhuru-publisher add dependency -n ${PRODUCT_NAME} -r ${CURRENT_VERSION} -d ${name} -s ${version}
 done
