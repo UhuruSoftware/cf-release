@@ -508,14 +508,14 @@ properties:
         scope: cloud_controller.read,cloud_controller.write,openid,password.write,cloud_controller.admin,scim.read,scim.write
         autoapprove: true
 
-
+<% services_password = SecureRandom.hex %>
     scim:
       # userids_enabled: true # has default false
       user:
         override: true #true # has default true
       users:
       - admin|password1234!|scim.write,scim.read,openid,cloud_controller.admin
-      - services|services|scim.write,scim.read,openid,cloud_controller.admin
+      - services|<%= services_password %>|scim.write,scim.read,openid,cloud_controller.admin
 
   login:
     protocol: http # has default "http"
@@ -528,13 +528,13 @@ properties:
   uaa_client_id: "cf"  # has default 'vmc'
   uaa_client_auth_credentials:
     username: "services"
-    password: "services"
+    password: <%= services_password %>
 
   mysql_gateway:
     supported_versions: ["5.5"]
     version_aliases:
       current: "5.5"
-    token: token # Security: assign a random value.
+    token: <%= SecureRandom.hex %> # Security: assign a random value.
     cc_api_version: v2
     check_orphan_interval: 7200 # has default '-1'
     service_timeout: 70 # has default 10
@@ -547,8 +547,9 @@ properties:
     service_start_timeout: 30 # has default 3
     op_time_limit: 50 # has default 6
     m_interval: 10 # has default 10
-    password: mysql # Security: assign a random value.
+    password: <%= SecureRandom.hex %> # Security: assign a random value.
     max_tmp: 1024 # has default 2048 # units in MB
+    production: false
 
 
   service_plans:
@@ -593,39 +594,3 @@ properties:
           #  worker_count: 5 # has default 1
           warden:
             enable: false # has default false
-
-      "wardenized":
-        unique_id: "72103582-dc7b-4aa9-b919-7fbbc9537895"
-        description: "Dedicated server, shared VM, 1MB memory, 10MB storage, 10 connections"
-        free: false
-        # extra: '{"cost":5.0,"bullets":[{"content":"10 MB storage"},{"content":"10 concurrent connections"},{"content":"Dedicated server"}]}'
-        job_management:
-          high_water: 900
-          low_water: 100
-        configuration:
-          allow_over_provisioning: false # has default false
-          capacity: 500
-          max_db_size: 10
-          key_buffer: 512
-          innodb_buffer_pool_size: 512
-          max_allowed_packet: 16
-          thread_cache_size: 128
-          query_cache_size: 128
-          max_long_query: 3
-          max_long_tx: 30
-          max_clients: 10
-          max_connections: 1000
-          table_open_cache: 2000
-          innodb_tables_per_database: 50
-          connection_pool_size:
-            min: 5
-            max: 10
-          backup:
-            enable: true
-          #lifecycle:
-          #  enable: false
-          #  serialization: enable
-          #  snapshot:
-          #    quota: 1
-          warden:
-            enable: true # has default false

@@ -47,6 +47,7 @@ module Uhuru::BoshCommander
       stats["sys_org"] = properties["system_domain_organization"]
       #stats["contact_email"] = "CHANGEME"
       stats["support_url"] = properties["support_address"]
+      stats["mysql_service_token"] ="cf -f  create-service-auth-token  --label mysql  --provider core  --token #{properties["mysql_gateway"]["token"]}"
       #stats["services"] = ["mysql_node", "mssql_node", "uhurufs_node", "rabbit_node", "postgresql_node", "redis_node", "mongodb_node"].map { |node|
       #  current_manifest["jobs"] != nil && current_manifest["jobs"].select{|job| job["name"] == node}.first["instances"] > 0 ? node : nil }.compact
       stats["stacks"] = ["dea_next", "win_dea"].map { |stack|

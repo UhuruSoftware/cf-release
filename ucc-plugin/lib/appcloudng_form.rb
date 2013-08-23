@@ -125,9 +125,12 @@ module Uhuru::BoshCommander
       properties.set_val 'vcap_databases',              'address',                    jobs.find_by_name('vcap_postgres')['networks'][0]['static_ips'][0]
       properties.set_val 'ccdb',              'address',                    jobs.find_by_name('vcap_postgres')['networks'][0]['static_ips'][0]
       properties.set_val 'ccdb_ng',              'address',                    jobs.find_by_name('vcap_postgres')['networks'][0]['static_ips'][0]  
-      properties.set_val 'cc',                'srv_api_uri',                "api.#{properties['domain']}"
+      properties.set_val 'cc',                'srv_api_uri',                "http://api.#{properties['domain']}"
       properties.set_val 'dea_next',               'memory_mb',                  resource_pools.find_by_name('deas')['cloud_properties']['ram']
       properties.set_val 'win_dea',               'max_memory',                  resource_pools.find_by_name('windows')['cloud_properties']['ram']
+
+
+      properties['uaa_endpoint']="http://uaa.#{properties['domain']}"
 
 
     end
