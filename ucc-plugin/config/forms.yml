@@ -111,9 +111,38 @@ appcloudng:
 
       - {name: service_sep,                                  label: Linux Services,                         type: separator}
 
-      - {name: mysql_nodes,                                label: MySQL Node,                                        type: numeric,
+      - {name: mysql_nodes,                                label: MySQL Nodes,                                        type: numeric,
       yml_key: ['["jobs"].select{|job| job["name"] == "mysql_node_free"}.first["instances"]'],
       description: 'Number of MySQL service nodes.' }
+
+      - {name: mongodb_nodes,                                label: MongoDB Nodes,                                        type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "mongodb_service_node_free"}.first["instances"]'],
+      description: 'Number of MongoDB service nodes.' }
+
+
+      - {name: memchached_nodes,                                label: Memcached Nodes,                                        type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "memcached_service_node_free"}.first["instances"]'],
+      description: 'Number of Memcached service nodes.' }
+
+      - {name: vblob_nodes,                                label: VBlob Nodes,                                        type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "vblob_service_node_free"}.first["instances"]'],
+      description: 'Number of VBlob service nodes.' }
+
+      - {name: elasticsearch_nodes,                                label: ElasticSearch Nodes,                                        type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "elasticsearch_service_node_free"}.first["instances"]'],
+      description: 'Number of ElasticSearch service nodes.' }
+
+      - {name: postgresql_nodes,                                label: PostgreSQL Nodes,                                        type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "postgresql_service_node_free"}.first["instances"]'],
+      description: 'Number of PostgreSQL service nodes.' }
+
+      - {name: redis_nodes,                                label: Redis Nodes,                                        type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "redis_service_node_free"}.first["instances"]'],
+      description: 'Number of Redis service nodes.' }
+
+      - {name: rabbit_nodes,                                label: RabbitMQ Nodes,                                        type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "rabbit_service_node_free"}.first["instances"]'],
+      description: 'Number of RabbitMQ service nodes.' }
 
       - {name: core_sep,                                  label: App Cloud Core Components,                         type: separator}
 

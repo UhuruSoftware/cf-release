@@ -47,7 +47,23 @@ module Uhuru::BoshCommander
       stats["sys_org"] = properties["system_domain_organization"]
       #stats["contact_email"] = "CHANGEME"
       stats["support_url"] = properties["support_address"]
-      stats["mysql_service_token"] ="cf -f  create-service-auth-token  --label mysql  --provider core  --token #{properties["mysql_gateway"]["token"]}"
+
+
+      current_manifest["jobs"].each do |job|
+        if (job['name'].to_s.end_with?('_node_free') && job['instances'] > 0)
+          service_name = job['name'].split('_')[0]
+          stats["#{service_name}_service_token"] = "cf -f  create-service-auth-token  --label #{service_name}  --provider core  --token #{properties["#{service_name}_gateway"]["token"]}"
+        end
+      end
+      #stats["mysql_service_token"] ="cf -f  create-service-auth-token  --label mysql  --provider core  --token #{properties["mysql_gateway"]["token"]}"
+      #stats["mongodb_service_token"] ="cf -f  create-service-auth-token  --label mongodb  --provider core  --token #{properties["mongodb_gateway"]["token"]}"
+      #stats["memcached_service_token"] ="cf -f  create-service-auth-token  --label memcached  --provider core  --token #{properties["memcached_gateway"]["token"]}"
+      #stats["vblob_service_token"] ="cf -f  create-service-auth-token  --label vblob  --provider core  --token #{properties["vblob_gateway"]["token"]}"
+      #stats["elasticsearch_service_token"] ="cf -f  create-service-auth-token  --label elasticsearch  --provider core  --token #{properties["elasticsearch_gateway"]["token"]}"
+      #stats["postgresql_service_token"] ="cf -f  create-service-auth-token  --label postgresql  --provider core  --token #{properties["postgresql_gateway"]["token"]}"
+      #stats["redis_service_token"] ="cf -f  create-service-auth-token  --label redis  --provider core  --token #{properties["redis_gateway"]["token"]}"
+      #stats["rabbit_service_token"] ="cf -f  create-service-auth-token  --label rabbit  --provider core  --token #{properties["rabbit_gateway"]["token"]}"
+
       #stats["services"] = ["mysql_node", "mssql_node", "uhurufs_node", "rabbit_node", "postgresql_node", "redis_node", "mongodb_node"].map { |node|
       #  current_manifest["jobs"] != nil && current_manifest["jobs"].select{|job| job["name"] == node}.first["instances"] > 0 ? node : nil }.compact
       stats["stacks"] = ["dea_next", "win_dea"].map { |stack|

@@ -281,6 +281,92 @@ jobs:
       mysql_node:
         plan: "free"
 
+  - name: mongodb_service_node_free
+    release: appcloudng.services-contrib
+    template: mongodb_node_ng
+    instances: 1
+    resource_pool: medium
+    persistent_disk: 10000
+    properties:
+      plan: "free"
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: memcached_service_node_free
+    release: appcloudng.services-contrib
+    template: memcached_node_ng
+    instances: 1
+    resource_pool: medium
+    persistent_disk: 10000
+    properties:
+      plan: "free"
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: vblob_service_node_free
+    release: appcloudng.services-contrib
+    template: vblob_node_ng
+    instances: 1
+    resource_pool: small
+    persistent_disk: 10000
+    properties:
+      plan: "free"
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: elasticsearch_service_node_free
+    release: appcloudng.services-contrib
+    template: elasticsearch_node
+    instances: 1
+    resource_pool: small
+    persistent_disk: 10000
+    properties:
+      plan: "free"
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: postgresql_service_node_free
+    release: appcloudng.services-contrib
+    template: postgresql_node_ng
+    instances: 1
+    resource_pool: medium
+    persistent_disk: 10000
+    properties:
+      postgresql_node:
+        plan: "free"
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: redis_service_node_free
+    release: appcloudng.services-contrib
+    template: redis_node_ng
+    instances: 1
+    resource_pool: small
+    persistent_disk: 10000
+    properties:
+      plan: "free"
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: rabbit_service_node_free
+    release: appcloudng.services-contrib
+    template: rabbit_node_ng
+    instances: 1
+    resource_pool: small
+    persistent_disk: 10000
+    properties:
+      plan: "free"
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+
   #### Service Gateways ####
   - name: service_gateways
     template:
@@ -291,6 +377,29 @@ jobs:
     networks:
       - name: default # static ip not required
     properties: {}
+
+  - name: gateways_contrib
+    release: appcloudng.services-contrib
+    template:
+    - elasticsearch_gateway
+    - mongodb_gateway
+    - memcached_gateway
+    - postgresql_gateway_ng
+    - redis_gateway
+    - rabbit_gateway
+    - vblob_gateway
+    instances: 1
+    resource_pool: medium
+    networks:
+      - name: default
+        default: [dns, gateway]
+    properties: {}
+      # Service credentials
+      #uaa_client_id: "cf"
+      #uaa_endpoint: http://uaa.mycloud.com # CHANGE
+      #uaa_client_auth_credentials:
+      #  username: services
+      #  password: SERVICES_PASSWORD # CHANGE
 
 
 
@@ -551,6 +660,88 @@ properties:
     max_tmp: 1024 # has default 2048 # units in MB
     production: false
 
+  mongodb_gateway:
+    token: <%= SecureRandom.hex %> # CHANGE - the token you use later with `cf create-service-auth-token`
+    default_plan: "free"
+    supported_versions: ["2.2"]
+    version_aliases:
+      current: "2.2"
+    cc_api_version: v2
+  mongodb_node:
+    supported_versions: ["2.2"]
+    default_version: "2.2"
+    max_tmp: 900
+
+  memcached_gateway:
+    token: <%= SecureRandom.hex %> # CHANGE - the token you use later with `cf create-service-auth-token`
+    default_plan: "free"
+    supported_versions: ["1.4"]
+    version_aliases:
+      current: "1.4"
+    cc_api_version: v2
+  memcached_node:
+    supported_versions: ["1.4"]
+    default_version: "1.4"
+
+  vblob_gateway:
+    token: <%= SecureRandom.hex %> # CHANGE - the token you use later with `cf create-service-auth-token`
+    default_plan: "free"
+    supported_versions: ["0.51"]
+    version_aliases:
+      current: "0.51"
+    cc_api_version: v2
+  vblob_node:
+    supported_versions: ["0.51"]
+    default_version: "0.51"
+
+  elasticsearch_gateway:
+    token: <%= SecureRandom.hex %> # CHANGE - the token you use later with `cf create-service-auth-token`
+    default_plan: "free"
+    supported_versions: ["0.20"]
+    version_aliases:
+      current: "0.20"
+    cc_api_version: v2
+  elasticsearch_node:
+    supported_versions: ["0.20"]
+    default_version: "0.20"
+
+  postgresql_gateway:
+    token: <%= SecureRandom.hex %> # CHANGE - the token you use later with `cf create-service-auth-token`
+    default_plan: "free"
+    supported_versions: ["9.2"]
+    version_aliases:
+      current: "9.2"
+    cc_api_version: v2
+  postgresql_node:
+    supported_versions: ["9.2"]
+    default_version: "9.2"
+    max_tmp: 900
+    password: <%= SecureRandom.hex %> # CHANGE
+
+  redis_gateway:
+    token: <%= SecureRandom.hex %> # CHANGE - the token you use later with `cf create-service-auth-token`
+    default_plan: "free"
+    supported_versions: ["2.6"]
+    version_aliases:
+      current: "2.6"
+    cc_api_version: v2
+  redis_node:
+    supported_versions: ["2.6"]
+    default_version: "2.6"
+    max_tmp: 900
+
+  rabbit_gateway:
+    token: <%= SecureRandom.hex %> # CHANGE - the token you use later with `cf create-service-auth-token`
+    default_plan: "free"
+    supported_versions: ["3.0"]
+    version_aliases:
+      current: "3.0"
+    cc_api_version: v2
+  rabbit_node:
+    supported_versions: ["3.0"]
+    default_version: "3.0"
+    max_tmp: 900
+
 
   service_plans:
     mysql:
@@ -594,3 +785,118 @@ properties:
           #  worker_count: 5 # has default 1
           warden:
             enable: false # has default false
+
+    mongodb:
+      "free":
+        description: "Developer, shared VM, 250MB storage, 10 connections"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+          max_clients: 10
+          quota_files: 4
+          quota_data_size: 240
+          enable_journaling: true
+          backup:
+            enable: true
+          lifecycle:
+            enable: true
+            serialization: enable
+            snapshot:
+              quota: 1
+
+    memcached:
+      "free":
+        description: "Developer"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+
+    vblob:
+      "free":
+        description: "Developer"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+
+    elasticsearch:
+      "free":
+        description: "Developer"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+
+    postgresql:
+      "free":
+        description: "Developer, 250MB storage, 10 connections"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+          max_clients: 10
+          quota_files: 4
+          quota_data_size: 240
+          enable_journaling: true
+          backup:
+            enable: false
+          lifecycle:
+            enable: false
+            serialization: enable
+            snapshot:
+              quota: 1
+
+    redis:
+      "free":
+        description: "Developer, 250MB storage, 10 connections"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+          max_clients: 10
+          quota_files: 4
+          quota_data_size: 240
+          enable_journaling: true
+          backup:
+            enable: false
+          lifecycle:
+            enable: false
+            serialization: enable
+            snapshot:
+              quota: 1
+
+
+    rabbit:
+      "free":
+        description: "Developer, 250MB storage, 10 connections"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+          max_clients: 10
+          quota_files: 4
+          quota_data_size: 240
+          enable_journaling: true
+          backup:
+            enable: false
+          lifecycle:
+            enable: false
+            serialization: enable
+            snapshot:
+              quota: 1

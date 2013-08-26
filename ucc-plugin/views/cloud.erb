@@ -275,7 +275,11 @@
   <hr />
 
   <h2>Service tokens</h2>
-  <h3>MySQL service registration command: <span class="highlight bold"><%= summary["mysql_service_token"] %></span></h3>
+  <% summary.each do |element| %>
+      <%if (element[0].to_s.end_with?("service_token"))%>
+        <h3><%= element[0].to_s.split('_')[0] %> service registration command: <span class="highlight bold"><%= summary[element[0]] %></span></h3>
+      <% end %>
+  <% end %>
   <hr />
 
 </div>
