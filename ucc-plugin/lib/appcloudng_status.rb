@@ -52,7 +52,12 @@ module Uhuru::BoshCommander
       current_manifest["jobs"].each do |job|
         if (job['name'].to_s.end_with?('_node_free') && job['instances'] > 0)
           service_name = job['name'].split('_')[0]
-          stats["#{service_name}_service_token"] = "cf -f  create-service-auth-token  --label #{service_name}  --provider core  --token #{properties["#{service_name}_gateway"]["token"]}"
+          if service_name == "rabbit"
+            stats["#{service_name}_service_token"] = "cf -f  create-service-auth-token  --label #{service_name}mq  --provider core  --token #{properties["#{service_name}_gateway"]["token"]}"
+          else
+            stats["#{service_name}_service_token"] = "cf -f  create-service-auth-token  --label #{service_name}  --provider core  --token #{properties["#{service_name}_gateway"]["token"]}"
+          end
+
         end
       end
       #stats["mysql_service_token"] ="cf -f  create-service-auth-token  --label mysql  --provider core  --token #{properties["mysql_gateway"]["token"]}"
