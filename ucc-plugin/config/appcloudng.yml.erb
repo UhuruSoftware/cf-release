@@ -284,7 +284,7 @@ jobs:
   - name: mongodb_service_node_free
     release: appcloudng.services-contrib
     template: mongodb_node_ng
-    instances: 1
+    instances: 0
     resource_pool: medium
     persistent_disk: 10000
     properties:
@@ -296,7 +296,7 @@ jobs:
   - name: memcached_service_node_free
     release: appcloudng.services-contrib
     template: memcached_node_ng
-    instances: 1
+    instances: 0
     resource_pool: medium
     persistent_disk: 10000
     properties:
@@ -308,7 +308,7 @@ jobs:
   - name: vblob_service_node_free
     release: appcloudng.services-contrib
     template: vblob_node_ng
-    instances: 1
+    instances: 0
     resource_pool: small
     persistent_disk: 10000
     properties:
@@ -320,7 +320,7 @@ jobs:
   - name: elasticsearch_service_node_free
     release: appcloudng.services-contrib
     template: elasticsearch_node
-    instances: 1
+    instances: 0
     resource_pool: small
     persistent_disk: 10000
     properties:
