@@ -786,56 +786,56 @@ properties:
           warden:
             enable: false # has default false
 
-    mongodb:
-      "free":
-        description: "Developer, shared VM, 250MB storage, 10 connections"
-        free: true
-        job_management:
-          high_water: 230
-          low_water: 20
-        configuration:
-          capacity: 125
-          max_clients: 10
-          quota_files: 4
-          quota_data_size: 240
-          enable_journaling: true
-          backup:
-            enable: true
-          lifecycle:
-            enable: true
-            serialization: enable
-            snapshot:
-              quota: 1
-
-    memcached:
-      "free":
-        description: "Developer"
-        free: true
-        job_management:
-          high_water: 230
-          low_water: 20
-        configuration:
-          capacity: 125
-
-    vblob:
-      "free":
-        description: "Developer"
-        free: true
-        job_management:
-          high_water: 230
-          low_water: 20
-        configuration:
-          capacity: 125
-
-    elasticsearch:
-      "free":
-        description: "Developer"
-        free: true
-        job_management:
-          high_water: 230
-          low_water: 20
-        configuration:
-          capacity: 125
+#    mongodb:
+#      "free":
+#        description: "Developer, shared VM, 250MB storage, 10 connections"
+#        free: true
+#        job_management:
+#          high_water: 230
+#          low_water: 20
+#        configuration:
+#          capacity: 125
+#          max_clients: 10
+#          quota_files: 4
+#          quota_data_size: 240
+#          enable_journaling: true
+#          backup:
+#            enable: true
+#          lifecycle:
+#            enable: true
+#            serialization: enable
+#            snapshot:
+#              quota: 1
+#
+#    memcached:
+#      "free":
+#        description: "Developer"
+#        free: true
+#        job_management:
+#          high_water: 230
+#          low_water: 20
+#        configuration:
+#          capacity: 125
+#
+#    vblob:
+#      "free":
+#        description: "Developer"
+#        free: true
+#        job_management:
+#          high_water: 230
+#          low_water: 20
+#        configuration:
+#          capacity: 125
+#
+#    elasticsearch:
+#      "free":
+#        description: "Developer"
+#        free: true
+#        job_management:
+#          high_water: 230
+#          low_water: 20
+#        configuration:
+#          capacity: 125
 
     postgresql:
       "free":
