@@ -127,6 +127,13 @@ appcloudng:
       yml_key: ['["jobs"].select{|job| job["name"] == "rabbit_service_node_free"}.first["instances"]'],
       description: 'Number of RabbitMQ service nodes.' }
 
+
+      - {name: winser_sep,                                label: Windows Services,                                  type: separator}
+
+      - {name: mssql_nodes,                               label: MSSQL Nodes,                                       type: numeric,
+      yml_key: ['["jobs"].select{|job| job["name"] == "mssql_node"}.first["instances"]'],
+      description: 'Number of Microsoft SQL Server nodes.' }
+
       - {name: core_sep,                                  label: App Cloud Core Components,                         type: separator}
 
       - {name: cloud_controllers,                         label: Cloud Controllers,                                 type: numeric,
@@ -137,12 +144,21 @@ appcloudng:
       yml_key: '["jobs"].select{|job| job["name"] == "router"}.first["instances"]',
       description: 'Number of Routers. The Router is a daemon that routes requests. In a larger system you should setup a pool of Routers behind a load balancer.' }
 
+
+
+
   - screen: Product Keys
     id: product_keys
     fields:
       - {name: windows_activation_key,                    label: Windows 2008 R2 Activation Key,                    type: product_key,
       yml_key: ['["resource_pools"].select{|r| r["name"] == "windows"}.first["env"]["windows"]["product_key"]'], 
       description: '<span class="error" style="font-weight:bold">Please make sure that your Windows activation key is valid. If the activation key is wrong, you will either have to manually activate machines or re-deploy your cloud.</span>' }
+
+      - {name: mssql_server_product_key,                  label: MSSQL Server 2008 Product Key,                     type: product_key,
+      yml_key: '["properties"]["mssql_node"]["product_key"]',
+      description: 'Microsoft SQL Server activation Key. The SQL Server instance will be upgraded to match the license of your key. If you set an invalid key, the SQL Server will be setup as a free SQL Server Express instance.' }
+
+
 
   - screen: Properties
     id: properties
