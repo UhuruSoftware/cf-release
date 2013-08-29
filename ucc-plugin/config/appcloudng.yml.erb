@@ -284,7 +284,7 @@ jobs:
   - name: mongodb_service_node_free
     release: appcloudng.services-contrib
     template: mongodb_node_ng
-    instances: 0
+    instances: 1
     resource_pool: medium
     persistent_disk: 10000
     properties:
@@ -296,7 +296,7 @@ jobs:
   - name: memcached_service_node_free
     release: appcloudng.services-contrib
     template: memcached_node_ng
-    instances: 0
+    instances: 1
     resource_pool: medium
     persistent_disk: 10000
     properties:
@@ -308,7 +308,7 @@ jobs:
   - name: vblob_service_node_free
     release: appcloudng.services-contrib
     template: vblob_node_ng
-    instances: 0
+    instances: 1
     resource_pool: small
     persistent_disk: 10000
     properties:
@@ -320,7 +320,7 @@ jobs:
   - name: elasticsearch_service_node_free
     release: appcloudng.services-contrib
     template: elasticsearch_node
-    instances: 0
+    instances: 1
     resource_pool: small
     persistent_disk: 10000
     properties:
@@ -381,9 +381,9 @@ jobs:
   - name: gateways_contrib
     release: appcloudng.services-contrib
     template:
-#    - elasticsearch_gateway
-#    - mongodb_gateway
-#    - memcached_gateway
+    - elasticsearch_gateway
+    - mongodb_gateway
+    - memcached_gateway
     - postgresql_gateway_ng
     - redis_gateway
     - rabbit_gateway
@@ -786,56 +786,56 @@ properties:
           warden:
             enable: false # has default false
 
-#    mongodb:
-#      "free":
-#        description: "Developer, shared VM, 250MB storage, 10 connections"
-#        free: true
-#        job_management:
-#          high_water: 230
-#          low_water: 20
-#        configuration:
-#          capacity: 125
-#          max_clients: 10
-#          quota_files: 4
-#          quota_data_size: 240
-#          enable_journaling: true
-#          backup:
-#            enable: true
-#          lifecycle:
-#            enable: true
-#            serialization: enable
-#            snapshot:
-#              quota: 1
-#
-#    memcached:
-#      "free":
-#        description: "Developer"
-#        free: true
-#        job_management:
-#          high_water: 230
-#          low_water: 20
-#        configuration:
-#          capacity: 125
-#
-#    vblob:
-#      "free":
-#        description: "Developer"
-#        free: true
-#        job_management:
-#          high_water: 230
-#          low_water: 20
-#        configuration:
-#          capacity: 125
-#
-#    elasticsearch:
-#      "free":
-#        description: "Developer"
-#        free: true
-#        job_management:
-#          high_water: 230
-#          low_water: 20
-#        configuration:
-#          capacity: 125
+    mongodb:
+      "free":
+        description: "Developer, shared VM, 250MB storage, 10 connections"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+          max_clients: 10
+          quota_files: 4
+          quota_data_size: 240
+          enable_journaling: true
+          backup:
+            enable: true
+          lifecycle:
+            enable: true
+            serialization: enable
+            snapshot:
+              quota: 1
+
+    memcached:
+      "free":
+        description: "Developer"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+
+    vblob:
+      "free":
+        description: "Developer"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
+
+    elasticsearch:
+      "free":
+        description: "Developer"
+        free: true
+        job_management:
+          high_water: 230
+          low_water: 20
+        configuration:
+          capacity: 125
 
     postgresql:
       "free":
