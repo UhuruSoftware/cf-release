@@ -13,6 +13,8 @@ releases:
   version: ###ucc_product_version###
 - name: appcloudng.services-contrib
   version: ###ucc_product_version###
+- name: appcloudng.uhuru-service
+  version: ###ucc_product_version###
 
 
 
@@ -264,6 +266,17 @@ jobs:
     networks:
       - name: default
 
+  ###### Windows Nodes #####
+
+  - name: mssql_node
+    template: mssql_node
+    release: appcloudng.uhuru-service
+    instances: 0
+    persistent_disk: 75000
+    resource_pool: windows
+    networks:
+    - name: default
+      static_ips:
 
 
   ###### Service Nodes ####
@@ -284,7 +297,7 @@ jobs:
   - name: mongodb_service_node_free
     release: appcloudng.services-contrib
     template: mongodb_node_ng
-    instances: 1
+    instances: 0
     resource_pool: medium
     persistent_disk: 10000
     properties:
@@ -296,7 +309,7 @@ jobs:
   - name: memcached_service_node_free
     release: appcloudng.services-contrib
     template: memcached_node_ng
-    instances: 1
+    instances: 0
     resource_pool: medium
     persistent_disk: 10000
     properties:
@@ -308,7 +321,7 @@ jobs:
   - name: vblob_service_node_free
     release: appcloudng.services-contrib
     template: vblob_node_ng
-    instances: 1
+    instances: 0
     resource_pool: small
     persistent_disk: 10000
     properties:
@@ -320,7 +333,7 @@ jobs:
   - name: elasticsearch_service_node_free
     release: appcloudng.services-contrib
     template: elasticsearch_node
-    instances: 1
+    instances: 0
     resource_pool: small
     persistent_disk: 10000
     properties:
@@ -381,9 +394,9 @@ jobs:
   - name: gateways_contrib
     release: appcloudng.services-contrib
     template:
-    - elasticsearch_gateway
-    - mongodb_gateway
-    - memcached_gateway
+#    - elasticsearch_gateway
+#    - mongodb_gateway
+#    - memcached_gateway
     - postgresql_gateway_ng
     - redis_gateway
     - rabbit_gateway
@@ -401,6 +414,14 @@ jobs:
       #  username: services
       #  password: SERVICES_PASSWORD # CHANGE
 
+
+  - name: mssql_gateway
+    template: mssql_gateway
+    release: appcloudng.uhuru-service
+    instances: 0
+    resource_pool: tiny
+    networks:
+    - name: default
 
 
 properties:
@@ -743,6 +764,29 @@ properties:
     max_tmp: 900
 
 
+  mssql_gateway:
+    check_orphan_interval: 7200
+    token: "<%= SecureRandom.hex %>"
+    service_timeout: 60
+    node_timeout: 30
+    supported_versions:
+    - "2008"
+    version_aliases:
+      current: "2008"
+  mssql_node:
+    capacity: 200
+    admin_user: sa
+    admin_password: changem3!
+    port: 1433
+    max_db_size: 20
+    max_long_query: 3
+    max_long_tx: 30
+    max_user_conns: 20
+    default_version: 2008
+    statusport: 12345
+    product_key: 00000-00000-00000-00000-00000
+
+
   service_plans:
     mysql:
       "free":
@@ -786,56 +830,56 @@ properties:
           warden:
             enable: false # has default false
 
-    mongodb:
-      "free":
-        description: "Developer, shared VM, 250MB storage, 10 connections"
-        free: true
-        job_management:
-          high_water: 230
-          low_water: 20
-        configuration:
-          capacity: 125
-          max_clients: 10
-          quota_files: 4
-          quota_data_size: 240
-          enable_journaling: true
-          backup:
-            enable: true
-          lifecycle:
-            enable: true
-            serialization: enable
-            snapshot:
-              quota: 1
-
-    memcached:
-      "free":
-        description: "Developer"
-        free: true
-        job_management:
-          high_water: 230
-          low_water: 20
-        configuration:
-          capacity: 125
-
-    vblob:
-      "free":
-        description: "Developer"
-        free: true
-        job_management:
-          high_water: 230
-          low_water: 20
-        configuration:
-          capacity: 125
-
-    elasticsearch:
-      "free":
-        description: "Developer"
-        free: true
-        job_management:
-          high_water: 230
-          low_water: 20
-        configuration:
-          capacity: 125
+#    mongodb:
+#      "free":
+#        description: "Developer, shared VM, 250MB storage, 10 connections"
+#        free: true
+#        job_management:
+#          high_water: 230
+#          low_water: 20
+#        configuration:
+#          capacity: 125
+#          max_clients: 10
+#          quota_files: 4
+#          quota_data_size: 240
+#          enable_journaling: true
+#          backup:
+#            enable: true
+#          lifecycle:
+#            enable: true
+#            serialization: enable
+#            snapshot:
+#              quota: 1
+#
+#    memcached:
+#      "free":
+#        description: "Developer"
+#        free: true
+#        job_management:
+#          high_water: 230
+#          low_water: 20
+#        configuration:
+#          capacity: 125
+#
+#    vblob:
+#      "free":
+#        description: "Developer"
+#        free: true
+#        job_management:
+#          high_water: 230
+#          low_water: 20
+#        configuration:
+#          capacity: 125
+#
+#    elasticsearch:
+#      "free":
+#        description: "Developer"
+#        free: true
+#        job_management:
+#          high_water: 230
+#          low_water: 20
+#        configuration:
+#          capacity: 125
 
     postgresql:
       "free":
@@ -900,3 +944,21 @@ properties:
             serialization: enable
             snapshot:
               quota: 1
+
+    mssql:
+      free:
+        job_management:
+          high_water: 1400
+          low_water: 100
+        configuration:
+          allow_over_provisioning: false
+          capacity: 100
+          max_db_size: 128
+          max_long_query: 3
+          max_long_tx: 0
+          max_clients: 20
+          lifecycle:
+            enable: true
+            worker_count: 1
+            snapshot:
+              quota: 10
