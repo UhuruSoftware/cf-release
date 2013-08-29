@@ -12,7 +12,7 @@ releases:
   - name: appcloudng.services-contrib
     tarball: services-contrib.release
     path: cf-services-contrib-release
-    git_repo: https://github.com/uhurusoftware/cf-services-contrib-release.git
+    git_repo: git@github.com:UhuruSoftware/cf-services-contrib-release.git
   - name: appcloudng.uhuru-service
     tarball: uhuru-services.release
     path: private-uhuru-services-release
