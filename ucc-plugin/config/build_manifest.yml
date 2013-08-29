@@ -15,5 +15,6 @@ releases:
     git_repo: https://github.com/uhurusoftware/cf-services-contrib-release.git
   - name: appcloudng.uhuru-service
     tarball: uhuru-services.release
+    path: private-uhuru-services-release
     git_repo: ssh://jenkins@github.com/uhurusoftware/private-uhuru-services-release.git
  
