@@ -22,6 +22,20 @@ module Uhuru::BoshCommander
     def auto_complete_manifest!
       volatile_manifest = get_data VALUE_TYPE_VOLATILE
 
+      #**************************************************************
+      # Setup gateways for used nodes
+      #**************************************************************
+
+      gateways = {
+          "mssql_gateway" => "mssql_node"
+      }
+
+      gateways.each{|gateway, node|
+        node_exists = volatile_manifest["jobs"].find {|job| job["name"] == node}["instances"].to_i > 0
+        volatile_manifest["jobs"].find{|job| job["name"] == gateway}["instances"] = node_exists ? 1 : 0
+      }
+
+
 
       #**************************************************************
       # Set resource pool sizes based on job instances
