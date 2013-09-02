@@ -27,7 +27,7 @@ module Uhuru::BoshCommander
       #**************************************************************
 
       gateways = {
-          "mssql_gateway" => "mssql_node"
+          "mssql_gateway" => "mssql_node_free"
       }
 
       gateways.each{|gateway, node|
