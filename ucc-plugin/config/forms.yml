@@ -131,7 +131,7 @@ appcloudng:
       - {name: winser_sep,                                label: Windows Services,                                  type: separator}
 
       - {name: mssql_nodes,                               label: MSSQL Nodes,                                       type: numeric,
-      yml_key: ['["jobs"].select{|job| job["name"] == "mssql_node"}.first["instances"]'],
+      yml_key: ['["jobs"].select{|job| job["name"] == "mssql_node_free"}.first["instances"]'],
       description: 'Number of Microsoft SQL Server nodes.' }
 
       - {name: core_sep,                                  label: App Cloud Core Components,                         type: separator}
