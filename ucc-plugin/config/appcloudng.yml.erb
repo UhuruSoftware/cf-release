@@ -423,7 +423,6 @@ jobs:
     networks:
     - name: default
 
-
 properties:
   sysadmin_password: changeme
   domain: mydomain.net
@@ -773,6 +772,8 @@ properties:
     - "2008"
     version_aliases:
       current: "2008"
+    cc_api_version: v2
+
   mssql_node:
     capacity: 200
     admin_user: sa
@@ -947,6 +948,9 @@ properties:
 
     mssql:
       free:
+        unique_id: 2292b94f-2507-466e-aeb6-5e50f0fa3714
+        description: "Microsoft Sql Server Database with 128 MB storage"
+        free: true
         job_management:
           high_water: 1400
           low_water: 100
