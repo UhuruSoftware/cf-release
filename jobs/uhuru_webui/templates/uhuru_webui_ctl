@@ -1,0 +1,49 @@
+#!/bin/bash
+
+export C_INCLUDE_PATH=/var/vcap/packages/libpq/include:$C_INCLUDE_PATH
+export LIBRARY_PATH=/var/vcap/packages/libpq/lib:$LIBRARY_PATH
+export LANG=en_US.UTF-8
+
+export PATH=/var/vcap/packages/ruby/bin:$PATH
+RUN_DIR=/var/vcap/sys/run/uhuru_webui
+LOG_DIR=/var/vcap/sys/log/uhuru_webui
+PIDFILE=$RUN_DIR/uhuru_webui.pid
+JOB_DIR=/var/vcap/jobs/uhuru_webui
+
+source /var/vcap/packages/common/utils.sh
+
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE "Uhuru WebUI"
+
+    mkdir -p $RUN_DIR
+    mkdir -p $LOG_DIR
+
+    echo $$ > $PIDFILE
+
+    export CONFIG_FILE=$JOB_DIR/config/uhuru-webui.yml
+
+    cd /var/vcap/packages/uhuru_webui
+
+    exec /var/vcap/packages/ruby/bin/ruby \
+         /var/vcap/packages/uhuru_webui/uhuru_webui/bin/webui \
+         -c $CONFIG_FILE \
+         >>$LOG_DIR/uhuru_webui.stdout.log \
+         2>>$LOG_DIR/uhuru_webui.stderr.log
+
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+
+
+    ;;
+
+  *)
+    echo "Usage: uhuru_webui_ctl {start|stop}"
+
+    ;;
+
+esac

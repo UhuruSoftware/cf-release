@@ -1,0 +1,12 @@
+---
+name: uhuru_webui
+templates:
+  uhuru_webui_ctl: bin/uhuru_webui_ctl
+  uhuru-webui.yml.erb: config/uhuru-webui.yml
+packages:
+  - common
+  - libpq
+  - mysqlclient
+  - sqlite
+  - uhuru_webui
+  - ruby

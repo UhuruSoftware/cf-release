@@ -266,6 +266,15 @@ jobs:
     networks:
       - name: default
 
+  - name: uhuru_webui
+    template: uhuru_webui
+    release: appcloudng.core
+    instances: 1
+    resource_pool: tiny
+    networks:
+    - name: default
+
+
   ###### Windows Nodes #####
 
   - name: mssql_node_free
@@ -436,6 +445,9 @@ properties:
   support_address: "http://support.mydomain.net" # has default "http://support.cloudfoundry.com"
   description: "Uhuru AppCloud Platform as a Service"
 
+  uhuru:
+    webui:
+      port: 9191
 
   networks: 
     apps: default
@@ -623,6 +635,14 @@ properties:
     #    - vmc
 
     clients:
+      webui:
+        override: true
+        secret: <%= SecureRandom.hex %>
+        authorized-grant-types: client_credentials,password,authorization_code
+        scope: cloud_controller.read,cloud_controller.write,cloud_controller.ad$
+        authorities: uaa.admin,uaa.resource,tokens.read,scim.read,scim.write,pa$
+        autoapprove: true
+
       login:
         secret: <%= SecureRandom.hex %>
       vmc:

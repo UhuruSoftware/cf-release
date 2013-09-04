@@ -1,0 +1,78 @@
+pid_filename: /var/vcap/sys/run/uhuru_webui/uhuru_webui.pid
+local_route: <%= spec.networks.send(properties.networks.apps).ip %>
+port: <%= properties.uhuru.webui.port || 9191 %>
+dev-mode: true
+
+cloud_controller_url: "<%= properties.cc.srv_api_uri %>"
+
+uaa:
+  url: "<%= properties.uaa_endpoint %>"
+  client_id: "webui"
+  client_secret: "<%= properties.uaa.clients.webui.secret %>"
+
+
+contact:
+  company: "Uhuru Software, Inc."
+  address: "17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA."
+  phone: "+1 (425) 406-6383"
+  email: "uhuru@uhurusoftware.com"
+
+email:
+  mailgun_api_url: "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0@api.mailgun.net/v2/samples.mailgun.org/messages"
+  from_title: "Uhuru Cloud"
+  from: "marius.ivan@uhurusoftware.mailgun.org" #"postmaster@uhurusoftware.mailgun.org"
+  subject: "Uhuru Cloud E-mail Validation"
+
+recaptcha:
+  recaptcha_public_key: "6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk"
+  recaptcha_private_key: "6LfuXN4SAAAAAEuH--10s_lH_HMeYdjQtxha3UKd"
+
+
+logging:
+  level: debug
+
+domains:
+  - url: "192.168.1.195:4567"
+    page_title: "Uhuru WebUi"
+    site_tab: "Uhuru"
+    welcome_message: "PeakColo PaaS - powered by Uhuru"
+  - url: "127.0.0.1:4567"
+    page_title: "Uhuru WebUi"
+    site_tab: "Uhuru"
+    welcome_message: "PeakColo PaaS - powered by Uhuru"
+  - url: "192.168.1.112:4567"
+    page_title: "Uhuru WebUi LINUX BOxX"
+    site_tab: "Uhuru"
+    welcome_message: "PeakColo PaaS - powered by Uhuru LINUX BOX"
+default_domain:
+  page_title: Uhuru Software .Inc
+  welcome_message: Welcome to Uhuru Cloud
+  site_tab: "Uhuru"
+
+webui:
+  activation_link_secret: "terceseht"
+  signup_user_password: "tHis1sth3def4ultuserpa55w0rd!!!"
+  company_link: http://www.uhurusoftware.com
+  support_link: http://uhurusoftware.zendesk.com
+
+
+  more_videos_link: http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases
+  guest_feedback_link: http://bit.ly/uhrbloglife
+  twitter_link: https://www.twitter.com/uhurusoftware
+  facebook_link: https://www.facebook.com/uhurusoftware
+
+  terms_of_services_link: http://uhurusoftware.com/tos
+  privacy_policy_link: http://uhurusoftware.com/privacy/
+  support_link: http://uhurusoftware.zendesk.com
+
+  visual_studio_plugin_link: vs
+  app_cloud_admin_link: appc
+  command_line_link: http://support.uhurusoftware.com/entries/21454287-deploying-and-managing-apps-with-command-line
+
+
+quota_settings:
+  billing_provider: chargify
+  billing_provider_domain: uhurutestcloud
+  auth_token: kQbDEn5os7NTX-TVv9GT
+  product_handle: paid
+  division_factor: 256
