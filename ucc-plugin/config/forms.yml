@@ -219,11 +219,11 @@ appcloudng:
 
       - {name: cloud_messages_sep,                        label: App Cloud Portal Customization,                    type: separator }
 
-      - {name: page_title,                           label: WebUI page title,                                   type: text,
+      - {name: page_title,                           label: WebUI page title,                                   type: string,
       yml_key: '["properties"]["uhuru"]["webui"]["page_title"]',
       description: 'Cloud web interface page title'}
 
-      - {name: site_tab,                           label: WebUI tab name,                                   type: text,
+      - {name: site_tab,                           label: WebUI tab name,                                   type: string,
       yml_key: '["properties"]["uhuru"]["webui"]["site_tab"]',
       description: 'Text displayed on the tab of the browser '}
 
@@ -231,7 +231,7 @@ appcloudng:
       yml_key: '["properties"]["uhuru"]["webui"]["welcome_message"]',
       description: 'Cloud web interface welcome message.'}
 
-      - {name: copyright_message,                           label: Welcome Message,                                   type: text,
+      - {name: copyright_message,                           label: Copyright Message,                                   type: text,
       yml_key: '["properties"]["uhuru"]["webui"]["copyright_message"]',
       description: 'The copyright notice displayed in the Web Interface of the cloud.'}
 
@@ -239,27 +239,27 @@ appcloudng:
       yml_key: '["properties"]["uhuru"]["webui"]["color_theme"]',
       description: 'The color theme of the Web Interface. Options are: <b>simple</b> (colorful tiles on a white background) and <b>lightsaber blue</b> (colorful tiles on a dark blue background)'}
 
-      - {name: more_videos_link,                           label: Video Links,                                   type: text,
+      - {name: more_videos_link,                           label: Video Links,                                   type: string,
       yml_key: '["properties"]["uhuru"]["webui"]["more_videos_link"]',
       description: 'Web address to video.'}
 
-      - {name: guest_feedback_link,                           label: Guest feedback link,                                   type: text,
+      - {name: guest_feedback_link,                           label: Guest feedback link,                                   type: string,
       yml_key: '["properties"]["uhuru"]["webui"]["guest_feedback_link"]',
       description: 'URI to guest feedback page.'}
 
-      - {name: twitter_link,                           label: Twiter link,                                   type: text,
+      - {name: twitter_link,                           label: Twiter link,                                   type: string,
       yml_key: '["properties"]["uhuru"]["webui"]["twitter_link"]',
       description: 'Link to the twitter account of the company.'}
 
-      - {name: facebook_link,                           label: Facebook link,                                   type: text,
+      - {name: facebook_link,                           label: Facebook link,                                   type: string,
       yml_key: '["properties"]["uhuru"]["webui"]["facebook_link"]',
       description: 'Link to the facebook account of the company.'}
 
-      - {name: terms_of_services_link,                           label: Terms of service link,                                   type: text,
+      - {name: terms_of_services_link,                           label: Terms of service link,                                   type: string,
       yml_key: '["properties"]["uhuru"]["webui"]["terms_of_services_link"]',
       description: 'Link to the terms of service.'}
 
-      - {name: privacy_policy_link,                           label: Privacy policy link,                                   type: text,
+      - {name: privacy_policy_link,                           label: Privacy policy link,                                   type: string,
       yml_key: '["properties"]["uhuru"]["webui"]["privacy_policy_link"]',
       description: 'Link to the privacy policy.'}
 
