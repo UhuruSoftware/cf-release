@@ -12,62 +12,61 @@ uaa:
 
 
 contact:
-  company: "Uhuru Software, Inc."
-  address: "17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA."
-  phone: "+1 (425) 406-6383"
-  email: "uhuru@uhurusoftware.com"
+  company: "<%= properties.uhuru.webui.contact.company || "Uhuru Software, Inc." %>"
+  address: "<%= properties.uhuru.webui.contact.address || "17530 NE Union Hill Road, Suite 120, Redmond, WA 98052, USA." %>"
+  phone: "<%= properties.uhuru.webui.contact.phone || "+1 (425) 406-6383" %>"
+  email: "<%= properties.uhuru.webui.contact.email || "uhuru@uhurusoftware.com" %>"
+  company_link: <%= properties.uhuru.webui.contact.company_link || "http://www.uhurusoftware.com" %>
+  support_link: <%= properties.uhuru.webui.contact.support_link || "http://uhurusoftware.zendesk.com" %>
+
 
 email:
-  mailgun_api_url: "https://api:key-3ax6xnjp29jd6fds4gc373sgvjxteol0@api.mailgun.net/v2/samples.mailgun.org/messages"
-  from_title: "Uhuru Cloud"
-  from: "marius.ivan@uhurusoftware.mailgun.org" #"postmaster@uhurusoftware.mailgun.org"
-  subject: "Uhuru Cloud E-mail Validation"
+  from: "<%= properties.uhuru.webui.email.from || "postmaster@uhurusoftware.mailgun.org" %>"
+  from_alias: "<%= properties.uhuru.webui.email.from_alias || "Uhuru Cloud" %>"
+  server: "<%= properties.uhuru.webui.email.server || "smtp.mailgun.org" %>"
+  port: <%= properties.uhuru.webui.email.port || 587 %>
+  user: "<%= properties.uhuru.webui.email.user || "postmaster@uhurusoftware.mailgun.org" %>"
+  secret: "<%= properties.uhuru.webui.email.secret || "4q899o1avzu3" %>"
+  auth_method: <%= properties.uhuru.webui.email.auth_method || ":plain" %>
+  enable_tls: <%= properties.uhuru.webui.email.enable_tls || true %>
 
 recaptcha:
-  recaptcha_public_key: "6LfuXN4SAAAAAAVoUDfpUzxftBrpecXQSzTuKcZk"
-  recaptcha_private_key: "6LfuXN4SAAAAAEuH--10s_lH_HMeYdjQtxha3UKd"
+  recaptcha_public_key: "<%= properties.uhuru.webui.recaptcha_public_key %>"
+  recaptcha_private_key: "<%= properties.uhuru.webui.recaptcha_private_key %>"
 
 
 logging:
   level: debug
+  file: /var/vcap/sys/log/simple_webui/simple_webui.log
 
-domains:
-  - url: "192.168.1.195:4567"
-    page_title: "Uhuru WebUi"
-    site_tab: "Uhuru"
-    welcome_message: "PeakColo PaaS - powered by Uhuru"
-  - url: "127.0.0.1:4567"
-    page_title: "Uhuru WebUi"
-    site_tab: "Uhuru"
-    welcome_message: "PeakColo PaaS - powered by Uhuru"
-  - url: "192.168.1.112:4567"
-    page_title: "Uhuru WebUi LINUX BOxX"
-    site_tab: "Uhuru"
-    welcome_message: "PeakColo PaaS - powered by Uhuru LINUX BOX"
-default_domain:
-  page_title: Uhuru Software .Inc
-  welcome_message: Welcome to Uhuru Cloud
-  site_tab: "Uhuru"
 
 webui:
-  activation_link_secret: "terceseht"
-  signup_user_password: "tHis1sth3def4ultuserpa55w0rd!!!"
-  company_link: http://www.uhurusoftware.com
-  support_link: http://uhurusoftware.zendesk.com
+  page_title: "<%= properties.uhuru.webui.page_title || "Uhuru WebUi" %>"
+  site_tab: "<%= properties.uhuru.webui.site_tab || "Uhuru" %>"
+  welcome_message: "<%= properties.uhuru.webui.welcome_message || "Uhuru AppClound NG" %>"
+  copyright_message: "<%= properties.uhuru.webui.copyright_message || "&copy; Copyright Uhuru Software 2012" %>" #de pus pagina
+  color_theme: "<%= properties.uhuru.simple_webui.color_theme || "simple_white" %>" #de pus || nu asa de important
 
+  <% if properties.uhuru.simple_webui && properties.uhuru.webui.domain %> # nu trebe facut nimic cu el
+  domain: "<%= properties.uhuru.webui.domain %>"
+  <% else %>
+  domain: "www.<%= properties.domain %>"
+  <% end %>
 
-  more_videos_link: http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases
-  guest_feedback_link: http://bit.ly/uhrbloglife
-  twitter_link: https://www.twitter.com/uhurusoftware
-  facebook_link: https://www.facebook.com/uhurusoftware
+  activation_link_secret: "<%= properties.uhuru.simple_webui.activation_link_secret %>"
 
-  terms_of_services_link: http://uhurusoftware.com/tos
-  privacy_policy_link: http://uhurusoftware.com/privacy/
-  support_link: http://uhurusoftware.zendesk.com
+  more_videos_link: <%= properties.uhuru.webui.video_links || 'http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases' %>
+  guest_feedback_link:  <%= properties.uhuru.webui.guest_feedback_link || 'http://bit.ly/uhrbloglife' %>
+  twitter_link:  <%= properties.uhuru.webui.twitter_link || 'https://www.twitter.com/uhurusoftware' %>
+  facebook_link: <%= properties.uhuru.webui.facebook_link || 'https://www.facebook.com/uhurusoftware' %>
 
-  visual_studio_plugin_link: vs
-  app_cloud_admin_link: appc
-  command_line_link: http://support.uhurusoftware.com/entries/21454287-deploying-and-managing-apps-with-command-line
+  terms_of_services_link: <%= properties.uhuru.webui.terms_of_services_link || 'http://uhurusoftware.com/tos' %>
+  privacy_policy_link:  <%= properties.uhuru.webui.privacy_policy_link || 'http://uhurusoftware.com/privacy/' %>
+
+  visual_studio_plugin_link: "<%= properties.uhuru.webui.visual_studio_plugin_download_url || 'http://www.uhurucloud.com/tools/visualstudio' %>"
+  app_cloud_admin_link: "<%= properties.uhuru.webui.cloud_admin_download_url || 'http://www.uhurucloud.com/tools/cloudadmin' %>"
+  command_line_link: "<%= properties.uhuru.webui.command_line || 'http://docs.cloudfoundry.com/tools/vmc/installing-vmc.html' %>"
+  eclipse_url: "<%= properties.uhuru.webui.eclipse_url || 'http://docs.cloudfoundry.com/tools/STS/configuring-STS.html' %>" #de pus pagina
 
 
 quota_settings:
