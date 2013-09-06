@@ -45,15 +45,15 @@ webui:
   site_tab: "<%= properties.uhuru.webui.site_tab || "Uhuru" %>"
   welcome_message: "<%= properties.uhuru.webui.welcome_message || "Uhuru AppClound NG" %>"
   copyright_message: "<%= properties.uhuru.webui.copyright_message || "&copy; Copyright Uhuru Software 2012" %>" #de pus pagina
-  color_theme: "<%= properties.uhuru.simple_webui.color_theme || "simple_white" %>" #de pus || nu asa de important
+  color_theme: "<%= properties.uhuru.webui.color_theme || "simple_white" %>" #de pus || nu asa de important
 
-  <% if properties.uhuru.simple_webui && properties.uhuru.webui.domain %> # nu trebe facut nimic cu el
+  <% if properties.uhuru.webui && properties.uhuru.webui.domain %> # nu trebe facut nimic cu el
   domain: "<%= properties.uhuru.webui.domain %>"
   <% else %>
   domain: "www.<%= properties.domain %>"
   <% end %>
 
-  activation_link_secret: "<%= properties.uhuru.simple_webui.activation_link_secret %>"
+  activation_link_secret: "<%= properties.uhuru.webui.activation_link_secret %>"
 
   more_videos_link: <%= properties.uhuru.webui.video_links || 'http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases' %>
   guest_feedback_link:  <%= properties.uhuru.webui.guest_feedback_link || 'http://bit.ly/uhrbloglife' %>
