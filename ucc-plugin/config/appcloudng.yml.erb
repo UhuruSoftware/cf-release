@@ -522,9 +522,9 @@ properties:
       name: <%= db_name_old %>
     - tag: cc_ng
       name: <%= db_name %>
-      # citext: true # not compatible with psql 9.2, use create extension instead
-      run_on_every_startup:
-        - "CREATE EXTENSION IF NOT EXISTS citext"
+      citext: true # not compatible with psql 9.2, use create extension instead
+      #run_on_every_startup:
+      #  - "CREATE EXTENSION IF NOT EXISTS citext"
     - tag: uaa
       name: uaa
     roles:
