@@ -263,6 +263,16 @@ appcloudng:
       yml_key: '["properties"]["uhuru"]["webui"]["privacy_policy_link"]',
       description: 'Link to the privacy policy.'}
 
+      - {name: recaptcha_sep,                             label: Recaptcha Settings,                                type: separator }
+
+      - {name: recaptcha_public_key,                      label: Public Key,                                        type: string,
+      yml_key: '["properties"]["uhuru"]["webui"]["recaptcha"]["recaptcha_public_key"]',
+      description: 'The public key of your recaptcha account. Recaptcha is a free Anti-Bot service provided by Google. You can get a key here (http://www.google.com/recaptcha).'}
+
+      - {name: recaptcha_private_key,                     label: Private Key,                                       type: string,
+      yml_key: '["properties"]["uhuru"]["webui"]["recaptcha"]["recaptcha_private_key"]',
+      description: 'The private key of your recaptcha account.'}
+
       - {name: email_sep,                                 label: E-mail Settings,                                   type: separator }
 
       - {name: email_from,                                label: From Address,                                      type: string,
