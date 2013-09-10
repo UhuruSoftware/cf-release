@@ -102,36 +102,36 @@ appcloudng:
       - {name: dea_sep,                                   label: Droplet Execution Agents,                          type: separator}
 
       - {name: linux_deas,                                label: Linux DEAs,                                        type: numeric,
-      yml_key: ['["jobs"].select{|job| job["name"] == "dea_next"}.first["instances"]'],
+      yml_key: ['["jobs"].select{|job| job["name"] == "dea_next"}.first["instances"]', '["properties"]["uhuru"]["webui"]["monitoring"]["components"]["dea"]'],
       description: 'Linux Droplet Execution Agent - the agent that that runs Linux applications (Java, Ruby, PHP, node.js).' }
 
       - {name: windows_deas,                              label: Windows DEAs,                                      type: numeric,
-      yml_key: ['["jobs"].select{|job| job["name"] == "win_dea"}.first["instances"]'],
+      yml_key: ['["jobs"].select{|job| job["name"] == "win_dea"}.first["instances"]', '["properties"]["uhuru"]["webui"]["monitoring"]["components"]["win_dea"]'],
       description: 'Windows Droplet Execution Agent - the agent that runs Windows applications (.Net on IIS).' }
 
       - {name: service_sep,                                  label: Linux Services,                         type: separator}
 
       - {name: mysql_nodes,                                label: MySQL Nodes,                                        type: numeric,
-      yml_key: ['["jobs"].select{|job| job["name"] == "mysql_node_free"}.first["instances"]'],
+      yml_key: ['["jobs"].select{|job| job["name"] == "mysql_node_free"}.first["instances"]', '["properties"]["uhuru"]["webui"]["monitoring"]["components"]["mysql_node"]'],
       description: 'Number of MySQL service nodes.' }
 
       - {name: postgresql_nodes,                                label: PostgreSQL Nodes,                                        type: numeric,
-      yml_key: ['["jobs"].select{|job| job["name"] == "postgresql_service_node_free"}.first["instances"]'],
+      yml_key: ['["jobs"].select{|job| job["name"] == "postgresql_service_node_free"}.first["instances"]', '["properties"]["uhuru"]["webui"]["monitoring"]["components"]["postgresql_node"]'],
       description: 'Number of PostgreSQL service nodes.' }
 
       - {name: redis_nodes,                                label: Redis Nodes,                                        type: numeric,
-      yml_key: ['["jobs"].select{|job| job["name"] == "redis_service_node_free"}.first["instances"]'],
+      yml_key: ['["jobs"].select{|job| job["name"] == "redis_service_node_free"}.first["instances"]', '["properties"]["uhuru"]["webui"]["monitoring"]["components"]["redis_node"]'],
       description: 'Number of Redis service nodes.' }
 
       - {name: rabbit_nodes,                                label: RabbitMQ Nodes,                                        type: numeric,
-      yml_key: ['["jobs"].select{|job| job["name"] == "rabbit_service_node_free"}.first["instances"]'],
+      yml_key: ['["jobs"].select{|job| job["name"] == "rabbit_service_node_free"}.first["instances"]', '["properties"]["uhuru"]["webui"]["monitoring"]["components"]["rabbit_node"]'],
       description: 'Number of RabbitMQ service nodes.' }
 
 
       - {name: winser_sep,                                label: Windows Services,                                  type: separator}
 
       - {name: mssql_nodes,                               label: MSSQL Nodes,                                       type: numeric,
-      yml_key: ['["jobs"].select{|job| job["name"] == "mssql_node_free"}.first["instances"]'],
+      yml_key: ['["jobs"].select{|job| job["name"] == "mssql_node_free"}.first["instances"]', '["properties"]["uhuru"]["webui"]["monitoring"]["components"]["mssql_node"]'],
       description: 'Number of Microsoft SQL Server nodes.' }
 
       - {name: core_sep,                                  label: App Cloud Core Components,                         type: separator}
