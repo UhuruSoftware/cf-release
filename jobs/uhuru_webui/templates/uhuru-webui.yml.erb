@@ -123,14 +123,14 @@ monitoring:
 #    timeout: 5000
   components:
     deas :
-    <% if properties.webui.monitoring.components.dea > 0 %>
+    <% if properties.uhuru.webui.monitoring.components.dea > 0 %>
     - name: "dea"
     <% end %>
-    <% if properties.webui.monitoring.components.win_dea > 0 %>
+    <% if properties.uhuru.webui.monitoring.components.win_dea > 0 %>
     - name: "win_dea"
     <% end %>
     services:
-    <% if properties.webui.monitoring.components.mysql_node > 0 %>
+    <% if properties.uhuru.webui.monitoring.components.mysql_node > 0 %>
     - name: mysql_node
       token: <%= properties.mysql_gateway.token %>
     <% end %>
@@ -138,16 +138,16 @@ monitoring:
 #    - name: mongodb_node <- not used yet
 #      token:
 
-    <% if properties.webui.monitoring.components.redis_node > 0 %>
+    <% if properties.uhuru.webui.monitoring.components.redis_node > 0 %>
     - name: redis_node
       token: <%= properties.redis_gateway.token %>
     <% end %>
-    <% if properties.webui.monitoring.components.rabbit_node > 0 %>
+    <% if properties.uhuru.webui.monitoring.components.rabbit_node > 0 %>
     - name: rabbit_node
       token: <%= properties.rabbit_gateway.token %>
     <% end %>
 
-    <% if properties.webui.monitoring.components.postgresql_node > 0 %>
+    <% if properties.uhuru.webui.monitoring.components.postgresql_node > 0 %>
     - name: postgresql_node
       token: <%= properties.postgresql_node.token %>
     <% end %>
@@ -155,7 +155,7 @@ monitoring:
 #      token:
 #    - name: uhurufs_node <- not used yet
 #      token:
-    <% if properties.webui.monitoring.components.mssql_node > 0 %>
+    <% if properties.uhuru.webui.monitoring.components.mssql_node > 0 %>
     - name: mssql_node
       token: <%= properties.mssql_gateway.token %>
     <% end %>
