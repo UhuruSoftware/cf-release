@@ -527,6 +527,8 @@ properties:
       #  - "CREATE EXTENSION IF NOT EXISTS citext"
     - tag: uaa
       name: uaa
+    - tag: monitoring
+      name: monitoring
     roles:
     - tag: admin
       name: root
@@ -534,6 +536,10 @@ properties:
     - tag: uaa
       name: uaa
       password: <%= db_password %> # Security: assign a random value.
+    - tag: monitoring
+      name: monitoring
+      password: <%= db_password %>
+
 
   ccdb_ng:
     address: 10.0.7.123

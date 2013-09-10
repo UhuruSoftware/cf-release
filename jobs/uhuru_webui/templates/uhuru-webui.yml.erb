@@ -75,3 +75,94 @@ quota_settings:
   auth_token: kQbDEn5os7NTX-TVv9GT
   product_handle: paid
   division_factor: 256
+
+
+monitoring:
+  reports:
+    half_of_day:
+      resolution: 30
+      resolution_unit: 'minutes'
+      sample_count: 30
+    last_day:
+      resolution: 1
+      resolution_unit: 'hours'
+      sample_count: 30
+    last_week:
+      resolution: 6
+      resolution_unit: 'hours'
+      sample_count: 30
+    last_month:
+      resolution: 1
+      resolution_unit: 'days'
+      sample_count: 30
+    last_year:
+      resolution: 12
+      resolution_unit: 'days'
+      sample_count: 30
+  vmc_executable_path: cf
+  cloud_user: monitoring
+  cloud_password:  <%= SecureRandom.hex %>
+  default_org: monitoring
+  default_space: monitoring
+  apps_domain: ["apps.ccng-dev.net"]
+  email_to: "<%= properties.uhuru.webui.monitoring.email_to %>"
+  sleep_after_app_push: 60
+  pause_after_each_app: 45
+  database:
+    database: "monitoring"
+    host: <%= properties.vcap_databases.address %>
+    port: <%= properties.vcap_databases.port %>
+    encoding: utf8
+    username: monitoring
+    password: <%= properties.vcap_databases.roles.find { |role| role.tag == "monitoring" }.password %>
+    adapter: postgresql
+    timeout: 2000
+#    adapter: sqlite3
+#    database: /tmp/monitoring.db
+#    pool: 5
+#    timeout: 5000
+  components:
+    deas :
+    <% if spec.jobs.find { |job| job.name == "dea_next" }.instances > 0 %>
+    - name: "dea"
+    <% end %>
+    <% if spec.jobs.find { |job| job.name == "win_dea" }.instances > 0 %>
+    - name: "win_dea"
+    <% end %>
+    services:
+    <% if spec.jobs.find { |job| job.name == "mysql_node_free" }.instances > 0 %>
+    - name: mysql_node
+      token: <%= properties.mysql_gateway.token %>
+    <% end %>
+    <% if spec.jobs.find { |job| job.name == "mongodb_service_node_free" }.instances > 0 %>
+    - name: mongodb_node
+      token: <%= properties.mongodb_gateway.token %>
+    <% end %>
+    <% if spec.jobs.find { |job| job.name == "redis_service_node_free" }.instances > 0 %>
+    - name: redis_node
+      token: <%= properties.redis_gateway.token %>
+    <% end %>
+    <% if spec.jobs.find { |job| job.name == "rabbit_service_node_free" }.instances > 0 %>
+    - name: rabbit_node
+      token: <%= properties.rabbit_gateway.token %>
+    <% end %>
+
+    <% if spec.jobs.find { |job| job.name == "postgresql_service_node_free" }.instances > 0 %>
+    - name: postgresql_node
+      token: <%= properties.postgresql_node.token %>
+    <% end %>
+#    - name: uhuru_tunnel_node <- not used yet
+#      token:
+#    - name: uhurufs_node <- not used yet
+#      token:
+    <% if spec.jobs.find { |job| job.name == "mssql_node_free" }.instances > 0 %>
+    - name: mssql_node
+      token: <%= properties.mssql_gateway.token %>
+    <% end %>
+
+  buildpacks:
+    dotNet: https://github.com/stefanschneider/dummy-buildpack.git
+    java: https://github.com/cloudfoundry/java-buildpack
+    nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
+    php: https://github.com/heroku/heroku-buildpack-php
+    ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
