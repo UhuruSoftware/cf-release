@@ -3,3 +3,9 @@ check process webui
   start program "/var/vcap/jobs/uhuru_webui/bin/uhuru_webui_ctl start"
   stop program "/var/vcap/jobs/uhuru_webui/bin/uhuru_webui_ctl stop"
   group vcap
+
+check process monitoring
+  with pidfile /var/vcap/sys/run/uhuru_webui/monitoring.pid
+  start program "/var/vcap/jobs/uhuru_webui/bin/monitoring_ctl start"
+  stop program "/var/vcap/jobs/uhuru_webui/bin/monitoring_ctl stop"
+  group vcap

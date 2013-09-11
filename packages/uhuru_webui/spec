@@ -7,6 +7,6 @@ dependencies:
   - ruby
 files:
   - uhuru-webui/{bin,lib,public,views,template_apps, logs}/**/*
-  - uhuru-webui/{Gemfile,Gemfile.lock,config/error_messages.yml,config/uhuru-webui.yml}
+  - uhuru-webui/{Gemfile,Gemfile.lock,config/error_messages.yml,config/uhuru-webui.yml,config/app-definitions.yml}
   - pkg_utils/*
 
