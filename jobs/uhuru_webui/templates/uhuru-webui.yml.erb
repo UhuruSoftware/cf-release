@@ -31,8 +31,8 @@ email:
   enable_tls: <%= properties.uhuru.webui.email.enable_tls || true %>
 
 recaptcha:
-  recaptcha_public_key: "<%= properties.uhuru.webui.recaptcha_public_key %>"
-  recaptcha_private_key: "<%= properties.uhuru.webui.recaptcha_private_key %>"
+  recaptcha_public_key: "<%= properties.uhuru.webui.recaptcha.recaptcha_public_key %>"
+  recaptcha_private_key: "<%= properties.uhuru.webui.recaptcha.recaptcha_private_key %>"
 
 
 logging:
@@ -149,7 +149,7 @@ monitoring:
 
     <% if properties.uhuru.webui.monitoring.components.postgresql_node > 0 %>
     - name: postgresql_node
-      token: <%= properties.postgresql_node.token %>
+      token: <%= properties.postgresql_gateway.token %>
     <% end %>
 #    - name: uhuru_tunnel_node <- not used yet
 #      token:
