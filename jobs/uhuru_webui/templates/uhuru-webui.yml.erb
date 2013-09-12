@@ -104,7 +104,7 @@ monitoring:
   cloud_password:  <%= SecureRandom.hex %>
   default_org: monitoring
   default_space: monitoring
-  apps_domain: "<%= properties.app_domains %>"
+  apps_domain: <%= properties.app_domains %>
   email_to: "<%= properties.uhuru.webui.monitoring.email_to %>"
   sleep_after_app_push: 60
   pause_after_each_app: 45
@@ -122,7 +122,7 @@ monitoring:
 #    pool: 5
 #    timeout: 5000
   components:
-    deas :
+    deas:
     <% if properties.uhuru.webui.monitoring.components.dea > 0 %>
     - name: "dea"
     <% end %>
