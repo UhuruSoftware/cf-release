@@ -99,7 +99,7 @@ monitoring:
       resolution: 12
       resolution_unit: 'days'
       sample_count: 30
-  vmc_executable_path: cf
+  vmc_executable_path:"HOME=/home/vcap cf"
   cloud_user: monitoring
   cloud_password:  <%= SecureRandom.hex %>
   default_org: monitoring
