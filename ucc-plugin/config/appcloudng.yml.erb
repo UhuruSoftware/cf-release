@@ -453,7 +453,7 @@ properties:
       welcome_message: "Uhuru AppClound NG"
       copyright_message: "&copy; Copyright Uhuru Software 2012"
       color_theme: simple_white
-      activation_link_secret:  "<%= SecureRandom.hex %>"
+      activation_link_secret: "<%= SecureRandom.hex %>"
       more_videos_link: 'http://support.uhurusoftware.com/forums/20507726-uhuru-knowledge-bases'
       guest_feedback_link: 'http://bit.ly/uhrbloglife'
       twitter_link: 'https://www.twitter.com/uhurusoftware'
@@ -465,6 +465,7 @@ properties:
       command_line: 'http://docs.cloudfoundry.com/tools/vmc/installing-vmc.html'
       eclipse_url: 'http://docs.cloudfoundry.com/tools/STS/configuring-STS.html'
       monitoring:
+        monitoring_user_password: "<%= SecureRandom.hex %>"
         email_to: "contact.uhurusoftware.com"
         components:
           dea: 0

@@ -101,7 +101,7 @@ monitoring:
       sample_count: 30
   vmc_executable_path: bash -c "HOME=/home/vcap cf"
   cloud_user: monitoring
-  cloud_password:  <%= SecureRandom.hex %>
+  cloud_password: "<%= properties.uhuru.webui.monitoring.monitoring_user_password %>"
   default_org: monitoring
   default_space: monitoring
   apps_domain: <%= properties.app_domains %>
