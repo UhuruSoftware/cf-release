@@ -106,8 +106,8 @@ monitoring:
   default_space: monitoring
   apps_domain: <%= properties.app_domains %>
   email_to: "<%= properties.uhuru.webui.monitoring.email_to %>"
-  sleep_after_app_push: 60
-  pause_after_each_app: 45
+  sleep_after_app_push: 240
+  pause_after_each_app: 1
   database:
     database: "monitoring"
     host: <%= properties.vcap_databases.address %>
@@ -162,7 +162,7 @@ monitoring:
 
   buildpacks:
     dotNet: https://github.com/stefanschneider/dummy-buildpack.git
-    java: https://github.com/cloudfoundry/java-buildpack
+    java: https://github.com/ramnivas/cloudfoundry-buildpack-java
     nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
     php: https://github.com/heroku/heroku-buildpack-php
     ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
