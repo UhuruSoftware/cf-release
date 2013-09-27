@@ -242,6 +242,9 @@ jobs:
     resource_pool: windows
     networks:
       - name: default
+    properties:
+      win_dea:
+        stacks: ["iis8"]
 
   - name: pseudo_stager
     template:

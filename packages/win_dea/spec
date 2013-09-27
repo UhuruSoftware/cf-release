@@ -3,5 +3,5 @@ name: win_dea
 
 files:
   - vcap_dotnet/installers/DEAInstaller.msi
-
+  - vcap_dotnet/src/Buildpacks/**/*
 

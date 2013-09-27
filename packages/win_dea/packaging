@@ -1,5 +1,6 @@
 # Extract the msi
-msiexec /a vcap_dotnet\installers\DEAInstaller.msi /qb TARGETDIR=%BOSH_INSTALL_TARGET%
+xcopy vcap_dotnet\src\Buildpacks %BOSH_INSTALL_TARGET%\buildpacks /S /Y /I
+msiexec /i vcap_dotnet\installers\DEAInstaller.msi /qb INSTALLDIR=%BOSH_INSTALL_TARGET%
 
 # Deleted the default configs. They will be generated from the job's ERBs.
 del %BOSH_INSTALL_TARGET%\DEA.config

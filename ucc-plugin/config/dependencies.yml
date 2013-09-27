@@ -1,2 +1,2 @@
-uhuru-windows-stemcell: ['1.1.2.a.a']
+windows2012: ['1.0.1.a.a']
 bosh-stemcell: ['0.10.0.a.a']

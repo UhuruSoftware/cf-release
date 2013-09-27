@@ -1,0 +1,6 @@
+---
+name: git_portable
+
+files:
+  - git_portable/PortableGit-1.8.4-preview20130916.exe
+

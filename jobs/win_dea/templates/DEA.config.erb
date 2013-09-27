@@ -17,12 +17,23 @@
     advertiseIntervalMs="5000"
     
     useDiskQuota="true"
+    uploadThrottleBitsps="<%= properties.win_dea.upload_throttle_bps || '0' %>"
+
     maxConcurrentStarts="3">
     
     <directoryServer v2Port="<%= properties.win_dea.v2fileport || '34567' %>" streamingTimeoutMS="60000" />
     
+    <staging 
+      enabled="true" 
+      buildpacksDirectory="C:\vcap\packages\win_dea\buildpacks"    
+      gitExecutable="C:\vcap\packages\git_portable\bin\git.exe"
+      stagingTimeoutMs="1200000"
+    />
+
     <stacks>
-      <stack name="iis75"/>
+      <% properties.win_dea.stacks.each do |stack| %>
+      <stack name="<%= stack %>"/>
+      <% end %>
     </stacks>
 
   </dea>

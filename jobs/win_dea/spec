@@ -8,4 +8,5 @@ templates:
 
 packages:
   - win_dea
+  - git_portable
 

@@ -1,3 +1,6 @@
+2013-09.27  Florin Dragos <florin.dragos@uhurusoftware.com>
+        * Added updated win_dea job and git_portable package
+
 2013-08-27  Vlad Iovanov  <vlad.iovanov@uhurusoftware.com>
         * Added Uhuru services to Cloud Foundry NG (Microsoft SQL Server and UhuruFS)
 
