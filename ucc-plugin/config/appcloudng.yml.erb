@@ -246,20 +246,6 @@ jobs:
       win_dea:
         stacks: ["iis8"]
 
-  - name: pseudo_stager
-    template:
-      - pseudo_stager # stateless, dynamically discovered
-    release: appcloudng.core
-    instances: 1 # farmable
-    resource_pool: medium
-    networks:
-      - name: default
-    properties:
-      dea_next:
-        memory_mb: 1024 
-        # num_instances: 0 # don't run apps, act just as a stager # dummy config :(
-        stacks: ["iis75"]
-
   - name: health_manager
     template:
       - health_manager_next # stateless, dynamically discovered
@@ -603,8 +589,8 @@ properties:
     stacks: 
       - name: "lucid64"
         description: "Lucid 64"
-      - name: "iis75"
-        description: "IIS 7.5"
+      - name: "iis8"
+        description: "IIS 8"
 
     cc_partition: "default" # has default "ng"
 
