@@ -8,5 +8,6 @@ dependencies:
 files:
   - uhuru-webui/{bin,lib,public,views,template_apps,test_apps,logs}/**/*
   - uhuru-webui/{Gemfile,Gemfile.lock,config/error_messages.yml,config/uhuru-webui.yml,config/app-definitions.yml,config/design.yml}
+  - uhuru-webui/billing_cache/*
   - pkg_utils/*
 
