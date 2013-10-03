@@ -30,10 +30,8 @@
       stagingTimeoutMs="1200000"
     />
 
-    <stacks>
-      <% properties.win_dea.stacks.each do |stack| %>
-      <stack name="<%= stack %>"/>
-      <% end %>
+    <stacks>      
+      <stack name="iis8"/>
     </stacks>
 
   </dea>
