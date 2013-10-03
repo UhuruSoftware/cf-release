@@ -14,5 +14,8 @@ $bundle_cmd config build.sqlite3 --with-sqlite3-dir=/var/vcap/packages/sqlite
 
 $bundle_cmd install --local --deployment --without development test
 
-
+cd ${BOSH_INSTALL_TARGET}
+cp -a ${BOSH_COMPILE_TARGET}/tools/router_registrar router_registrar
+cd ${BOSH_INSTALL_TARGET}/router_registrar
+$bundle_cmd install --local --deployment --without development test
 
