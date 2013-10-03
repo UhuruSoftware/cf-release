@@ -21,12 +21,12 @@ echo $$ > $PIDFILE
     /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $JOB_DIR/config
 <% end %>
 
-export CONFIG_FILE=/var/vcap/jobs/webui/config/router_registrar/config.yml
+export CONFIG_FILE=/var/vcap/jobs/uhuru_webui/config/router_registrar/config.yml
 
-cd /var/vcap/packages/webui/router_registrar
+cd /var/vcap/packages/uhuru_webui/router_registrar
 
 exec /var/vcap/packages/ruby/bin/ruby \
-/var/vcap/packages/webui/router_registrar/bin/router_registrar \
+/var/vcap/packages/uhuru_webui/router_registrar/bin/router_registrar \
 >>$LOG_DIR/router_registrar.stdout.log \
 2>>$LOG_DIR/router_registrar.stderr.log
 
