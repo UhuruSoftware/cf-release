@@ -4,6 +4,8 @@ templates:
   uhuru_webui_ctl: bin/uhuru_webui_ctl
   monitoring_ctl: bin/monitoring_ctl
   uhuru-webui.yml.erb: config/uhuru-webui.yml
+  router_registrar_ctl.erb: bin/router_registrar_ctl
+  router_registrar.config.yml.erb: config/router_registrar/config.yml
 packages:
   - common
   - libpq
