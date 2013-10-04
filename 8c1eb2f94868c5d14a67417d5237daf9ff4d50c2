@@ -1,0 +1,9 @@
+Change-Id: I8c1eb2f94868c5d14a67417d5237daf9ff4d50c2
+Code-Review+2: Vlad Iovanov <vlad.iovanov@uhurusoftware.com>
+Verified+1: Vlad Iovanov <vlad.iovanov@uhurusoftware.com>
+Verified+1: Jenkins 
+Submitted-by: Vlad Iovanov <vlad.iovanov@uhurusoftware.com>
+Submitted-at: Fri, 04 Oct 2013 15:19:33 +0300
+Reviewed-on: http://gerrit.uhurusoftware.org/2051
+Project: private-cf-release
+Branch: refs/heads/ng
