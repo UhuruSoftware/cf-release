@@ -3,5 +3,4 @@ set -e
 
 cd ${BUILD_DIR}
 pkg_utils/vendor.sh uhuru-webui
-pkg_utils/vendor.sh tools/router_registrar
 rm -rf pkg_utils

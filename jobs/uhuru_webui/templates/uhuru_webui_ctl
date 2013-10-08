@@ -10,6 +10,8 @@ LOG_DIR=/var/vcap/sys/log/uhuru_webui
 PIDFILE=$RUN_DIR/uhuru_webui.pid
 JOB_DIR=/var/vcap/jobs/uhuru_webui
 
+
+
 source /var/vcap/packages/common/utils.sh
 
 
@@ -17,6 +19,8 @@ case $1 in
 
   start)
     pid_guard $PIDFILE "Uhuru WebUI"
+
+    cp /var/vcap/jobs/uhuru_webui/config/admin-settings.yml /var/vcap/packages/uhuru_webui/uhuru_webui/config/admin-settings.yml #temporary fix
 
     mkdir -p $RUN_DIR
     mkdir -p $LOG_DIR

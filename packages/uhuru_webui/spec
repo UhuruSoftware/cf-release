@@ -10,5 +10,4 @@ files:
   - uhuru-webui/{Gemfile,Gemfile.lock,config/error_messages.yml,config/uhuru-webui.yml,config/app-definitions.yml,config/design.yml}
   - uhuru-webui/billing_cache/*
   - pkg_utils/*
-  - tools/router_registrar/**/*
 
