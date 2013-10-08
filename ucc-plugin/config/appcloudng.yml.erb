@@ -255,15 +255,6 @@ jobs:
     networks:
       - name: default
 
-  - name: uhuru_webui
-    template: uhuru_webui
-    release: appcloudng.core
-    instances: 1
-    persistent_disk: 10000
-    resource_pool: tiny
-    networks:
-    - name: default
-
 
   ###### Windows Nodes #####
 
@@ -419,6 +410,15 @@ jobs:
     template: mssql_gateway
     release: appcloudng.uhuru-service
     instances: 0
+    resource_pool: tiny
+    networks:
+    - name: default
+
+  - name: uhuru_webui
+    template: uhuru_webui
+    release: appcloudng.core
+    instances: 1
+    persistent_disk: 10000
     resource_pool: tiny
     networks:
     - name: default
