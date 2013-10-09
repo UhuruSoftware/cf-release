@@ -59,44 +59,6 @@ module Uhuru::BoshCommander
           unless value.to_s.match(/(?=^.{6,20}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*/)
             error = 'Provided password does not meet the length or complexity requirements'
           end
-        elsif @name == 'email_server'
-          email_server =  @screen.fields.find {|field| field.name == 'email_server' }.get_value(value_type)
-          email_from =  @screen.fields.find {|field| field.name == 'email_from' }.get_value(value_type)
-          email_port = @screen.fields.find {|field| field.name == 'email_server_port' }.get_value(value_type)
-          email_server_enable_tls = @screen.fields.find {|field| field.name == 'email_server_enable_tls' }.get_value(value_type)
-          email_server_user = @screen.fields.find {|field| field.name == 'email_server_user' }.get_value(value_type)
-          email_server_secret = @screen.fields.find {|field| field.name == 'email_server_secret' }.get_value(value_type)
-          email_server_auth_method = @screen.fields.find {|field| field.name == 'email_server_auth_method' }.get_value(value_type)
-          domain = @screen.fields.find {|field| field.name == 'domain' }.get_value(value_type)
-
-          client = Net::SMTP.new( email_server,email_port)
-
-          if email_server_enable_tls
-            context =   Net::SMTP.default_ssl_context
-            client.enable_starttls(context)
-          end
-          begin
-            msg = <<END_OF_MESSAGE
-Subject: Test send email for deployment #{domain}
-MIME-Version: 1.0
-Content-type: text/html
-
-
-Test email for #{domain} deployment
-
-END_OF_MESSAGE
-            client.open_timeout = 10
-            client.start(
-                "localhost",
-                email_server_user,
-                email_server_secret,
-                eval(email_server_auth_method)) do
-              client.send_message msg, email_from, $config[:test_email]
-
-            end
-          rescue Exception => e
-            error = "Cannot connect to email server, please verify settings - #{e.message}"
-          end
         end
       end
       error
