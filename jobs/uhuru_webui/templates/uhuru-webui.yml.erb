@@ -6,6 +6,19 @@ message_bus_uri: nats://<%= properties.nats.user %>:<%= properties.nats.password
 bind_address: <%= spec.networks.send(properties.networks.apps).ip %>
 domain: "www.<%= properties.domain %>"
 
+ccdb:
+  host: "<%= properties.ccdb_ng.address %>"
+  user: 'root'
+  password: "<%= properties.vcap_databases.roles.find { |role| role.tag == "admin" }.password %>"
+  port: <%= properties.ccdb_ng.port %>
+  dbname: "<%= properties.vcap_databases.databases.find { |database| database.tag == "cc_ng" }.name %>"
+uaadb:
+  host: "<%= properties.uaadb.address %>"
+  user: 'uaa'
+  password: "<%= properties.vcap_databases.roles.find { |role| role.tag == "uaa" }.password %>"
+  port: <%= properties.uaadb.port %>
+  dbname: "<%= properties.vcap_databases.databases.find { |database| database.tag == "uaa" }.name %>"
+
 cloud_controller_url: "<%= properties.cc.srv_api_uri %>"
 
 uaa:
