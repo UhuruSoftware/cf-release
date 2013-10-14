@@ -19,7 +19,7 @@ module Uhuru::BoshCommander
 
       stats = {}
 
-      unless (state == DeploymentState::ERROR) || (state == DeploymentState::NOT_CONFIGURED)
+      unless (state == DeploymentState::NOT_CONFIGURED)
         stats["resources"] = @deployment.get_resources(current_manifest)
 
         current_manifest["jobs"].each do |job|

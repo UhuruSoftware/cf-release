@@ -264,6 +264,13 @@
       <%= summary["web_ui_url"] %>
     </a>
   </h3>
+  <h3>QoS Monitoring:
+    <a class="highlight bold"
+       target="_blank"
+       href="<%= (summary["web_ui_url"].to_s.start_with?('http://') ? summary["web_ui_url"] : "http://#{summary['web_ui_url']}") %>/monitoring">
+      <%= summary["web_ui_url"] %>/monitoring
+    </a>
+  </h3>
   <h3>Support URL:
     <a class="highlight bold"
        target="_blank"
