@@ -11,4 +11,36 @@ keys:
   '["properties"]["ccdb_ng"]["databases"].select{|r| r["tag"] == "cc"}.first["name"]': '["properties"]["ccdb_ng"]["databases"].select{|r| r["tag"] == "cc"}.first["name"]'
   '["properties"]["nats"]["user"]': '["properties"]["nats"]["user"]'
   '["properties"]["nats"]["password"]': '["properties"]["nats"]["password"]'
+  '["properties"]["webui"]["monitoring"]["monitoring_user_password"]': '["properties"]["webui"]["monitoring"]["monitoring_user_password"]'
+  '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]': '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]'
+  '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "uaa"}.first["password"]': '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "uaa"}.first["password"]'
+  '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "monitoring"}.first["password"]': '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "monitoring"}.first["password"]'
+  '["properties"]["uaadb"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]': '["properties"]["uaadb"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]'
+  '["properties"]["ccdb"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]': '["properties"]["ccdb"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]'
+  '["properties"]["ccng"]["bulk_api_password"]': '["properties"]["ccng"]["bulk_api_password"]'
+  '["properties"]["ccng"]["staging_upload_user"]': '["properties"]["ccng"]["staging_upload_user"]'
+  '["properties"]["ccng"]["staging_upload_password"]': '["properties"]["ccng"]["staging_upload_password"]'
+  '["properties"]["ccng"]["db_encryption_key"]': '["properties"]["ccng"]["db_encryption_key"]'
+  '["properties"]["uaa"]["cc"]["client_secret"]': '["properties"]["uaa"]["cc"]["client_secret"]'
+  '["properties"]["uaa"]["cc"]["token_secret"]': '["properties"]["uaa"]["cc"]["token_secret"]'
+  '["properties"]["uaa"]["admin"]["client_secret"]': '["properties"]["uaa"]["admin"]["client_secret"]'
+  '["properties"]["uaa"]["batch"]["password"]': '["properties"]["uaa"]["batch"]["password"]'
+  '["properties"]["uaa"]["clients"]["webui"]["secret"]': '["properties"]["uaa"]["clients"]["webui"]["secret"]'
+  '["properties"]["uaa"]["clients"]["login"]["secret"]': '["properties"]["uaa"]["clients"]["login"]["secret"]'
+  '["properties"]["mysql_gateway"]["token"]': '["properties"]["mysql_gateway"]["token"]'
+  '["properties"]["mysql_node"]["password"]': '["properties"]["mysql_node"]["password"]'
+  '["properties"]["mongodb_gateway"]["token"]': '["properties"]["mongodb_gateway"]["token"]'
+  '["properties"]["memcached_gateway"]["token"]': '["properties"]["memcached_gateway"]["token"]'
+  '["properties"]["vblob_gateway"]["token"]': '["properties"]["vblob_gateway"]["token"]'
+  '["properties"]["elasticsearch_gateway"]["token"]': '["properties"]["elasticsearch_gateway"]["token"]'
+  '["properties"]["postgresql_gateway"]["token"]': '["properties"]["postgresql_gateway"]["token"]'
+  '["properties"]["postgresql_node"]["password"]': '["properties"]["postgresql_node"]["password"]'
+  '["properties"]["redis_gateway"]["token"]': '["properties"]["redis_gateway"]["token"]'
+  '["properties"]["rabbit_gateway"]["token"]': '["properties"]["rabbit_gateway"]["token"]'
+  '["properties"]["mssql_gateway"]["token"]': '["properties"]["mssql_gateway"]["token"]'
+
+
+
+
+
 
