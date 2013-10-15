@@ -10,6 +10,7 @@ LOG_DIR=/var/vcap/sys/log/uhuru_webui
 PIDFILE=$RUN_DIR/uhuru_webui.pid
 JOB_DIR=/var/vcap/jobs/uhuru_webui
 SETTINGS_DIR=/var/vcap/store/uhuru_webui/
+TEMPLATE_APP_DIR=/var/vcap/store/uhuru_webui/template_apps/
 
 
 source /var/vcap/packages/common/utils.sh
@@ -24,6 +25,7 @@ case $1 in
     mkdir -p $SETTINGS_DIR
     mkdir -p $RUN_DIR
     mkdir -p $LOG_DIR
+    mkdir -p $TEMPLATE_APP_DIR
 
     echo $$ > $PIDFILE
 
