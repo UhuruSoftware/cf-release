@@ -11,7 +11,7 @@ keys:
   '["properties"]["ccdb_ng"]["databases"].select{|r| r["tag"] == "cc"}.first["name"]': '["properties"]["ccdb_ng"]["databases"].select{|r| r["tag"] == "cc"}.first["name"]'
   '["properties"]["nats"]["user"]': '["properties"]["nats"]["user"]'
   '["properties"]["nats"]["password"]': '["properties"]["nats"]["password"]'
-  '["properties"]["webui"]["monitoring"]["monitoring_user_password"]': '["properties"]["webui"]["monitoring"]["monitoring_user_password"]'
+  '["properties"]["uhuru"]["webui"]["monitoring"]["monitoring_user_password"]': '["properties"]["uhuru"]["webui"]["monitoring"]["monitoring_user_password"]'
   '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]': '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "admin"}.first["password"]'
   '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "uaa"}.first["password"]': '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "uaa"}.first["password"]'
   '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "monitoring"}.first["password"]': '["properties"]["vcap_databases"]["roles"].select{|r| r["tag"] == "monitoring"}.first["password"]'
