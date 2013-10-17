@@ -1,4 +1,7 @@
 2013-10-09  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
+        * Updated Web UI, fix for rabbitmq service, bugfixes for Uhuru WebUI
+
+2013-10-09  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
         * Updated Web UI, new registrar and bugfixes for the Windows DEA
 
 2013-10-04  Florin Dragos  <florin.dragos@uhurusoftware.com>

@@ -96,7 +96,7 @@ monitoring:
       token: <%= properties.redis_gateway.token %>
     <% end %>
     <% if properties.uhuru.webui.monitoring.components.rabbit_node > 0 %>
-    - name: rabbit_node
+    - name: rabbitmq_node
       token: <%= properties.rabbit_gateway.token %>
     <% end %>
 
@@ -113,12 +113,6 @@ monitoring:
       token: <%= properties.mssql_gateway.token %>
     <% end %>
 
-  buildpacks:
-    dotNet: https://github.com/stefanschneider/dummy-buildpack.git
-    java: https://github.com/ramnivas/cloudfoundry-buildpack-java
-    nodejs: https://github.com/cloudfoundry/heroku-buildpack-nodejs
-    php: https://github.com/heroku/heroku-buildpack-php
-    ruby: https://github.com/cloudfoundry/heroku-buildpack-ruby
 admin_config_file: /var/vcap/store/uhuru_webui/admin-settings.yml
 template_apps_dir: /var/vcap/store/uhuru_webui/template_apps
 billing_data:
