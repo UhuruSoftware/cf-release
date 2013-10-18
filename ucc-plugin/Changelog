@@ -1,3 +1,6 @@
+2013-10-18  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
+        * Updated Web UI, fix for organization creation
+
 2013-10-09  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
         * Updated Web UI, fix for rabbitmq service, bugfixes for Uhuru WebUI
 
