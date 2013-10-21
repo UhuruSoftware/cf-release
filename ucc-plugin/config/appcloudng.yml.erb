@@ -144,7 +144,7 @@ jobs:
     release: appcloudng.core
     instances: 1 # farmable
     resource_pool: small
-    persistent_disk: 50000
+    persistent_disk: 100000
     networks: 
       - name: default
         static_ips:
@@ -343,6 +343,7 @@ jobs:
         plan: "free"
     networks:
       - name: default
+        static_ips:
         default: [dns, gateway]
 
   - name: redis_service_node_free
@@ -355,6 +356,7 @@ jobs:
       plan: "free"
     networks:
       - name: default
+        static_ips:
         default: [dns, gateway]
 
   - name: rabbit_service_node_free
@@ -367,6 +369,7 @@ jobs:
       plan: "free"
     networks:
       - name: default
+        static_ips:
         default: [dns, gateway]
 
 
