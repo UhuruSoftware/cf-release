@@ -1,0 +1,8 @@
+Change-Id: I966ccbf4dc8482cc4b0dab0358c2b58691c8b799
+Code-Review+2: Florin Dragos <florind@uhurusoftware.com>
+Verified+1: Florin Dragos <florind@uhurusoftware.com>
+Submitted-by: Florin Dragos <florind@uhurusoftware.com>
+Submitted-at: Mon, 21 Oct 2013 17:18:04 +0300
+Reviewed-on: http://gerrit.uhurusoftware.org/2143
+Project: private-cf-release
+Branch: refs/heads/ng
