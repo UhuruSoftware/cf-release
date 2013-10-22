@@ -3,7 +3,7 @@ name: health_manager_next
 templates:
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
   health_manager_next.yml.erb: config/health_manager_next.yml
-  health_manager_next_ctl: bin/health_manager_next_ctl
+  health_manager_next_ctl.erb: bin/health_manager_next_ctl
 packages:
   - health_manager_next
   - common
@@ -15,9 +15,6 @@ properties:
     default: 'cc'
   cc.srv_api_uri:
     description: "API URI of cloud controller"
-  hm_props:
-    description: "BOSH job name of health manager"
-    default: 'health_manager'
   networks.apps:
     description:
   nats.address:
@@ -49,7 +46,7 @@ properties:
     default: 1
   health_manager.intervals.flapping_timeout:
     description:
-    default: 500
+    default: 1920
   health_manager.intervals.restart_timeout:
     description:
     default: 20
@@ -58,7 +55,7 @@ properties:
     default: 60
   health_manager.intervals.max_restart_delay:
     description:
-    default: 480
+    default: 960
   health_manager.intervals.giveup_crash_number:
     description:
     default: -1

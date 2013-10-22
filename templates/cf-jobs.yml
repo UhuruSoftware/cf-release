@@ -1,0 +1,352 @@
+networks: (( merge ))
+
+meta:
+  environment: ~
+
+  networks:
+    z1:
+      apps: cf1
+      management: cf1
+
+    z2:
+      apps: cf2
+      management: cf2
+
+  syslog:
+    z1:
+      address: (( jobs.logs_z1.networks.cf1.static_ips.[0] ))
+      port: 54321
+    z2:
+      address: (( jobs.logs_z2.networks.cf2.static_ips.[0] ))
+      port: 54321
+
+  loggregator:
+    z1:
+      trafficcontroller: (( jobs.loggregator_trafficcontroller_z1.networks.cf1.static_ips.[0] ":3456" ))
+    z2:
+      trafficcontroller: (( jobs.loggregator_trafficcontroller_z2.networks.cf2.static_ips.[0] ":3456" ))
+
+
+jobs:
+  - name: nats_z2
+    template: nats
+    instances: 1
+    resource_pool: medium_z2
+    networks:
+      - name: cf2
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+
+  - name: logs_z1
+    template: syslog_aggregator
+    instances: 1
+    resource_pool: medium_z1
+    persistent_disk: 100000
+    networks:
+      - name: cf1
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+
+  - name: logs_z2
+    template: syslog_aggregator
+    instances: 1
+    resource_pool: medium_z2
+    persistent_disk: 100000
+    networks:
+      - name: cf2
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+
+  - name: stats_z1
+    template: collector
+    instances: 1
+    resource_pool: small_z1
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+
+  - name: nfs_z1
+    template: debian_nfs_server
+    instances: 0
+    resource_pool: medium_z1
+    persistent_disk: 102400
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: postgres_z1
+    template: postgres
+    instances: 0
+    resource_pool: large_z1
+    persistent_disk: 4096
+    networks:
+    - name: cf1
+      static_ips: ~
+    properties:
+      db: databases
+
+  - name: uaa_z1
+    template: uaa
+    instances: 1
+    resource_pool: large_z1
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+
+  - name: uaa_z2
+    template: uaa
+    instances: 1
+    resource_pool: large_z2
+    networks:
+      - name: cf2
+    properties:
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+
+  - name: login_z1
+    template: login
+    instances: 1
+    resource_pool: medium_z1
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+
+  - name: api_z1
+    template: cloud_controller_ng
+    instances: 1
+    resource_pool: large_z1
+    persistent_disk: 0
+    networks:
+      - name: cf1
+    properties:
+      ccdb: ccdb
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+      loggregator:
+        trafficcontroller: (( meta.loggregator.z1.trafficcontroller ))
+
+  - name: api_z2
+    template: cloud_controller_ng
+    instances: 1
+    resource_pool: large_z2
+    persistent_disk: 0
+    networks:
+      - name: cf2
+    properties:
+      ccdb: ccdb
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+      loggregator:
+        trafficcontroller: (( meta.loggregator.z2.trafficcontroller ))
+
+  - name: hm_z1
+    template: health_manager_next
+    instances: 1
+    resource_pool: medium_z1
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+    
+  - name: runner_z1
+    template:
+      - dea_next
+      - dea_logging_agent
+    instances: 1
+    update:
+      max_in_flight: 1
+    resource_pool: runner_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+      loggregator:
+        trafficcontroller: (( meta.loggregator.z1.trafficcontroller ))
+
+  - name: runner_z2
+    template:
+      - dea_next
+      - dea_logging_agent
+    instances: 1
+    update:
+      max_in_flight: 1
+    resource_pool: runner_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+    properties:
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+      loggregator:
+        trafficcontroller: (( meta.loggregator.z2.trafficcontroller ))
+
+  - name: taskmaster_z1
+    template: narc
+    instances: 1
+    resource_pool: runner_z1
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+
+  - name: taskmaster_z2
+    template: narc
+    instances: 1
+    resource_pool: runner_z2
+    networks:
+      - name: cf2
+    properties:
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+
+  - name: loggregator_z1
+    template: loggregator
+    instances: 2
+    resource_pool: small_z1
+    networks:
+      - name: cf1
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+
+  - name: loggregator_z2
+    template: loggregator
+    instances: 2
+    resource_pool: small_z2
+    networks:
+      - name: cf2
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+
+  - name: loggregator_trafficcontroller_z1
+    template: loggregator_trafficcontroller
+    instances: 1
+    resource_pool: small_z1
+    networks:
+      - name: cf1
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+      zone: z1
+
+  - name: loggregator_trafficcontroller_z2
+    template: loggregator_trafficcontroller
+    instances: 1
+    resource_pool: small_z2
+    networks:
+      - name: cf2
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+      zone: z2
+
+  - name: router_z1
+    template: gorouter
+    instances: 1
+    resource_pool: router_z1
+    networks:
+      - name: cf1
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z1 ))
+      syslog_aggregator: (( meta.syslog.z1 ))
+      loggregator:
+        trafficcontroller: (( meta.loggregator.z1.trafficcontroller ))
+
+  - name: router_z2
+    template: gorouter
+    instances: 1
+    resource_pool: router_z2
+    networks:
+      - name: cf2
+        static_ips: (( merge ))
+    properties:
+      networks: (( meta.networks.z2 ))
+      syslog_aggregator: (( meta.syslog.z2 ))
+      loggregator:
+        trafficcontroller: (( meta.loggregator.z2.trafficcontroller ))
+
+properties:
+  domain: (( merge ))
+  system_domain: (( domain ))
+  system_domain_organization: ~
+  app_domains: (( [domain] ))
+
+  disk_quota_enabled: true
+
+  nats:
+    user: (( merge ))
+    password: (( merge ))
+    address: (( jobs.nats_z2.networks.cf2.static_ips.[0] ))
+    port: 4222
+
+  dea_next:
+    memory_mb: (( merge ))
+    memory_overcommit_factor: 3
+    disk_mb: (( merge ))
+    disk_overcommit_factor: 2
+    deny_networks: (( merge || [] ))
+    allow_networks: (( merge || [] ))
+    kernel_network_tuning_enabled: true
+    directory_server_protocol: https
+    evacuation_delay: 115
+
+  loggregator:
+    servers:
+      z1: (( jobs.loggregator_z1.networks.cf1.static_ips ))
+      z2: (( jobs.loggregator_z2.networks.cf2.static_ips ))
+    incoming_port: 3456
+    outgoing_port: 8080
+    maxRetainedLogMessages: 1000
+
+  cc: (( merge ))
+  ccdb: (( merge ))
+
+  ccng: (( cc ))
+  ccdb_ng: (( ccdb ))
+
+  uaa: (( merge ))
+  uaadb: (( merge ))
+
+  databases: ~
+
+  login: (( merge ))
+
+  router:
+    endpoint_timeout: 60
+    status:
+      user: (( merge ))
+      password: (( merge ))
+
+  syslog_aggregator: ~
+
+  nfs_server:
+    address: (( jobs.nfs_z1.networks.cf1.static_ips.[0] || nil ))
+    network: (( networks.cf1.subnets.[0].range ))
+
+  collector:
+    use_datadog: true
+    datadog_api_key: ""
+    datadog_application_key: ""
+    deployment_name: (( meta.environment ))

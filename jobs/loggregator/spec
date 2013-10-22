@@ -3,7 +3,6 @@ name: loggregator
 templates:
   loggregator_ctl.erb: bin/loggregator_ctl
   loggregator.json.erb: config/loggregator.json
-  uaa_token.pub.erb: config/uaa_token.pub
 packages:
 - common
 - loggregator
@@ -13,13 +12,20 @@ properties:
     default: false
   loggregator.status.user:
     description: username used to log into varz endpoint
+    default: ""
   loggregator.status.password:
     description: password used to log into varz endpoint
+    default: ""
   loggregator.status.port:
     description: port used to run the varz endpoint
+    default: 0
   loggregator.maxRetainedLogMessages:
     description: number of log messages to retain per application
     default: 10
+  loggregator.incoming_port:
+    description: Port for incoming log messages
+  loggregator.outgoing_port:
+    description: Port for outgoing log messages
   cc.srv_api_uri:
     description: "API URI of cloud controller"
   nats.user:
@@ -32,5 +38,3 @@ properties:
     description: "IP port of Cloud Foundry NATS server"
   system_domain:
     description: "Domain reserved for CF operator, base URL where the login, uaa, and other non-user apps listen"
-  uaa.jwt.verification_key:
-    description: "ssl cert defined in the manifest by the UAA, required by the cc to communicate with UAA"

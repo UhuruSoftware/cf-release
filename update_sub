@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 REPO_NAME"
+  exit 1
+fi
+
 repo=$1
 release=`pwd`
 
@@ -11,8 +16,9 @@ git submodule foreach \
   '  sub=`pwd`;' \
   '  git checkout master;' \
   '  git pull;' \
+  '  git submodule update --init --recursive;' \
   "  cd $release;" \
   '  git add $sub;' \
   'fi'
 
-./staged_shortlog
+./staged_shortlog -c

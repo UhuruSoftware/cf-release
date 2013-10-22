@@ -4,7 +4,7 @@ export CC_JOB_DIR=/var/vcap/jobs/cloud_controller_ng
 export PATH=/var/vcap/packages/ruby/bin:$PATH
 
 CC_PACKAGE_DIR=/var/vcap/packages/cloud_controller_ng
-NFS_SHARE=/var/vcap/shared
+NFS_SHARE=/var/vcap/nfs
 
 RUN_DIR=/var/vcap/sys/run/cloud_controller_ng
 LOG_DIR=/var/vcap/sys/log/cloud_controller_ng
@@ -50,9 +50,6 @@ case $1 in
     chown vcap:vcap $LOG_DIR
     chown vcap:vcap $TMPDIR
 
-    echo $$ > $PIDFILE
-    chown vcap:vcap $PIDFILE
-
     <% if properties.nfs_server.address %>
     modprobe nfs
     mkdir -p $NFS_SHARE
@@ -77,14 +74,14 @@ case $1 in
     <% if properties.nfs_server.nfsv4 %>
     mount -o timeo=10,intr,lookupcache=positive -t nfs4 <%= properties.nfs_server.address %>:<%= properties.nfs_server.share || "/" %> $NFS_SHARE
     <% else %>
-    mount -o timeo=10,intr,lookupcache=positive -t nfs <%= properties.nfs_server.address %>:<%= properties.nfs_server.share || "/var/vcap/store/shared" %> $NFS_SHARE
+    mount -o timeo=10,intr,lookupcache=positive -t nfs <%= properties.nfs_server.address %>:<%= properties.nfs_server.share || "/var/vcap/store" %> $NFS_SHARE
     <% end %>
     if [ $? != 0 ]; then
       echo "Cannot mount NFS, exiting..."
       exit 1
     fi
 
-    chpst -u vcap:vcap touch $NFS_SHARE/.nfs_test
+    chpst -u vcap:vcap touch $NFS_SHARE/shared/.nfs_test
 
     if [ $? != 0 ]; then
       echo "Failed to start: cannot write to NFS"
@@ -114,7 +111,7 @@ case $1 in
 
     ulimit -c unlimited
 
-    <% if properties.syslog_aggregator && properties.syslog_aggregator.address %>
+    <% if_p("syslog_aggregator") do %>
     # TODO(kowshik): Configure Steno to write to the correct files.
     # Log to syslog agg, Log rotation.
     /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $CONFIG_DIR

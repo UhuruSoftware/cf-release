@@ -2,7 +2,7 @@
 name: uaa
 templates:
   uaa_ctl.erb: bin/uaa_ctl
-  cf-registrar_ctl: bin/cf-registrar_ctl
+  cf-registrar_ctl: bin/uaa_cf-registrar_ctl
 
   cf-registrar.config.yml.erb: config/cf-registrar/config.yml
   uaa.yml.erb: config/uaa.yml
@@ -30,6 +30,7 @@ properties:
     description:
   uaa.catalina_opts:
     description:
+    default: -Xmx768m -XX:MaxPermSize=256m
   uaa.cc.client_secret:
     description:
   uaa.cc.token_secret:
@@ -98,7 +99,8 @@ properties:
   uaadb.roles:
     description: "The list of database Roles used in UAA database including tag/name/password"
   uaa.no_ssl:
-    description:
+    description: "when true, uaa uses http, otherwise it uses https"
+    default: false
   uaa.url:
     description:
   uaa.dump_requests:
