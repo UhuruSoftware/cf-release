@@ -1,3 +1,6 @@
+2013-10-18  Mihai Buzga  <mihai.buzgau@uhurusoftware.com>
+        * Bugfixes for uhuruWebUI and vcap_dotnet
+
 2013-10-18  Florin Dragos  <florin.dragos@uhurusoftware.com>
         * Updated to latest code for nfs bugfix
 
