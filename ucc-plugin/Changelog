@@ -1,4 +1,7 @@
-2013-10-18  Mihai Buzga  <mihai.buzgau@uhurusoftware.com>
+2013-10-24  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
+        * fix for delete app, app update and template DotNet and MSSQL app
+
+2013-10-18  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
         * Bugfixes for uhuruWebUI and vcap_dotnet
 
 2013-10-18  Florin Dragos  <florin.dragos@uhurusoftware.com>
