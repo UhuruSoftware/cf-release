@@ -69,17 +69,32 @@ appcloudng:
       yml_key: '["resource_pools"].select{|r| r["name"] == "small"}.first["cloud_properties"]["ram"]',
       description: 'Specifies how much memory small VMs should get. Recommended value is 512 MB.' }
 
-      - {name: mms_sep,                                   label: Linux DEA and Service Nodes,                       type: separator}
+
+      - {name: linuxdea_sep,                                   label: Linux DEA,                       type: separator}
+
+      - {name: dea_cpu,                                label: DEA CPU,                                        type: numeric,
+      yml_key: ['["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["cpu"]'],
+      description: 'Specifies how many virtual CPUs medium VMs should get. Recommended value is 2.' }
+
+      - {name: dea_disk,                               label: Medium Disk,                                       type: numeric,
+      yml_key: ['["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["disk"]'],
+         description: 'Specifies how much disk space medium VMs should get. Recommended value is 5000 MB.' }
+      - {name: dea_ram,                                label: Medium Memory,                                     type: numeric,
+      yml_key: ['["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["ram"]', '["properties"]["dea_next"]["memory_mb"]'],
+      description: 'Specifies much memory medium VMs should get. Recommended value is 2048 MB.' }
+
+
+      - {name: mms_sep,                                   label: Linux Service Nodes,                       type: separator}
 
       - {name: medium_cpu,                                label: Medium CPU,                                        type: numeric,
-      yml_key: ['["resource_pools"].select{|r| r["name"] == "medium"}.first["cloud_properties"]["cpu"]', '["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["cpu"]'],
+      yml_key: ['["resource_pools"].select{|r| r["name"] == "medium"}.first["cloud_properties"]["cpu"]'],
       description: 'Specifies how many virtual CPUs medium VMs should get. Recommended value is 2.' }
 
       - {name: medium_disk,                               label: Medium Disk,                                       type: numeric,
-      yml_key: ['["resource_pools"].select{|r| r["name"] == "medium"}.first["cloud_properties"]["disk"]', '["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["disk"]'],
+      yml_key: ['["resource_pools"].select{|r| r["name"] == "medium"}.first["cloud_properties"]["disk"]'],
          description: 'Specifies how much disk space medium VMs should get. Recommended value is 5000 MB.' }
       - {name: medium_ram,                                label: Medium Memory,                                     type: numeric,
-      yml_key: ['["resource_pools"].select{|r| r["name"] == "medium"}.first["cloud_properties"]["ram"]', '["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["ram"]', '["properties"]["dea_next"]["memory_mb"]'],
+      yml_key: ['["resource_pools"].select{|r| r["name"] == "medium"}.first["cloud_properties"]["ram"]'],
       description: 'Specifies much memory medium VMs should get. Recommended value is 1024 MB.' }
 
       - {name: lms_sep,                                   label: 'Windows DEAs',              type: separator}
