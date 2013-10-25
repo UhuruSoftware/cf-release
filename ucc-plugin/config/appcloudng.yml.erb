@@ -56,8 +56,8 @@ resource_pools:
     name: windows
     version: 0.9.6
   cloud_properties:
-    ram: 2048
-    disk: 5000
+    ram: 4096
+    disk: 10000
     cpu: 2
   env:
     windows:
@@ -101,7 +101,7 @@ resource_pools:
     name: bosh-stemcell
     version: 1.5.0.pre.3
   cloud_properties:
-    ram: 4096
+    ram: 2048
     disk: 5000
     cpu: 2
   env:
@@ -115,9 +115,9 @@ resource_pools:
     name: bosh-stemcell
     version: 1.5.0.pre.3
   cloud_properties:
-    ram: 2048
+    ram: 4096
     disk: 10000
-    cpu: 4
+    cpu: 2
   env:
     bosh:
       password: $6$DxzA20NmmfOjOyqk$GiuzvfioqPMpzOIZxhKeuPRSEniM2PecTQLBtj1wcX8j9RncfzLWKNAfdQ/X0hJoTRmyvqNCe1N1BwQb5F3TP.
@@ -129,9 +129,9 @@ resource_pools:
     name: bosh-stemcell
     version: 1.5.0.pre.3
   cloud_properties:
-    ram: 3072
+    ram: 4096
     disk: 30000
-    cpu: 4
+    cpu: 2
   env:
     bosh:
       password: $6$DxzA20NmmfOjOyqk$GiuzvfioqPMpzOIZxhKeuPRSEniM2PecTQLBtj1wcX8j9RncfzLWKNAfdQ/X0hJoTRmyvqNCe1N1BwQb5F3TP.
@@ -165,7 +165,7 @@ jobs:
     release: appcloudng.core
     instances: 1 # farmable
     resource_pool: medium
-    persistent_disk: 1000
+    persistent_disk: 10000
     networks:
       - name: default
         static_ips:
