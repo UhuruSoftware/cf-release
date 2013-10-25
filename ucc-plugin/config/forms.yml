@@ -76,10 +76,10 @@ appcloudng:
       yml_key: ['["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["cpu"]'],
       description: 'Specifies how many virtual CPUs medium VMs should get. Recommended value is 2.' }
 
-      - {name: dea_disk,                               label: Medium Disk,                                       type: numeric,
+      - {name: dea_disk,                               label: DEA Disk,                                       type: numeric,
       yml_key: ['["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["disk"]'],
-         description: 'Specifies how much disk space medium VMs should get. Recommended value is 5000 MB.' }
-      - {name: dea_ram,                                label: Medium Memory,                                     type: numeric,
+         description: 'Specifies how much disk space medium VMs should get. Recommended value is 10000 MB.' }
+      - {name: dea_ram,                                label: DEA Memory,                                     type: numeric,
       yml_key: ['["resource_pools"].select{|r| r["name"] == "deas"}.first["cloud_properties"]["ram"]', '["properties"]["dea_next"]["memory_mb"]'],
       description: 'Specifies much memory medium VMs should get. Recommended value is 2048 MB.' }
 
@@ -99,17 +99,17 @@ appcloudng:
 
       - {name: lms_sep,                                   label: 'Windows DEAs',              type: separator}
 
-      - {name: large_cpu,                                 label: Large CPU,                                         type: numeric,
+      - {name: large_cpu,                                 label: Windows CPU,                                         type: numeric,
       yml_key: [ '["resource_pools"].select{|r| r["name"] == "large"}.first["cloud_properties"]["cpu"]', '["resource_pools"].select{|r| r["name"] == "windows"}.first["cloud_properties"]["cpu"]' ],
-      description: 'Specifies how many CPUs large VMs should get. Recommended value is 4.' }
+      description: 'Specifies how many CPUs Windows VMs should get. Recommended value is 4.' }
 
-      - {name: large_disk,                                label: Large Disk,                                        type: numeric,
+      - {name: large_disk,                                label: Windows Disk,                                        type: numeric,
       yml_key: [ '["resource_pools"].select{|r| r["name"] == "large"}.first["cloud_properties"]["disk"]', '["resource_pools"].select{|r| r["name"] == "windows"}.first["cloud_properties"]["disk"]' ],
-      description: 'Specifies how much disk space large VMs should get. Recommended value is 10000 MB.' }
+      description: 'Specifies how much disk space Windows VMs should get. Recommended value is 10000 MB.' }
 
-      - {name: large_ram,                                 label: Large Memory,                                      type: numeric,
+      - {name: large_ram,                                 label: Windows Memory,                                      type: numeric,
       yml_key: [ '["resource_pools"].select{|r| r["name"] == "large"}.first["cloud_properties"]["ram"]', '["resource_pools"].select{|r| r["name"] == "windows"}.first["cloud_properties"]["ram"]' ],
-      description: 'Specifies much memory large VMs should get. Recommended value is 2048 MB.' }
+      description: 'Specifies much memory Windows VMs should get. Recommended value is 4096 MB.' }
 
   - screen: Components
     id: components
@@ -165,7 +165,7 @@ appcloudng:
   - screen: Product Keys
     id: product_keys
     fields:
-      - {name: windows_activation_key,                    label: Windows 2008 R2 Activation Key,                    type: product_key,
+      - {name: windows_activation_key,                    label: Windows 2012 Activation Key,                    type: product_key,
       yml_key: ['["resource_pools"].select{|r| r["name"] == "windows"}.first["env"]["windows"]["product_key"]'], 
       description: '<span class="error" style="font-weight:bold">Please make sure that your Windows activation key is valid. If the activation key is wrong, you will either have to manually activate machines or re-deploy your cloud.</span>' }
 
