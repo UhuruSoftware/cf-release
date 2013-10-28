@@ -1,3 +1,6 @@
+2013-10-28  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
+        * Bugfixes for Uhuru Webui, added overprovisioning option to cf release
+
 2013-10-24  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
         * fix for delete app, app update and template DotNet and MSSQL app
 
