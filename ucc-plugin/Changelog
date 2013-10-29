@@ -1,3 +1,6 @@
+013-10-29  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
+        * Bugfixes for Uhuru Webui, added https, added cc editing option
+
 2013-10-28  Mihai Buzgau  <mihai.buzgau@uhurusoftware.com>
         * Bugfixes for Uhuru Webui, added overprovisioning option to cf release
 
