@@ -1,0 +1,9 @@
+Change-Id: Ied25a13e27b1b554711e2080bd80347a7cf52ec3
+Verified+1: Jenkins 
+Code-Review+2: Florin Dragos <florind@uhurusoftware.com>
+Verified+1: Florin Dragos <florind@uhurusoftware.com>
+Submitted-by: Florin Dragos <florind@uhurusoftware.com>
+Submitted-at: Fri, 08 Nov 2013 16:59:34 +0200
+Reviewed-on: http://gerrit.uhurusoftware.org/2242
+Project: private-cf-release
+Branch: refs/heads/ng
