@@ -38,9 +38,8 @@ case $1 in
     # It enables fast recycling of TIME_WAIT sockets. The default value is 0 (disabled). The sysctl documentation
     # incorrectly states the default as enabled. It can be changed to 1 (enabled) in many cases. Known to cause some
     # issues with hoststated (load balancing and fail over) if enabled, should be used with caution.
-    # Activate tcp_tw_recycle only when the vcap_router is behind a HTTP load balencer.
-    # TCP Syn packets my be dropped: http://stackoverflow.com/questions/8893888/dropping-of-connections-with-tcp-tw-recycle
-    echo 0 > /proc/sys/net/ipv4/tcp_tw_recycle
+
+    echo 1 > /proc/sys/net/ipv4/tcp_tw_recycle
 
     # TCP_TW_REUSE
     # This allows reusing sockets in TIME_WAIT state for new connections when it is safe from protocol viewpoint.
