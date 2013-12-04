@@ -838,18 +838,18 @@ properties:
         configuration:
           allow_over_provisioning: false
           capacity: 500
-          max_db_size: 10
+          max_db_size: 500
           key_buffer: 512
           innodb_buffer_pool_size: 512
-          max_allowed_packet: 16
-          thread_cache_size: 128
-          query_cache_size: 128
-          max_long_query: 3
-          max_long_tx: 30
+          max_allowed_packet: 32
+          thread_cache_size: 256
+          query_cache_size: 256
+          max_long_query: 10
+          max_long_tx: 120
           max_clients: 10
           max_connections: 1000
           table_open_cache: 2000
-          innodb_tables_per_database: 50
+          innodb_tables_per_database: 100
           connection_pool_size:
             min: 5
             max: 10
