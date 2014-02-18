@@ -82,6 +82,8 @@ properties:
     description: "TCP port of NATS server"
   nats.user:
     description: "User name for NATS login"
+  nats.machines:
+    description: "IP of each NATS cluster member."
   networks.apps:
     description: "The App network name"
   syslog_aggregator.address:
@@ -113,3 +115,5 @@ properties:
     description:
   uaa_client_auth_credentials.username:
     description:
+  uaa.login.addnew:
+    description: "If set to true, non existent client accounts are automatically added to the SCIM user database upon an authentication attempt" 

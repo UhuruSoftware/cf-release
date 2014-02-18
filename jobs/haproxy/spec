@@ -1,0 +1,29 @@
+---
+name: haproxy
+packages:
+- haproxy
+- syslog_aggregator
+templates:
+  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
+  haproxy.config.erb:        config/haproxy.config
+  haproxy_ctl:               bin/haproxy_ctl
+  cert.pem.erb:              config/cert.pem
+properties:
+  ha_proxy.ssl_pem:
+    default:
+    description: "SSL certificate (PEM file)"
+  ha_proxy.timeout:
+    default: 300
+    description: "Server and client timeouts in seconds"
+  syslog_aggregator.address:
+    default:
+    description:
+  syslog_aggregator.port:
+    default:
+    description:
+  router.servers.z1:
+    default:
+    description:
+  router.servers.z2:
+    default:
+    description:

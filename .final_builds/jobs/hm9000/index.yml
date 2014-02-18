@@ -5,3 +5,48 @@ builds:
     version: 1
     sha1: !binary |-
       NDRhYzkwODQ2YzcxNDk0NTMxZTk4YzBmMDc3MmVhMTZlZjViZjZmZg==
+  !binary "ZDY2MjJhOWRkYTU3YWM0MDc1NDhlMjhiMWE4ZTQ5YTA3MWM4ZTcyNA==":
+    blobstore_id: c4dab8b7-81b7-4d9d-8c44-8c5689630999
+    version: 2
+    sha1: !binary |-
+      NjA0OTY1ZWI1OGU3NjhjY2JhOTkwYTA2OGZhM2M1ZDAwMDQxNzgxOA==
+  !binary "NzhlOGQ2ZmQ2ZWU0OTFhNDgzMzczMTRmNWIwY2JmNDg3Yjg3MWRmZA==":
+    blobstore_id: f4099db9-7931-4da0-8a97-146371eebbe1
+    version: 3
+    sha1: !binary |-
+      MGI0MDc5OTE3YzIzNjkxYjUzMjQ5ODUzZWJmNWZmMjNiYzZhZWIwNA==
+  !binary "MjNiY2RhOWIyMWVkMDU4MjMwM2M4MDdhMGY0ZjIzOWM3NzE5MjRlOQ==":
+    blobstore_id: 3b38e465-6c67-4603-874f-1bcd8514a411
+    version: 4
+    sha1: !binary |-
+      YjUyMDYzZTNkOGZiYjkxNTY2ODIxMjEyNGM4NTAyMDY4Y2E4MmQ2Mg==
+  !binary "NTg4NzI0NmNhOWI1YzUwNzE2NmE2MDdmYzU0OWNmZWMzNWJhYzllYg==":
+    blobstore_id: 5baae614-e665-462f-9518-a7a067c997b9
+    version: 5
+    sha1: !binary |-
+      OTM0ZTA4OTE5ZjczZTI1ZDBlZmQzZTZlM2EyM2ZmODBlZjg1N2Q4Yw==
+  !binary "NWFhNGE0M2FlMjgxYmJmNmIyMTlmNGUwMTg3ZTE4MzVhNmUwZGM2YQ==":
+    blobstore_id: bb4d9aee-e12c-49c8-b000-3fc1e6425aec
+    version: 6
+    sha1: !binary |-
+      MDk4NzQ4MThiNTdjNTYyNjEyYzI5ZTk1YTlmNTE0NzMxYWQxMzNjOQ==
+  !binary "MjkyNmM3NWY1Mjk3MTEzNDU3NTk4MjY1YTFmYTU3OTZlYTA1NGNiZg==":
+    blobstore_id: 7bc17254-fe45-4405-8d23-54588e11b334
+    version: 7
+    sha1: !binary |-
+      MTc3NmZhNzc2MzFkNTg3Y2YyOGY4MzY0NjRmYjYyYjgzZTU5OGRkMQ==
+  !binary "NTIyMzQxNThkNzZmYzZlZTNkMDc2YTRiNjk4ZmM2YTc5NmI2OTk0OQ==":
+    blobstore_id: a92fc85e-e5b0-4823-8be8-81ef4a527ea4
+    version: 8
+    sha1: !binary |-
+      YTQ3NjcyZGY0NGVmNjI4ZDNiNDY2ZmY0NTQ5NDIyMjU4NTEyNThmZA==
+  !binary "NWEyY2EzMTU0MzFhMGMwMzU3MzI1NDVjYTk4NDYwYTNkNGI1ZTNhOQ==":
+    blobstore_id: 83a80dba-a868-425f-aad4-4d4e51d1daaa
+    version: 9
+    sha1: !binary |-
+      M2EwY2UwNTRmNGVjMTZlMjhmZGQ5ZmI5MjUzZTdmYTQzODNkNTc0OQ==
+  !binary "NTk4ZWUyMjBhYzIzZjQ0YjNlZWM0NDcyZjc4MGYwMmQ0NGMxYjNhZQ==":
+    blobstore_id: 3e1f9075-7171-4c07-a676-1a923027176b
+    version: 10
+    sha1: !binary |-
+      ZWZiODc1NGU1OWM0YWRmOGM4NWJkZTNlYmFjNzA5NmI5YjU1YTVmMA==

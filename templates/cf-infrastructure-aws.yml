@@ -8,9 +8,23 @@ meta:
     aws_access_key_id: (( properties.template_only.aws.access_key_id ))
     aws_secret_access_key: (( properties.template_only.aws.secret_access_key ))
 
+  stemcell:
+    name: bosh-aws-xen-ubuntu
+    version: latest
+
 
 properties:
   template_only: (( merge ))
+
+  logger_endpoint:
+    port: 4443
+
+  loggregator:
+    blacklisted_syslog_ranges:
+    - start: 10.10.16.0
+      end: 10.10.31.255
+    - start: 10.10.80.0
+      end: 10.10.95.255
 
   cc:
     resource_pool:
@@ -104,12 +118,12 @@ resource_pools:
 
   - name: large_z1
     cloud_properties:
-      instance_type: m1.medium
+      instance_type: m1.large
       availability_zone: (( meta.zones.z1 ))
 
   - name: large_z2
     cloud_properties:
-      instance_type: m1.medium
+      instance_type: m1.large
       availability_zone: (( meta.zones.z2 ))
 
   - name: runner_z1
@@ -138,16 +152,22 @@ resource_pools:
 # set up static IPs
 jobs:
   - name: logs_z1
-    instances: 1
+    instances: 0
     networks:
       - name: cf1
         static_ips: (( static_ips(0) ))
 
   - name: logs_z2
-    instances: 1
+    instances: 0
     networks:
       - name: cf2
         static_ips: (( static_ips(0) ))
+
+  - name: nats_z1
+    instances: 0
+    networks:
+      - name: cf1
+        static_ips: (( static_ips(1) ))
 
   - name: nats_z2
     instances: 1
@@ -190,3 +210,21 @@ jobs:
     networks:
       - name: cf2
         static_ips: (( static_ips(24) ))
+
+  - name: etcd_leader_z1
+    instances: 1
+    networks:
+      - name: cf1
+        static_ips: (( static_ips(9) ))
+
+  - name: etcd_z1
+    instances: 1
+    networks:
+      - name: cf1
+        static_ips: (( static_ips(10) ))
+
+  - name: etcd_z2
+    instances: 1
+    networks:
+      - name: cf2
+        static_ips: (( static_ips(9) ))

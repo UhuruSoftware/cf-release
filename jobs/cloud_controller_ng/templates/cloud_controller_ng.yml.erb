@@ -1,8 +1,13 @@
 ---
 local_route: <%= spec.networks.send(properties.networks.apps).ip %>
-port: 9022 # external CC port
+port: <%= p("ccng.port") %>
 pid_filename: /var/vcap/sys/run/cloud_controller_ng/cloud_controller_ng.pid
-message_bus_uri: nats://<%= p("nats.user") %>:<%= p("nats.password") %>@<%= p("nats.address") %>:<%= p("nats.port") %>
+development_mode: <%= p("ccng.development_mode") %>
+
+message_bus_servers:
+<% p("nats.machines").each do |ip| %>
+  - nats://<%= p("nats.user") %>:<%= p("nats.password") %>@<%= ip %>:<%= p("nats.port") %>
+<% end %>
 
 external_domain:
   - <%= p("ccng.external_host") %>.<%= p("domain") %>
@@ -10,6 +15,54 @@ external_domain:
 system_domain_organization: <%= p("system_domain_organization") %>
 system_domain: <%= p("system_domain") %>
 app_domains: [ <%= p("app_domains").join(", ") %> ]
+
+jobs:
+  global:
+    timeout_in_seconds: <%= p("ccng.jobs.global.timeout_in_seconds") %>
+  <% if_p("ccng.jobs.app_bits_packer.timeout_in_seconds") do |timeout| %>
+  app_bits_packer:
+    timeout_in_seconds: <%= timeout %>
+  <% end %>
+  <% if_p("ccng.jobs.app_events_cleanup.timeout_in_seconds") do |timeout| %>
+  app_events_cleanup:
+    timeout_in_seconds: <%= timeout %>
+  <% end %>
+  <% if_p("ccng.jobs.app_usage_events_cleanup.timeout_in_seconds") do |timeout| %>
+  app_usage_events_cleanup:
+    timeout_in_seconds: <%= timeout %>
+  <% end %>
+  <% if_p("ccng.jobs.blobstore_delete.timeout_in_seconds") do |timeout| %>
+  blobstore_delete:
+    timeout_in_seconds: <%= timeout %>
+  <% end %>
+  <% if_p("ccng.jobs.blobstore_upload.timeout_in_seconds") do |timeout| %>
+  blobstore_upload:
+    timeout_in_seconds: <%= timeout %>
+  <% end %>
+  <% if_p("ccng.jobs.droplet_deletion.timeout_in_seconds") do |timeout| %>
+  droplet_deletion:
+    timeout_in_seconds: <%= timeout %>
+  <% end %>
+  <% if_p("ccng.jobs.droplet_upload.timeout_in_seconds") do |timeout| %>
+  droplet_upload:
+    timeout_in_seconds: <%= timeout %>
+  <% end %>
+  <% if_p("ccng.jobs.droplet_upload.timeout_in_seconds") do |timeout| %>
+  droplet_upload:
+    timeout_in_seconds: <%= timeout %>
+  <% end %>
+
+app_events:
+  cutoff_age_in_days: <%= p("ccng.app_events.cutoff_age_in_days") %>
+
+app_usage_events:
+  cutoff_age_in_days: <%= p("ccng.app_usage_events.cutoff_age_in_days") %>
+
+audit_events:
+  cutoff_age_in_days: <%= p("ccng.audit_events.cutoff_age_in_days") %>
+
+default_app_memory: <%= p("ccng.default_app_memory") %>
+maximum_app_disk_in_mb: <%= p("ccng.maximum_app_disk_in_mb") %>
 
 cc_partition: <%= p("ccng.cc_partition") %>
 
@@ -20,7 +73,7 @@ bulk_api:
   auth_password: "<%= p("ccng.bulk_api_password") %>"
 
 nginx:
-  use_nginx: <%= p("ccng.use_nginx") %>
+  use_nginx: true
   instance_socket: "/var/vcap/sys/run/cloud_controller_ng/cloud_controller.sock"
 
 index: <%= spec.index %>
@@ -34,12 +87,8 @@ info:
   description: <%= p("description") %>
   api_version: <%= p("api_version") %>
 
-<% if_p("directories.droplets",
-        "ccng.directories.staging_manifests",
-        "ccng.directories.tmpdir") do |droplets, staging_manifests, tmpdir| %>
+<% if_p("ccng.directories.tmpdir") do |tmpdir| %>
 directories:
- droplets: <%= droplets %>
- staging_manifests: <%= staging_manifests %>
  tmpdir: <%= tmpdir %>
 <% end %>
 
@@ -51,9 +100,11 @@ logging:
   level: <%= p("ccng.logging_level") %>
   max_retries: <%= p("ccng.logging_max_retries") %>
 
-<% if_p("loggregator.trafficcontroller") do |trafficcontroller| %>
+<% if_p("loggregator_endpoint.host", "loggregator_endpoint.port", "loggregator_endpoint.shared_secret") do |host, port, shared_secret| %>
 loggregator:
-  router: <%= trafficcontroller %>
+  router: <%= host %>:<%= port %>
+  shared_secret: <%= shared_secret %>
+  url: ws<%= "s" if p("logger_endpoint.use_ssl") %>://loggregator.<%= p("system_domain") %>:<%= p("logger_endpoint.port") %>
 <% end %>
 
 <% db = p("ccdb_ng.databases").find { |db| db["tag"] == "cc" } %>
@@ -82,31 +133,21 @@ uaa:
 # App staging parameters
 staging:
   max_staging_runtime: <%= p("ccng.max_staging_runtime") %>
+  minimum_staging_memory_mb: <%= p("dea_next.staging_memory_limit_mb") %>
   auth:
     user: <%= p("ccng.staging_upload_user") %>
     password: "<%= p("ccng.staging_upload_password") %>"
+
+maximum_health_check_timeout: <%= p("ccng.maximum_health_check_timeout") %>
 
 runtimes_file: /var/vcap/jobs/cloud_controller_ng/config/runtimes.yml
 stacks_file: /var/vcap/jobs/cloud_controller_ng/config/stacks.yml
 
 quota_definitions:
-  free:
-    non_basic_services_allowed: <%= p("ccng.quota_definitions.free.non_basic_services_allowed") %>
-    total_services: <%= p("ccng.quota_definitions.free.total_services") %>
-    memory_limit: <%= p("ccng.quota_definitions.free.memory_limit") %>
-  paid:
-    non_basic_services_allowed: <%= p("ccng.quota_definitions.paid.non_basic_services_allowed") %>
-    total_services: <%= p("ccng.quota_definitions.paid.total_services") %>
-    memory_limit: <%= p("ccng.quota_definitions.paid.memory_limit") %>
-  runaway:
-    non_basic_services_allowed: <%= p("ccng.quota_definitions.runaway.non_basic_services_allowed") %>
-    total_services: <%= p("ccng.quota_definitions.runaway.total_services") %>
-    memory_limit: <%= p("ccng.quota_definitions.runaway.memory_limit") %>
-  trial:
-    non_basic_services_allowed: false
-    total_services: 10
-    memory_limit: 2048
-    trial_db_allowed: true
+  <% p("ccng.quota_definitions").each do |name, quota_properties| %>
+  <%= name %>:<% quota_properties.each do |key,value|%>
+    <%= key %>: <%= value %><% end %>
+  <% end %>
 
 default_quota_definition: <%= p("ccng.default_quota_definition") %>
 
@@ -120,16 +161,7 @@ resource_pool:
     key_pair_id: <%= p("ccng.resource_pool.cdn.key_pair_id") %>
     private_key: <%= p("ccng.resource_pool.cdn.private_key").inspect %>
   <% end %>
-  fog_connection:
-  <% if_p("ccng.resource_pool.fog_connection.provider") do |provider| %>
-    provider: <%= provider %>
-    <% if provider.downcase == "local" %>
-    local_root: <%= p("ccng.resource_pool.fog_connection.local_root") %>
-    <% else %>
-    aws_access_key_id: <%= p("ccng.resource_pool.fog_connection.aws_access_key_id") %>
-    aws_secret_access_key: <%= p("ccng.resource_pool.fog_connection.aws_secret_access_key") %>
-    <% end %>
-  <% end %>
+  fog_connection: <%= p(["ccng.resource_pool.fog_connection", "ccng.default_fog_connection"]).to_json %>
 
 packages:
   app_package_directory_key: <%= p("ccng.packages.app_package_directory_key") %>
@@ -139,16 +171,7 @@ packages:
     key_pair_id: <%= p("ccng.packages.cdn.key_pair_id") %>
     private_key: <%= p("ccng.packages.cdn.private_key").inspect %>
   <% end %>
-  fog_connection:
-  <% if_p("ccng.packages.fog_connection.provider") do |provider| %>
-    provider: <%= provider %>
-    <% if provider.downcase == "local" %>
-    local_root: <%= p("ccng.packages.fog_connection.local_root") %>
-    <% else %>
-    aws_access_key_id: <%= p("ccng.packages.fog_connection.aws_access_key_id") %>
-    aws_secret_access_key: <%= p("ccng.packages.fog_connection.aws_secret_access_key") %>
-    <% end %>
-  <% end %>
+  fog_connection: <%= p(["ccng.packages.fog_connection", "ccng.default_fog_connection"]).to_json %>
 
 droplets:
   droplet_directory_key: <%= p("ccng.droplets.droplet_directory_key") %>
@@ -158,16 +181,7 @@ droplets:
     key_pair_id: <%= p("ccng.droplets.cdn.key_pair_id") %>
     private_key: <%= p("ccng.droplets.cdn.private_key").inspect %>
   <% end %>
-  fog_connection:
-  <% if_p("ccng.droplets.fog_connection.provider") do |provider| %>
-    provider: <%= provider %>
-    <% if provider.downcase == "local" %>
-    local_root: <%= p("ccng.droplets.fog_connection.local_root") %>
-    <% else %>
-    aws_access_key_id: <%= p("ccng.droplets.fog_connection.aws_access_key_id") %>
-    aws_secret_access_key: <%= p("ccng.droplets.fog_connection.aws_secret_access_key") %>
-    <% end %>
-  <% end %>
+  fog_connection: <%= p(["ccng.droplets.fog_connection", "ccng.default_fog_connection"]).to_json %>
 
 buildpacks:
   buildpack_directory_key: <%= p("ccng.buildpacks.buildpack_directory_key") %>
@@ -177,17 +191,7 @@ buildpacks:
     key_pair_id: <%= p("ccng.buildpacks.cdn.key_pair_id") %>
     private_key: <%= p("ccng.buildpacks.cdn.private_key").inspect %>
   <% end %>
-  fog_connection:
-  <% if_p("ccng.buildpacks.fog_connection.provider") do |provider| %>
-    provider: <%= provider %>
-    <% if provider.downcase == "local" %>
-    local_root: <%= p("ccng.buildpacks.fog_connection.local_root") %>
-    <% else %>
-    aws_access_key_id: <%= p("ccng.buildpacks.fog_connection.aws_access_key_id") %>
-    aws_secret_access_key: <%= p("ccng.buildpacks.fog_connection.aws_secret_access_key") %>
-    <% end %>
-  <% end %>
-
+  fog_connection: <%= p(["ccng.buildpacks.fog_connection", "ccng.default_fog_connection"]).to_json %>
 
 db_encryption_key: <%= p("ccng.db_encryption_key") %>
 
@@ -196,4 +200,8 @@ trial_db:
 
 tasks_disabled: <%= p("ccng.tasks_disabled") %>
 hm9000_noop: <%= p("ccng.hm9000_noop") %>
+flapping_crash_count_threshold: <%= p("ccng.flapping_crash_count_threshold") %>
 
+disable_custom_buildpacks: <%= p("ccng.disable_custom_buildpacks") %>
+
+broker_client_timeout_seconds: <%= p("ccng.broker_client_timeout_seconds") %>

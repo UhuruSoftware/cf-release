@@ -7,15 +7,16 @@ templates:
   hm9000_sender_ctl: bin/hm9000_sender_ctl
   hm9000_metrics_server_ctl: bin/hm9000_metrics_server_ctl
   hm9000_api_server_ctl: bin/hm9000_api_server_ctl
+  hm9000_evacuator_ctl: bin/hm9000_evacuator_ctl
+  hm9000_shredder_ctl: bin/hm9000_shredder_ctl
   hm9000.json.erb: config/hm9000.json
-  etcd_ctl.erb: bin/etcd_ctl
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
 
 packages:
   - common
-  - golang
   - hm9000
   - syslog_aggregator
+
 properties:
   nats.user:
     description:
@@ -24,6 +25,8 @@ properties:
   nats.address:
     description:
   nats.port:
+    description:
+  nats.machines:
     description:
   syslog_aggregator.address:
     description: "IP address of syslog aggregator"
@@ -36,3 +39,5 @@ properties:
     description: "User used to access the bulk_api, health_manager uses it to connect to the cc, announced over NATS"
   ccng.bulk_api_password:
     description: "Password used to access the bulk_api, health_manager uses it to connect to the cc, announced over NATS"
+  etcd_ips:
+    description: "IPs pointing to the ETCD cluster"

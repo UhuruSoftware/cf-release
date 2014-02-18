@@ -1,7 +1,53 @@
+meta:
+  environment: ~
+  default_quota_definitions:
+    default:
+       memory_limit: 10240
+       total_services: 100
+       non_basic_services_allowed: true
+       total_routes: 1000
+       trial_db_allowed: true
+
 properties:
   domain: (( merge ))
 
+  loggregator_endpoint:
+    shared_secret: (( merge ))
   cc:
+    jobs:
+      global:
+        timeout_in_seconds: 14400 # 4 hours
+      app_bits_packer:
+        timeout_in_seconds: ~
+      app_events_cleanup:
+        timeout_in_seconds: ~
+      app_usage_events_cleanup:
+        timeout_in_seconds: ~
+      blobstore_delete:
+        timeout_in_seconds: ~
+      blobstore_upload:
+        timeout_in_seconds: ~
+      droplet_deletion:
+        timeout_in_seconds: ~
+      droplet_upload:
+        timeout_in_seconds: ~
+      model_deletion:
+        timeout_in_seconds: ~
+
+    app_events:
+      cutoff_age_in_days: 31
+    app_usage_events:
+      cutoff_age_in_days: 31
+    audit_events:
+      cutoff_age_in_days: 31
+
+    process_group: cloud_controller
+
+    hm9000_noop: false
+    default_app_memory: 1024
+    maximum_app_disk_in_mb: 2048
+    client_max_body_size: 256M
+
     srv_api_uri: (( "https://api." domain ))
 
     bulk_api_password: (( merge ))
@@ -12,6 +58,10 @@ properties:
     db_encryption_key: (( merge ))
 
     tasks_disabled: false
+
+    disable_custom_buildpacks: false
+
+    broker_client_timeout_seconds: 60
 
     resource_pool:
       resource_directory_key: (( domain "-cc-resources" ))
@@ -28,25 +78,28 @@ properties:
       fog_connection: ~
       cdn: ~
 
+    development_mode: false
+
+    newrelic:
+      license_key: ~
+      environment_name: (( meta.environment ))
+      developer_mode: (( cc.development_mode ))
+      monitor_mode: (( merge || false ))
+      capture_params: (( merge || false ))
+      transaction_tracer:
+        enabled: (( merge || true ))
+        record_sql: (( merge || "obfuscated" ))
+
     buildpacks:
       buildpack_directory_key: (( domain "-cc-buildpacks" ))
       fog_connection: ~
       cdn: ~
-
-    quota_definitions:
-      free:
-        memory_limit: 0
-        total_services: 0
-      paid:
-        memory_limit: 10240
-        total_services: -1
-      runaway:
-        memory_limit: 102400
-        total_services: -1
+    quota_definitions: (( merge || meta.default_quota_definitions ))
+    default_quota_definition: default
 
   login:
     catalina_opts: (( merge ))
-
+    uaa_certificate: ~
     protocol: https
 
     links:
@@ -81,12 +134,12 @@ properties:
     clients:
       login:
         override: true
-        scope: openid
+        scope: openid,oauth.approvals
         authorities: oauth.login
         secret: (( merge ))
         authorized-grant-types: authorization_code,client_credentials,refresh_token
         redirect-uri: (( "https://login." domain ))
-      portal:
+      developer_console:
         override: true
         scope: openid,cloud_controller.read,cloud_controller.write,password.write,console.admin,console.support
         authorities: scim.write,scim.read,cloud_controller.read,cloud_controller.write,password.write,uaa.admin,uaa.resource,cloud_controller.admin,billing.admin
@@ -94,14 +147,7 @@ properties:
         authorized-grant-types: authorization_code,client_credentials
         access-token-validity: 1209600
         refresh-token-validity: 1209600
-      billing:
-        override: true
-        scope: uaa.none
-        authorities: cloud_controller.read,cloud_controller.write,cloud_controller.admin,uaa.resource,scim.read,scim.write
-        secret: (( merge ))
-        authorized-grant-types: client_credentials
-        access-token-validity: 1209600
-        refresh-token-validity: 1209600
+        redirect-uri: (( "https://console." domain "/oauth/callback" ))
       app-direct:
         override: true
         authorities: app_direct_invoice.write

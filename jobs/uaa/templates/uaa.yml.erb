@@ -43,7 +43,7 @@ oauth:
     autoapprove:
       - cf
       - login
-      - portal
+      - developer_console
       - support-signon
   <% end %>
   clients:
@@ -56,14 +56,14 @@ oauth:
       authorized-grant-types: client_credentials
       authorities: clients.read,clients.write,clients.secret,uaa.admin,scim.read,password.write
       id: admin
-      secret: <%= properties.uaa.admin.client_secret %>
+      secret: "<%= properties.uaa.admin.client_secret %>"
 <% end %>
 <% if !properties.uaa.clients || !properties.uaa.clients.cloud_controller %>
     cloud_controller:
       authorized-grant-types: client_credentials
       authorities: scim.read,scim.write,password.write
       id: cloud_controller
-      secret: <%= properties.uaa.cc.client_secret %>
+      secret: "<%= properties.uaa.cc.client_secret %>"
       access-token-validity: 604800
 <% end %>
 <% if !properties.uaa.clients || !properties.uaa.clients.cf %>
@@ -80,10 +80,10 @@ oauth:
     login:
       id: login
       override: true
-      secret: <%= properties.uaa.login.client_secret %>
+      secret: "<%= properties.uaa.login.client_secret %>"
       authorized-grant-types: authorization_code,client_credentials,refresh_token
       authorities: oauth.login
-      scope: openid
+      scope: openid,oauth.approvals
       redirect-uri: https://login.<%= properties.domain %>
 <% end %>
 <% if properties.uaa.scim %>
@@ -110,4 +110,6 @@ require_https: <%= properties.uaa.require_https %>
 <% if !properties.uaa.dump_requests.nil? %>
 dump_requests: <%= properties.uaa.dump_requests %>
 <% end %>
-
+<% if properties.uaa.login && !properties.uaa.login.addnew.nil? %>
+login.addnew: <%= properties.uaa.login.addnew %>
+<% end %>

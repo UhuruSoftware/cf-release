@@ -35,6 +35,11 @@ export C_INCLUDE_PATH=/var/vcap/packages/libpq/include:$C_INCLUDE_PATH
 export LIBRARY_PATH=/var/vcap/packages/libpq/lib:$LIBRARY_PATH
 export LANG=en_US.UTF-8
 
+<% if_p("ccng.newrelic.license_key") do %>
+export NRCONFIG=$CONFIG_DIR/newrelic.yml
+export RACK_ENV=<%= properties.ccng.newrelic.environment_name %> # used by NewRelic
+<% end %>
+
 source /var/vcap/packages/common/utils.sh
 
 case $1 in
@@ -89,17 +94,17 @@ case $1 in
     fi
     <% else %>
     echo "Preparing local droplet directory"
-    <% if p("ccng.packages.fog_connection.provider").downcase == "local" %>
-    mkdir -p <%= properties.ccng.packages.fog_connection.local_root %>
-    chown vcap:vcap <%= properties.ccng.packages.fog_connection.local_root %>
+    <% if p("ccng.packages.fog_connection.provider", "local").downcase == "local" %>
+    mkdir -p <%= p(["ccng.packages.fog_connection.local_root", "ccng.default_fog_connection.local_root"]) %>
+    chown vcap:vcap <%= p(["ccng.packages.fog_connection.local_root", "ccng.default_fog_connection.local_root"]) %>
     <% end %>
-    <% if p("ccng.resource_pool.fog_connection.provider").downcase == "local" %>
-    mkdir -p <%= properties.ccng.resource_pool.fog_connection.local_root %>
-    chown vcap:vcap <%= properties.ccng.resource_pool.fog_connection.local_root %>
+    <% if p("ccng.resource_pool.fog_connection.provider", "local").downcase == "local" %>
+    mkdir -p <%= p(["ccng.resource_pool.fog_connection.local_root", "ccng.default_fog_connection.local_root"]) %>
+    chown vcap:vcap <%= p(["ccng.resource_pool.fog_connection.local_root", "ccng.default_fog_connection.local_root"]) %>
     <% end %>
-    <% if p("ccng.droplets.fog_connection.provider").downcase == "local" %>
-    mkdir -p <%= properties.ccng.droplets.fog_connection.local_root %>
-    chown vcap:vcap <%= properties.ccng.droplets.fog_connection.local_root %>
+    <% if p("ccng.droplets.fog_connection.provider", "local").downcase == "local" %>
+    mkdir -p <%= p(["ccng.droplets.fog_connection.local_root", "ccng.default_fog_connection.local_root"]) %>
+    chown vcap:vcap <%= p(["ccng.droplets.fog_connection.local_root", "ccng.default_fog_connection.local_root"]) %>
     <% end %>
 
     <% end %>
@@ -120,7 +125,13 @@ case $1 in
     # Run the migrations only on the first CC launch
     <% if spec.index.to_i == 0 %>
       cd $CC_PACKAGE_DIR/cloud_controller_ng
-      chpst -u vcap:vcap bundle exec rake db:migrate >>$LOG_DIR/db_migrate.stdout.log 2>>$LOG_DIR/db_migrate.stderr.log
+      chpst -u vcap:vcap bundle exec rake db:migrate \<% if properties.syslog_aggregator && properties.syslog_aggregator.address %>
+        > >(tee -a >(logger -p user.info -t vcap.db_migrate.stdout) $LOG_DIR/db_migrate.stdout.log) \
+        2> >(tee -a >(logger -p user.error -t vcap.db_migrate.stderr) $LOG_DIR/db_migrate.stderr.log)<% else %>
+        >>$LOG_DIR/db_migrate.stdout.log \
+        2>>$LOG_DIR/db_migrate.stderr.log
+        <% end %>
+
       if [ $? != 0 ]; then
         echo "Migrations failed"
         exit 1
@@ -129,16 +140,14 @@ case $1 in
       # TODO: remove the -m when we have a stand alone utility for loading
       # frameworks etc, and call those utilities here.  See corresponding
       # comments in ccng runner.
-      exec chpst -u vcap:vcap $CC_PACKAGE_DIR/cloud_controller_ng/bin/cloud_controller -m \
-        -c $CLOUD_CONTROLLER_NG_CONFIG \
+      exec chpst -u vcap:vcap $CC_PACKAGE_DIR/cloud_controller_ng/bin/cloud_controller -m \<% else %>
+      exec chpst -u vcap:vcap $CC_PACKAGE_DIR/cloud_controller_ng/bin/cloud_controller \<% end %>
+        -c $CLOUD_CONTROLLER_NG_CONFIG \<% if properties.syslog_aggregator && properties.syslog_aggregator.address %>
+        > >(tee -a >(logger -p user.info -t vcap.cloud_controller_ng.stdout) $LOG_DIR/cloud_controller_ng.stdout.log) \
+        2> >(tee -a >(logger -p user.error -t vcap.cloud_controller_ng.stderr) $LOG_DIR/cloud_controller_ng.stderr.log)<% else %>
         >>$LOG_DIR/cloud_controller_ng.stdout.log \
         2>>$LOG_DIR/cloud_controller_ng.stderr.log
-    <% else %>
-      exec chpst -u vcap:vcap $CC_PACKAGE_DIR/cloud_controller_ng/bin/cloud_controller \
-        -c $CLOUD_CONTROLLER_NG_CONFIG \
-        >>$LOG_DIR/cloud_controller_ng.stdout.log \
-        2>>$LOG_DIR/cloud_controller_ng.stderr.log
-    <% end %>
+        <% end %>
     ;;
 
   stop)
