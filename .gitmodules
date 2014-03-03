@@ -54,10 +54,10 @@
 	url = https://github.com/nu7hatch/gouuid.git
 [submodule "src/vcap_dotnet"]
 	path = src/vcap_dotnet
-	url = git@github.com:UhuruSoftware/private-vcap-dotnet.git
+	url = git@github.com:UhuruSoftware/vcap-dotnet.git
 [submodule "src/uhuru-webui"]
 	path = src/uhuru-webui
-	url = git@github.com:UhuruSoftware/private-uhuru-webui.git
+	url = git@github.com:UhuruSoftware/uhuru-webui.git
 [submodule "src/narc/src/github.com/cloudfoundry/gibson"]
 	path = src/narc/src/github.com/cloudfoundry/gibson
 	url = https://github.com/cloudfoundry/gibson.git

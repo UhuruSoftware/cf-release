@@ -143,6 +143,7 @@ module Uhuru::BoshCommander
 
 
       properties['uaa_endpoint']="http://uaa.#{properties['domain']}"
+	  properties['nats']['machines'][0] = properties['nats']['address']
 
 
     end

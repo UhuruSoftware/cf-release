@@ -477,7 +477,9 @@ properties:
     address: 10.0.7.122
     port: 4222
     authorization_timeout: 20
-
+    use_gnatsd: true
+    machines:
+      - 10.0.100.45
 
   <% db_name = "ccdb_ng" %>
   <% db_name_old = "ccdb" %>
@@ -592,14 +594,17 @@ properties:
       free:
         non_basic_services_allowed: false
         total_services: 2
+        total_routes: 1000
         memory_limit: 1024   # units in MB
       paid:
         non_basic_services_allowed: true
         total_services: 33
+        total_routes: 1000
         memory_limit: 204800 # 200 GB # units in MB
       runaway:
         non_basic_services_allowed: true
         memory_limit: 102400
+        total_routes: 1000
         total_services: -1
 
     resource_pool:
