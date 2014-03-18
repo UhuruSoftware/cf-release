@@ -102,7 +102,7 @@
 	url = https://github.com/cloudfoundry/cf-acceptance-tests
 [submodule "packages/ruby"]
 	path = packages/ruby
-	url = https://github.com/cloudfoundry/ruby-package
+	url = git@github.com:cloudfoundry/ruby-package.git
 [submodule "src/uaa"]
 	path = src/uaa
 	url = https://github.com/cloudfoundry/uaa.git
