@@ -25,9 +25,6 @@
 [submodule "src/cloud_controller_ng"]
   path = src/cloud_controller_ng
   url = https://github.com/cloudfoundry/cloud_controller_ng.git
-[submodule "src/tests"]
-  path = src/tests
-  url = https://github.com/cloudfoundry/vcap-yeti.git
 [submodule "src/logplex"]
   path = src/logplex
   url = https://github.com/cloudfoundry/logplex.git
@@ -100,3 +97,15 @@
 [submodule "src/loggregator"]
 	path = src/loggregator
 	url = https://github.com/cloudfoundry/loggregator
+[submodule "src/acceptance-tests"]
+	path = src/acceptance-tests
+	url = https://github.com/cloudfoundry/cf-acceptance-tests
+[submodule "packages/ruby"]
+	path = packages/ruby
+	url = https://github.com/cloudfoundry/ruby-package
+[submodule "src/uaa"]
+	path = src/uaa
+	url = https://github.com/cloudfoundry/uaa.git
+[submodule "src/login"]
+	path = src/login
+	url = https://github.com/cloudfoundry/login-server.git
