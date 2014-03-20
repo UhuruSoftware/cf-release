@@ -222,6 +222,18 @@ jobs:
     networks: 
       - name: default
 
+  - name: api_worker
+    template:
+      - cloud_controller_ng # stateless, dynamically discovered
+    release: appcloudng.core
+    instances: 1 # farmable
+    resource_pool: medium
+    networks:
+      - name: default
+    properties:
+      ccng:
+        process_group: worker
+
   - name: dea_next
     template: 
       - dea_next # stateless, dynamically discovered

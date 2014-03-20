@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem "blobstore_client", :git => 'git@github.com:UhuruSoftware/private-bosh.git', :ref => '66eec1b4b64d144288e395e734ce03e64b6d87cc'
-gem "bosh_cli", :git => 'git@github.com:UhuruSoftware/private-bosh.git', :ref => '66eec1b4b64d144288e395e734ce03e64b6d87cc'
-gem "uhuru-publisher", :git => "git@github.com:UhuruSoftware/private-uhuru-commander.git"
+gem "blobstore_client", :git => 'git@github.com:UhuruSoftware/bosh.git', :ref => '88c3cc7b25ec5df7098edd6de3adf74ec4750680'
+gem "bosh_cli", :git => 'git@github.com:UhuruSoftware/bosh.git', :ref => '88c3cc7b25ec5df7098edd6de3adf74ec4750680'
+gem "uhuru-publisher", :git => "git@github.com:UhuruSoftware/uhuru-commander.git"
 
