@@ -231,7 +231,7 @@ appcloudng:
       - {name: free_sep,                                  label: Free Accounts,                                     type: separator }
 
 #TODO added service plans
-      - {name: free_app_memory_quota,                            label: Maximum App Count,                                 type: numeric,
+      - {name: free_app_memory_quota,                            label: Maximum App Memory,                                 type: numeric,
       yml_key: '["properties"]["ccng"]["quota_definitions"]["free"]["memory_limit"]',
       description: 'Maximum memory of apps a normal user can have.'}
 
