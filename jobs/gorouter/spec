@@ -6,6 +6,7 @@ templates:
   gorouter_logrotate.cron.erb: config/gorouter_logrotate.cron
   syslog_forwarder.conf.erb: config/syslog_forwarder.conf
   logrotate.conf.erb: config/logrotate.conf
+  drain: bin/drain
 packages:
   - common
   - golang
@@ -13,9 +14,9 @@ packages:
   - syslog_aggregator
 properties:
   syslog_aggregator.address:
-    description: "IP address for syslog aggregator"
+    description: "IP address for syslog aggregator."
   syslog_aggregator.port:
-    description: "TCP port of syslog aggregator"
+    description: "TCP port of syslog aggregator."
   syslog_aggregator.all:
     description: "Define whether forwarders should send all their syslog data to our aggregator."
     default: false
@@ -23,6 +24,9 @@ properties:
     description: "Transport to be used when forwarding logs (tcp|udp|relp)."
     default: "tcp"
 
+  router.port:
+    description: "Listening Port for Router."
+    default: 80
   router.status.port:
     description: "Port for the Router varz/status endpoint."
     default: 8080
@@ -33,8 +37,6 @@ properties:
   nats.user:
     description:
   nats.password:
-    description:
-  nats.address:
     description:
   nats.port:
     description:
@@ -52,9 +54,11 @@ properties:
     description: "Timeout in seconds for Router -> Endpoint roundtrip."
     default: 300
   loggregator_endpoint.host:
-    description: "The host used to emit messages to the Loggregator"
+    description: "The host used to emit messages to the Loggregator."
   loggregator_endpoint.port:
-    description: "The port used to emit messages to the Loggregator"
+    description: "The port used to emit messages to the Loggregator."
     default: 3456
   loggregator_endpoint.shared_secret:
-    description: "The key used to sign log messages"
+    description: "The key used to sign log messages."
+  networks.apps:
+    description: "GoRouter network information."

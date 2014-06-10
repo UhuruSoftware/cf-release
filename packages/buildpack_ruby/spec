@@ -1,0 +1,5 @@
+---
+name: buildpack_ruby
+dependencies:
+files:
+- ruby-buildpack/ruby-buildpack-offline-b13.zip
