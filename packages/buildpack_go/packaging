@@ -1,0 +1,3 @@
+set -e
+
+cp go-buildpack/go-buildpack-offline-b7.zip ${BOSH_INSTALL_TARGET}
