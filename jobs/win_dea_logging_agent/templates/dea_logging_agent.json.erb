@@ -1,0 +1,13 @@
+{
+    "Index": <%= spec.index %>,
+    "LoggregatorAddress": "<%= properties.loggregator_endpoint.host %>:<%= properties.loggregator_endpoint.port %>",
+    "SharedSecret": "<%= properties.loggregator_endpoint.shared_secret %>",
+
+    "NatsHosts": ["<%= properties.nats.address %>"],
+    "NatsPort": <%= properties.nats.port %>,
+    "NatsUser": "<%= properties.nats.user %>",
+    "NatsPass": "<%= properties.nats.password %>",
+    "VarzUser": "<%= properties.dea_logging_agent.status.user %>",
+    "VarzPass": "<%= properties.dea_logging_agent.status.password %>",
+    "VarzPort": <%= properties.dea_logging_agent.status.port || "12347" %>
+}

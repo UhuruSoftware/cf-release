@@ -1,0 +1,7 @@
+set GOROOT=c:\vcap\packages\win_golang
+set PATH=%PATH%;c:\vcap\packages\git_portable\bin
+set PATH=%PATH%;%GOROOT%\bin
+set GOPATH=%CD%\loggregator
+
+go install deaagent/deaagent
+copy %CD%\loggregator\bin\deaagent.exe %BOSH_INSTALL_TARGET%\deaagent.exe

@@ -1,0 +1,8 @@
+---
+name: win_dea_logging_agent
+templates:
+  install.bat.erb: install.bat
+  dea_logging_agent.json.erb: dea_logging_agent.json
+
+packages:
+- win_dea_logging_agent
