@@ -1,0 +1,6 @@
+# Create the windows service
+sc create deaagent DisplayName= "Uhuru DEA Logging Agent" binPath= "C:\vcap\packages\win_dea_logging_agent\deaagent.exe -config=c:\vcap\jobs\win_dea_logging_agent\dea_logging_agent.json -instancesFile=c:\vcap\data\win_dea\db\applications.json" start= auto
+sc failure deaagent actions= restart/0 reset= 0
+
+# Add firewall rules for statusport
+netsh advfirewall firewall add rule name="loggregator_status" protocol=TCP dir=in localport=<%= properties.dea_logging_agent.status.port || '12347' %> action=allow

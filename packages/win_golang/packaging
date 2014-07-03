@@ -1,0 +1,2 @@
+# Extract the msi
+msiexec /i win_golang\go1.2.2.windows-amd64.msi /qb INSTALLDIR=%BOSH_INSTALL_TARGET%

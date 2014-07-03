@@ -1,0 +1,5 @@
+---
+name: win_golang
+
+files:
+    - win_golang/go1.2.2.windows-amd64.msi

@@ -1,0 +1,6 @@
+---
+name: win_dea_logging_agent
+dependencies:
+    - win_golang
+files:
+    - loggregator/**/*
